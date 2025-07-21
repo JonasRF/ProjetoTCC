@@ -1,39 +1,40 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
+import org.jonasribeiro.admin.catalogo.domain.AgreggateRoot;
+
 import java.time.Instant;
 import java.util.UUID;
 
-public class Category {
-    private String id;
+public class Category extends AgreggateRoot<CategoryID> {
     private String name;
     private String description;
     private boolean isActive;
-    private String createdAt;
-    private String updatedAt;
-    private String deletedAt;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private Instant deletedAt;
 
-    private Category(final String id,
-                    final String name,
-                    final String description,
+    private Category(final CategoryID anId,
+                    final String aName,
+                    final String aDescription,
                     final boolean isActive,
-                    final String createdAt,
-                    final String updatedAt,
-                    final String deletedAt
+                    final Instant aCreationDate,
+                    final Instant aupdatedDate,
+                    final Instant aDeletedDate
     ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+        super(anId);
+        this.name = aName;
+        this.description = aDescription;
         this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
+        this.createdAt = aCreationDate;
+        this.updatedAt = aupdatedDate;
+        this.deletedAt = aDeletedDate;
     }
 
     public static Category newCategory(final String aName,
                                        final String aDescription,
                                        final boolean isActive) {
-        final var id = UUID.randomUUID().toString();
-        final var now = Instant.now().toString();
+        final var id = CategoryID.unique();
+        final var now = Instant.now();
         return new Category(
                 id,
                 aName,
@@ -45,7 +46,7 @@ public class Category {
         );
     }
 
-    public String getId() {
+    public CategoryID getId() {
         return id;
     }
 
@@ -61,15 +62,15 @@ public class Category {
         return isActive;
     }
 
-    public String getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public String getDeletedAt() {
+    public Instant getDeletedAt() {
         return deletedAt;
     }
 }

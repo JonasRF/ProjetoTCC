@@ -1,4 +1,4 @@
 package org.jonasribeiro.admin.catalogo.domain;
 
-public class identifier {
+public class Identifier extends ValueObject{
 }
