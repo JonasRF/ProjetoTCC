@@ -1,6 +1,8 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
 import org.jonasribeiro.admin.catalogo.domain.AgreggateRoot;
+import org.jonasribeiro.admin.catalogo.domain.validation.Error;
+import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -44,6 +46,11 @@ public class Category extends AgreggateRoot<CategoryID> {
                now,
                 null
         );
+    }
+
+    @Override
+    public void validate(ValidationHandler handler) {
+       new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {
