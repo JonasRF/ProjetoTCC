@@ -7,6 +7,14 @@ import org.jonasribeiro.admin.catalogo.application.UseCase;
 public class Main {
     public static void main(String[] args) {
         System.out.printf("Hello, %s!%n", "World");
-        System.out.println(new UseCase().execute());
+        final UseCase useCase = new UseCase() {
+            @Override
+            public Object execute(Object anIn) {
+                return null;
+            }
+        };
+        System.out.println("UseCase instance created: " + useCase);
+
+
     }
 }
