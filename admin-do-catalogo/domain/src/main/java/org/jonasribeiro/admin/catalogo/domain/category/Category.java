@@ -3,6 +3,7 @@ package org.jonasribeiro.admin.catalogo.domain.category;
 import org.jonasribeiro.admin.catalogo.domain.AgreggateRoot;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
+import org.jonasribeiro.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -52,6 +53,35 @@ public class Category extends AgreggateRoot<CategoryID> {
     @Override
     public void validate(ValidationHandler handler) {
        new CategoryValidator(this, handler).validate();
+    }
+
+    public Category deActivate() {
+        if (getDeletedAt() == null) {
+            this.deletedAt = Instant.now();
+        }
+        this.isActive = false;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category activate() {
+        this.isActive = true;
+        this.deletedAt = null;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category update(final String aName,
+                           final String aDescription,
+                           final boolean isActive) {
+        this.name = aName;
+        this.description = aDescription;
+        this.isActive = isActive;
+        this.updatedAt = Instant.now();
+        if (!isActive) {
+            this.deletedAt = Instant.now();
+        }
+        return this;
     }
 
     public CategoryID getId() {

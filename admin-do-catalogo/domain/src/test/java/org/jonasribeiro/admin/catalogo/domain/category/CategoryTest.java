@@ -141,4 +141,189 @@ public class CategoryTest {
         Assertions.assertNotNull(category.getUpdatedAt());
         Assertions.assertNotNull(category.getDeletedAt());
     }
+
+    @Test
+    public void givenAValidActiveCategory_whenCallDeactivate_thenReturnCategoryInactivated() {
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = false;
+
+        final Category category = Category.newCategory(expectedName, expectedDescription, true);
+
+        Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+
+        final var updatedAt = category.getUpdatedAt();
+        final var createdAt = category.getCreatedAt();
+
+       Assertions.assertTrue(category.isActive());
+       Assertions.assertNull(category.getDeletedAt());
+
+       final var actualCategory = category.deActivate();
+
+        Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
+
+        Assertions.assertEquals(category.getId(), actualCategory.getId());
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
+        Assertions.assertNotNull(actualCategory.getDeletedAt());
+    }
+
+    @Test
+    public void givenAValidInactiveCategory_whenCallActivate_thenReturnCategoryActivated() {
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+
+        final Category category = Category.newCategory(expectedName, expectedDescription, false);
+
+        Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+
+        final var updatedAt = category.getUpdatedAt();
+        final var createdAt = category.getCreatedAt();
+
+        Assertions.assertFalse(category.isActive());
+        Assertions.assertNotNull(category.getDeletedAt());
+
+        final var actualCategory = category.activate();
+
+        Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
+
+        Assertions.assertEquals(category.getId(), actualCategory.getId());
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
+        Assertions.assertNull(actualCategory.getDeletedAt());
+    }
+
+    @Test
+    public void givenAValidCategory_WhenCallUpdate_thenReturnCategoryUpdated() {
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+
+        final Category category = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+
+        final var updatedAt = category.getUpdatedAt();
+        final var createdAt = category.getCreatedAt();
+
+        final String newName = "Séries";
+        final String newDescription = "A categoria mais assistida de séries";
+
+        try {
+            Field nameField = Category.class.getDeclaredField("name");
+            nameField.setAccessible(true);
+            nameField.set(category, newName);
+
+            Field descriptionField = Category.class.getDeclaredField("description");
+            descriptionField.setAccessible(true);
+            descriptionField.set(category, newDescription);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        final var actualCategory = category.update(newName, newDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
+
+        Assertions.assertEquals(category.getId(), actualCategory.getId());
+        Assertions.assertEquals(newName, actualCategory.getName());
+        Assertions.assertEquals(newDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
+    }
+
+    @Test
+    public void givenAValidCategory_WhenCallUpdateToInactive_thenReturnCategoryUpdated() {
+        final String expectedName = "Filmes";
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = false;
+
+        final Category category = Category.newCategory(expectedName, expectedDescription, true);
+
+        Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+        Assertions.assertTrue(category.isActive());
+        Assertions.assertNull(category.getDeletedAt());
+
+        final var updatedAt = category.getUpdatedAt();
+        final var createdAt = category.getCreatedAt();
+
+        final String newName = "Séries";
+        final String newDescription = "A categoria mais assistida de séries";
+
+        try {
+            Field nameField = Category.class.getDeclaredField("name");
+            nameField.setAccessible(true);
+            nameField.set(category, newName);
+
+            Field descriptionField = Category.class.getDeclaredField("description");
+            descriptionField.setAccessible(true);
+            descriptionField.set(category, newDescription);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        final var actualCategory = category.update(newName, newDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
+
+        Assertions.assertEquals(category.getId(), actualCategory.getId());
+        Assertions.assertEquals(newName, actualCategory.getName());
+        Assertions.assertEquals(newDescription, actualCategory.getDescription());
+        Assertions.assertFalse(category.isActive());
+        Assertions.assertNotNull(category.getDeletedAt());
+        Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
+        Assertions.assertNotNull(actualCategory.getCreatedAt());
+        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
+    }
+
+    @Test
+    public void givenAValidCategory_WhenCallUpdateWithInvalidParams_thenReturnCategoryUpdated() {
+        final String expectedName = null;
+        final String expectedDescription = "A categoria mais assistida";
+        final boolean expectedIsActive = true;
+
+        final Category category = Category.newCategory("Films", expectedDescription, expectedIsActive);
+
+        Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
+
+        final var updatedAt = category.getUpdatedAt();
+        final var createdAt = category.getCreatedAt();
+
+        final String newName = "Séries";
+        final String newDescription = "A categoria mais assistida de séries";
+
+        try {
+            Field nameField = Category.class.getDeclaredField("name");
+            nameField.setAccessible(true);
+            nameField.set(category, newName);
+
+            Field descriptionField = Category.class.getDeclaredField("description");
+            descriptionField.setAccessible(true);
+            descriptionField.set(category, newDescription);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        final var actualCategory = category.update(expectedName, newDescription, expectedIsActive);
+
+        Assertions.assertEquals(category.getId(), actualCategory.getId());
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(newDescription, actualCategory.getDescription());
+        Assertions.assertTrue(category.isActive());
+        Assertions.assertNull(category.getDeletedAt());
+        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+        Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
+    }
 }
