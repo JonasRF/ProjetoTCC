@@ -42,7 +42,7 @@ public class CreateCategoryUseCaseTest {
         final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
 
         // Act
-        final var actualOutput = useCase.execute(aCommand);
+        final var actualOutput = useCase.execute(aCommand).get();
 
         // Assert
         Assertions.assertNotNull(actualOutput);
@@ -74,9 +74,10 @@ public class CreateCategoryUseCaseTest {
         final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
 
         // Act & Assert
-        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
+       final var notification = useCase.execute(aCommand).getLeft();
 
-        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
+        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
 
         Mockito.verify(categoryGateway, Mockito.times(0))
                 .create(Mockito.any());
@@ -93,7 +94,7 @@ public class CreateCategoryUseCaseTest {
         when(categoryGateway.create(Mockito.any()))
                 .thenAnswer(returnsFirstArg());
 
-        final var actualOutput = useCase.execute(aCommand);
+        final var actualOutput = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
@@ -117,49 +118,29 @@ public class CreateCategoryUseCaseTest {
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
         final var expectedErrorMessage = "Gateway error";
+        final var expectedErrorCount = 1;
 
         final var aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
 
         when(categoryGateway.create(Mockito.any()))
                 .thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
+        final var notification = useCase.execute(aCommand).getLeft();
 
         // Act & Assert
-        final var actualException = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(aCommand));
-
-        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
-
-        Mockito.verify(categoryGateway, Mockito.times(1))
-                .create(Mockito.any());
-    }
-
-    @Test
-    public void givenAValidCommand_whenCallsCreateCategory_ShouldPersistIt() {
-        final var expectedName = "Filmes";
-        final var expectedDescription = "A categoria mais assistida";
-        final var expectedIsActive = true;
-
-        final var aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
-
-        when(categoryGateway.create(Mockito.any()))
-                .thenAnswer(returnsFirstArg());
-
-        final var actualOutput = useCase.execute(aCommand);
-
-        Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.id());
+        Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
+        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
 
         Mockito.verify(categoryGateway, Mockito.times(1))
-                .create(argThat(aCategory -> {
-                    return Objects.equals(expectedName, aCategory.getName()) &&
+                .create(argThat(aCategory ->
+                            Objects.equals(expectedName, aCategory.getName()) &&
                             Objects.equals(expectedDescription, aCategory.getDescription()) &&
                             Objects.equals(expectedIsActive, aCategory.isActive()) &&
                             aCategory.getId() != null &&
                             aCategory.getCreatedAt() != null &&
                             aCategory.getUpdatedAt() != null &&
-                            aCategory.getDeletedAt() == null;
-                }));
-    }
+                            aCategory.getDeletedAt() == null
+                ));
+        }
 }
 
