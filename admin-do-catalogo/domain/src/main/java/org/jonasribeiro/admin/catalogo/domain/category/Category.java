@@ -8,7 +8,7 @@ import org.jonasribeiro.admin.catalogo.domain.validation.handler.ThrowsValidatio
 import java.time.Instant;
 import java.util.UUID;
 
-public class Category extends AgreggateRoot<CategoryID> {
+public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
     private String name;
     private String description;
     private boolean isActive;
@@ -110,5 +110,14 @@ public class Category extends AgreggateRoot<CategoryID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    @Override
+    public Category clone() {
+        try {
+            return (Category) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
