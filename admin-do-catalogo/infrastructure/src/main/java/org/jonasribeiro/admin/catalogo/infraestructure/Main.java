@@ -1,20 +1,16 @@
 package org.jonasribeiro.admin.catalogo.infraestructure;
 
 import org.jonasribeiro.admin.catalogo.application.UseCase;
+import org.jonasribeiro.admin.catalogo.infraestructure.configuration.WebServerConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.jetty.JettyWebServer;
+import org.springframework.boot.web.server.WebServer;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
         System.out.printf("Hello, %s!%n", "World");
-        final UseCase useCase = new UseCase() {
-            @Override
-            public Object execute(Object anIn) {
-                return null;
-            }
-        };
-        System.out.println("UseCase instance created: " + useCase);
-
-
+        SpringApplication.run(WebServerConfig.class, args);
     }
 }
