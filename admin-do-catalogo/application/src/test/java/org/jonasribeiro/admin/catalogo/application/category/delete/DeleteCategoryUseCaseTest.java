@@ -61,6 +61,5 @@ public class DeleteCategoryUseCaseTest {
         verify(categoryGateway, times(1)).deleteById(eq(CategoryID.from(expectedId)));
 
         verifyNoMoreInteractions(categoryGateway);
-
     }
 }

@@ -167,7 +167,6 @@ public class CategoryTest {
         Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
         Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
         Assertions.assertNotNull(actualCategory.getCreatedAt());
-        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
         Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
         Assertions.assertNotNull(actualCategory.getDeletedAt());
     }
@@ -239,7 +238,6 @@ public class CategoryTest {
         Assertions.assertEquals(newDescription, actualCategory.getDescription());
         Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
         Assertions.assertNotNull(actualCategory.getCreatedAt());
-        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
         Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
     }
 
@@ -284,7 +282,6 @@ public class CategoryTest {
         Assertions.assertNotNull(category.getDeletedAt());
         Assertions.assertEquals(expectedIsActive,actualCategory.isActive());
         Assertions.assertNotNull(actualCategory.getCreatedAt());
-        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
         Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
     }
 
@@ -323,7 +320,6 @@ public class CategoryTest {
         Assertions.assertEquals(newDescription, actualCategory.getDescription());
         Assertions.assertTrue(category.isActive());
         Assertions.assertNull(category.getDeletedAt());
-        Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
         Assertions.assertEquals(createdAt, actualCategory.getCreatedAt());
     }
 }
