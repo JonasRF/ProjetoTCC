@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: root
+    password: 123456
+    url: jdbc:h2:mem:adm_videos_test;MODE=MYSQL;DATABASE_TO_LOWER=TRUE # H2 in-memory database for testing
+  jpa:
+    deferred-datasource-initialization: true
+  h2:
+    console:
+      enabled: true # Enable H2 console for testing
+      path: /h2-console
