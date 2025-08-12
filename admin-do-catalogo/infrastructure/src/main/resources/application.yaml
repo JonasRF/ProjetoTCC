@@ -26,7 +26,7 @@ spring:
       hibernate:
         ddl-auto: update # Update the database schema automatically
       properties:
-         "[hibernate.dialect]": org.hibernate.dialect.MySQL5InnoDBDialect # Use MySQL 5 dialect
+         "[hibernate.dialect]": org.hibernate.dialect.MySQL8Dialect # Use MySQL 8 dialect
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
 
