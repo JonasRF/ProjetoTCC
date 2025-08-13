@@ -41,7 +41,7 @@ public class CategoryJpaEntity {
     public CategoryJpaEntity(final String id,
                              final String name,
                              final String description,
-                             final boolean isActive,
+                             final boolean active,
                              final Instant createdAt,
                              final Instant updatedAt,
                              final Instant deletedAt
@@ -67,7 +67,7 @@ public class CategoryJpaEntity {
         );
     }
 
-    public Category toAgregate() {
+    public Category toAggregate() {
         return Category.with(
                 CategoryID.from(getId()),
                 this.name,

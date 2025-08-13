@@ -6,6 +6,7 @@ import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
@@ -28,8 +29,8 @@ public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
         this.name = aName;
         this.description = aDescription;
         this.isActive = isActive;
-        this.createdAt = aCreationDate;
-        this.updatedAt = aupdatedDate;
+        this.createdAt = Objects.requireNonNull(aCreationDate, "'createdAt' should not be null");
+        this.updatedAt = Objects.requireNonNull(aupdatedDate, "'updatedAt' should not be null");
         this.deletedAt = aDeletedDate;
     }
 
