@@ -1,6 +1,7 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.category;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
+import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.infraestructure.anotation.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
@@ -94,5 +95,88 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertTrue(aCategory.getUpdatedAt().isBefore(actualCategory.getUpdatedAt()));
         Assertions.assertEquals(aCategory.getDeletedAt(), actualEntity.getDeletedAt());
         Assertions.assertNull(actualCategory.getDeletedAt());
+    }
+
+    @Test
+    public void givenPersistedCategoryAndValidCategoryId_whenTryDeleteById_shouldDeleteCategory() {
+            final var expectedName = "Filmes";
+            final var expectedDescription = "Category Description";
+            final var expectedIsActive = true;
+
+            final var aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+
+            Assertions.assertEquals(0, categoryRepository.count());
+
+            categoryRepository.saveAndFlush(CategoryJpaEntity.from(aCategory));
+
+            Assertions.assertEquals(1, categoryRepository.count());
+
+            // Busca a categoria pelo ID
+            final var foundCategory = categoryMySQLGateway.create(aCategory);
+
+            final var actualEntity = categoryRepository.findById(foundCategory.getId().getValue());
+
+            Assertions.assertTrue(actualEntity.isPresent());
+            Assertions.assertEquals(expectedName, actualEntity.get().getName());
+            Assertions.assertEquals(expectedDescription, actualEntity.get().getDescription());
+            Assertions.assertEquals(expectedIsActive, actualEntity.get().isActive());
+            Assertions.assertEquals(aCategory.getCreatedAt(), actualEntity.get().getCreatedAt());
+            Assertions.assertEquals(aCategory.getUpdatedAt(), actualEntity.get().getUpdatedAt());
+            Assertions.assertEquals(aCategory.getDeletedAt(), actualEntity.get().getDeletedAt());
+            Assertions.assertNull(actualEntity.get().getDeletedAt());
+
+            // Deleta a categoria
+            categoryMySQLGateway.deleteById(aCategory.getId());
+
+            Assertions.assertEquals(0, categoryRepository.count());
+    }
+
+    @Test
+    public void givenInvalidCategoryId_whenTryDeleteById_shouldDeleteCategory() {
+        Assertions.assertEquals(0, categoryRepository.count());
+
+        final var invalidId = CategoryID.from("invalid");
+
+        // Tenta deletar uma categoria inexistente
+        categoryMySQLGateway.deleteById(invalidId);
+
+        // Garante que nada foi deletado
+        Assertions.assertEquals(0, categoryRepository.count());
+    }
+
+    @Test
+    public void givenValidCategoryId_whenCallsFindById_shouldReturnCategory() {
+        final var expectedName = "Filmes";
+        final var expectedDescription = "Category Description";
+        final var expectedIsActive = true;
+
+        final var aCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
+
+        Assertions.assertEquals(0, categoryRepository.count());
+
+        categoryRepository.saveAndFlush(CategoryJpaEntity.from(aCategory));
+
+        Assertions.assertEquals(1, categoryRepository.count());
+
+        final var actualCategory = categoryMySQLGateway.findById(aCategory.getId()).get();
+
+        Assertions.assertEquals(1, categoryRepository.count());
+
+        Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
+        Assertions.assertEquals(expectedName, actualCategory.getName());
+        Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+        Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
+        Assertions.assertEquals(aCategory.getCreatedAt(), actualCategory.getCreatedAt());
+        Assertions.assertEquals(aCategory.getUpdatedAt(), actualCategory.getUpdatedAt());
+        Assertions.assertEquals(aCategory.getDeletedAt(), actualCategory.getDeletedAt());
+        Assertions.assertNull(actualCategory.getDeletedAt());
+    }
+
+    @Test
+    public void givenInvalidCategoryId_whenCallsFindById_shouldReturnEmpty( ) {
+        Assertions.assertEquals(0, categoryRepository.count());
+        final var invalidId = CategoryID.from("empty");
+        final var actualCategory = categoryMySQLGateway.findById(invalidId);
+        Assertions.assertTrue(actualCategory.isEmpty());
     }
 }
