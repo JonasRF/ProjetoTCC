@@ -7,9 +7,19 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
+import org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Optional;
+
+import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
 @Service
 public class CategoryMySQLGateway implements CategoryGateway {
@@ -46,7 +56,31 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public Pagination<Category> findAll(CategorySearchQuery aQuery) {
-        return null;
+        //Paginação
+        final var page = PageRequest.of(
+                aQuery.page(),
+                aQuery.perPage(),
+                Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
+        );
+
+        //Busca dinâmica pelo critério terms(name ou descripition)
+       final var specification = Optional.ofNullable(aQuery.terms())
+                .filter(str -> !str.isBlank())
+                .map(str -> {
+                        final Specification<CategoryJpaEntity> nameLike = like("name", str);
+                        final Specification<CategoryJpaEntity> descriptionLike = like("description", str);
+                        return Specification.where(nameLike).or(descriptionLike);
+                })
+                .orElse(null);
+
+        final var pageResult = this.categoryRepository.findAll(Specification.where(specification), page);
+
+        return new Pagination<>(
+                pageResult.getNumber(),
+                pageResult.getSize(),
+                pageResult.getTotalElements(),
+                pageResult.map(CategoryJpaEntity::toAggregate).toList()
+        );
     }
 
     private Category save(Category aCategory) {
