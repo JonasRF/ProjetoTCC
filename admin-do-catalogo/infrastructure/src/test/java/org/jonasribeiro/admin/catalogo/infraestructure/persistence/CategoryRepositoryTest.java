@@ -1,14 +1,12 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.persistence;
 
-import org.apache.el.parser.AstSetData;
 import org.hibernate.PropertyValueException;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
-import org.jonasribeiro.admin.catalogo.infraestructure.anotation.MySQLGatewayTest;
+import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 

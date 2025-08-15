@@ -3,7 +3,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
-import org.jonasribeiro.admin.catalogo.infraestructure.anotation.MySQLGatewayTest;
+import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -328,7 +328,6 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertEquals(1, result.items().size());
 
         Assertions.assertEquals("Séries", result.items().get(0).getName());
-
     }
 
     @Test
@@ -361,6 +360,5 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertEquals(1, result.items().size());
 
         Assertions.assertEquals("Filmes", result.items().get(0).getName());
-
     }
 }

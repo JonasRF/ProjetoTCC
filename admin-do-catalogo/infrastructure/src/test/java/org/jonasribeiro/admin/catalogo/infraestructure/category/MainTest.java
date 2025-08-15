@@ -1,5 +1,6 @@
-package org.jonasribeiro.admin.catalogo.infraestructure;
+package org.jonasribeiro.admin.catalogo.infraestructure.category;
 
+import org.jonasribeiro.admin.catalogo.infraestructure.Main;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.env.AbstractEnvironment;
 
