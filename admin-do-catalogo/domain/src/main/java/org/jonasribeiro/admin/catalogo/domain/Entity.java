@@ -18,6 +18,7 @@ public abstract class Entity<ID extends Identifier> {
     public ID getId() {
         return id;
     }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -25,6 +26,7 @@ public abstract class Entity<ID extends Identifier> {
         final Entity<?> entity = (Entity<?>) o;
         return Objects.equals(id, entity.id);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

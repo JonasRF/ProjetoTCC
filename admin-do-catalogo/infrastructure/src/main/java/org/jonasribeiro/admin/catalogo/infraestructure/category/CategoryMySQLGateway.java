@@ -7,18 +7,14 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
-import org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.Optional;
 
+import static org.hibernate.criterion.Restrictions.like;
 import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
 @Service
