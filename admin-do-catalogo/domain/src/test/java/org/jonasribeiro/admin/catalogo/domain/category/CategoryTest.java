@@ -158,7 +158,7 @@ public class CategoryTest {
        Assertions.assertTrue(category.isActive());
        Assertions.assertNull(category.getDeletedAt());
 
-       final var actualCategory = category.deActivate();
+       final var actualCategory = category.deactivate();
 
         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
 
