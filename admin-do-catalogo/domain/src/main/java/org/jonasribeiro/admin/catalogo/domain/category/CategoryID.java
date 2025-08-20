@@ -2,7 +2,6 @@ package org.jonasribeiro.admin.catalogo.domain.category;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 

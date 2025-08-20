@@ -9,10 +9,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.util.Objects;
-
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 @IntegrationTest
@@ -45,7 +41,7 @@ public class CreateCategoryUseCaseIT {
 
         Assertions.assertEquals(1, categoryRepository.count());
 
-        final var actualCategory = categoryRepository.findById(actualOutput.id().getValue()).get();
+        final var actualCategory = categoryRepository.findById(actualOutput.id()).get();
 
         Assertions.assertNotNull(actualCategory);
         Assertions.assertEquals(expectedName, actualCategory.getName());
@@ -98,7 +94,7 @@ public class CreateCategoryUseCaseIT {
 
         Assertions.assertEquals(1, categoryRepository.count());
 
-        final var actualCategory = categoryRepository.findById(actualOutput.id().getValue()).orElse(null);
+        final var actualCategory = categoryRepository.findById(actualOutput.id()).orElse(null);
 
         Assertions.assertNotNull(actualCategory);
         Assertions.assertEquals(expectedName, actualCategory.getName());
