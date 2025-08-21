@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CategoryApiOutput;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiInput;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +59,18 @@ public interface CategoryAPI {
             @RequestParam(name = "direction", required = false, defaultValue = "asc") final String direction
     );
 
+    @GetMapping(
+            value = "{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+
+    )
+    @Operation(summary = "Get a category by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "A invalid parameter was received, check the request parameters for more details"),
+            @ApiResponse(responseCode = "500", description = "An internal server error occurred, please try again later")
+
+    })
+    CategoryApiOutput getById(@PathVariable(name = "id") String id);
 }

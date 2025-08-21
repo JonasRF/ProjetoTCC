@@ -32,6 +32,7 @@ public class CategoryID extends Identifier {
         return new CategoryID(anId.toString().toLowerCase());
     }
 
+    @Override
     public String getValue() {
         return value;
     }

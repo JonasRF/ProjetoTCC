@@ -1,9 +1,9 @@
 package org.jonasribeiro.admin.catalogo.application.category.retrieve.get;
 
+import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
-import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
-import org.jonasribeiro.admin.catalogo.domain.validation.Error;
+import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -23,9 +23,7 @@ public DefaultGetCategoryByIdUseCase(final CategoryGateway categoryGateway) {
                 .orElseThrow(notFound(anCategoryID));
     }
 
-    private Supplier<DomainException> notFound(CategoryID anId) {
-        return () -> DomainException.with(
-                new Error("Category with ID %s was not found".formatted(anId.getValue()))
-        );
+    private Supplier<NotFoundException> notFound(CategoryID anId) {
+        return () -> NotFoundException.with(Category.class, anId);
     }
 }

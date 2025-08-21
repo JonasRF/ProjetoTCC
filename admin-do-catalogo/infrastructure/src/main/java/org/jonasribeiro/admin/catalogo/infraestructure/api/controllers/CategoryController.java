@@ -3,10 +3,13 @@ package org.jonasribeiro.admin.catalogo.infraestructure.api.controllers;
 import org.jonasribeiro.admin.catalogo.application.category.create.CreateCategoryCommand;
 import org.jonasribeiro.admin.catalogo.application.category.create.CreateCategoryOutput;
 import org.jonasribeiro.admin.catalogo.application.category.create.CreateCategoryUseCase;
+import org.jonasribeiro.admin.catalogo.application.category.retrieve.get.GetCategoryByUseCase;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
 import org.jonasribeiro.admin.catalogo.infraestructure.api.CategoryAPI;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CategoryApiOutput;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiInput;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.presenters.CategoryApiPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +21,13 @@ import java.util.function.Function;
 public class CategoryController implements CategoryAPI {
 
     private final CreateCategoryUseCase createCategoryUseCase;
+    private final GetCategoryByUseCase getCategoryByUseCase;
 
-    public CategoryController(final CreateCategoryUseCase createCategoryUseCase) {
+    public CategoryController(
+            final CreateCategoryUseCase createCategoryUseCase,
+            final GetCategoryByUseCase getCategoryByUseCase) {
         this.createCategoryUseCase = Objects.requireNonNull(createCategoryUseCase);
+        this.getCategoryByUseCase = Objects.requireNonNull(getCategoryByUseCase);
     }
 
     @Override
@@ -45,5 +52,10 @@ public class CategoryController implements CategoryAPI {
     @Override
     public Pagination<?> listCategories(String search, int page, int perPage, String sort, String direction) {
         return null;
+    }
+
+    @Override
+    public CategoryApiOutput getById(String id) {
+        return CategoryApiPresenter.present(this.getCategoryByUseCase.execute(id));
     }
 }

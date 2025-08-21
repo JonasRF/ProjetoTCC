@@ -9,6 +9,7 @@ import org.jonasribeiro.admin.catalogo.application.category.retrieve.get.GetCate
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
+import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiInput;
@@ -46,7 +47,7 @@ public class CategoryAPITest {
     private GetCategoryByUseCase getCategoryByIdUseCase;
 
     @Test
-    public void givenAValidCommand_whenCallsCreateCategory_ShouldReturnCategoryId() throws Exception {
+    public void givenAValidCommand_whenCallsCreateCategory_thenShouldReturnCategoryId() throws Exception {
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
@@ -76,7 +77,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAnInvalidName_whenCallsCreateCategory_ShouldReturnNotification() throws Exception {
+    public void givenAnInvalidName_whenCallsCreateCategory_thenShouldReturnNotification() throws Exception {
         final String expectedName = null;
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
@@ -108,7 +109,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAnInvalidCommand_whenCallsCreateCategory_ShouldReturnDomainException() throws Exception {
+    public void givenAnInvalidCommand_whenCallsCreateCategory_thenShouldReturnDomainException() throws Exception {
         final String expectedName = null;
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
@@ -141,7 +142,7 @@ public class CategoryAPITest {
     }
 
     @Test
-    public void givenAValidId_whenCallsCreateCategory_ShouldReturnCategory() throws Exception {
+    public void givenAValidId_whenCallsCreateCategory_thenShouldReturnCategory() throws Exception {
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = true;
@@ -153,33 +154,40 @@ public class CategoryAPITest {
         when(getCategoryByIdUseCase.execute(any()))
                 .thenReturn(CategoryOutput.from(aCategory));
 
-        final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId);
+        final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(request)
                 .andDo(print());
 
         response.andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.id", equalTo(expectedId)))
                 .andExpect(jsonPath("$.name", equalTo(expectedName)))
                 .andExpect(jsonPath("$.description", equalTo(expectedDescription)))
                 .andExpect(jsonPath("$.is_active", equalTo(expectedIsActive)))
-                .andExpect(jsonPath("$.is_active", equalTo(expectedId)))
                 .andExpect(jsonPath("$.created_at", equalTo(aCategory.getCreatedAt().toString())))
                 .andExpect(jsonPath("$.updated_at", equalTo(aCategory.getUpdatedAt().toString())))
-                .andExpect(jsonPath("$.deleted_at", equalTo(aCategory.getDeletedAt().toString())));
+                .andExpect(jsonPath("$.deleted_at", equalTo(aCategory.getDeletedAt())));
 
         verify(getCategoryByIdUseCase, times(1))
                 .execute(eq(expectedId));
     }
 
     @Test
-    public void givenAnInvalidId_whenCallsGetCategoryById_ShouldReturnNotFound() throws Exception {
+    public void givenAnInvalidId_whenCallsGetCategoryById_thenShouldReturnNotFound() throws Exception {
         //given
         final var expectedErrorMessage = "Category with ID 123 was not found";
-        final var expectedId = CategoryID.from("123").getValue();
+        final var expectedId = CategoryID.from("123");
+
+        when(getCategoryByIdUseCase.execute(any()))
+                .thenThrow(NotFoundException.with(Category.class, expectedId));
 
         //when
-        final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId);
+        final var request = MockMvcRequestBuilders.get("/categories/{id}", expectedId.getValue())
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
 
         final  var response = this.mvc.perform(request)
                 .andDo(print());

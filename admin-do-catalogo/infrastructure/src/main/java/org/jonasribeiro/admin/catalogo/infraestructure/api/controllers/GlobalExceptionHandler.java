@@ -1,7 +1,9 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.api.controllers;
 
 import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
+import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,6 +17,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleDomainException(final DomainException ex) {
         return ResponseEntity.unprocessableEntity()
                 .body(ApiError.from(ex));
+    }
+
+    @ExceptionHandler(value = NotFoundException.class)
+    public ResponseEntity<?> handleNotFoundException(final NotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiError.from(ex));
     }
 
     record ApiError(String message, List<Error> errors) {
