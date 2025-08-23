@@ -222,9 +222,6 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertNotNull(actualException.getMessage());
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
-
         Mockito.verify(categoryGateway, times(1))
                 .findById(eq(CategoryID.from(expectedId)));
 

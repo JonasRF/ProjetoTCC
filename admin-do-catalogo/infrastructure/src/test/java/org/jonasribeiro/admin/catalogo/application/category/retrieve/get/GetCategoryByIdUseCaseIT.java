@@ -58,7 +58,7 @@ public class GetCategoryByIdUseCaseIT {
     }
 
     @Test
-    public void givenInvalidId_whenCallsGetCategory_shouldReturnNotFound() {
+    public void givenInvalidId_whenCallsGetCategory_thenshouldReturnNotFound() {
         final var expectedErrorMessage = "Category with ID 123 was not found";
         final var expectedId = CategoryID.from("123");
 

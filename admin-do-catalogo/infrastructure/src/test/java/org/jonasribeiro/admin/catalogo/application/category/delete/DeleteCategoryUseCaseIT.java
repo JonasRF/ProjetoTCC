@@ -8,7 +8,6 @@ import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.Cate
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
@@ -35,6 +34,7 @@ public class DeleteCategoryUseCaseIT {
         final var expectedId = aCategory.getId();
 
          save(aCategory);
+
          Assertions.assertEquals(1, categoryRepository.count());
          Assertions.assertDoesNotThrow(() -> useCase.execute(expectedId.getValue()));
          Assertions.assertEquals(0, categoryRepository.count());

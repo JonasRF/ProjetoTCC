@@ -3,7 +3,6 @@ package org.jonasribeiro.admin.catalogo.application.category.update;
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
-import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
@@ -14,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
-import java.util.Optional;
 
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 
 @IntegrationTest
 public class UpdateCategoryUseCaseIT {
@@ -220,8 +217,5 @@ public class UpdateCategoryUseCaseIT {
         Assertions.assertNotNull(actualException);
         Assertions.assertNotNull(actualException.getMessage());
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
-
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 }

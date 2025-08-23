@@ -1,12 +1,12 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.category.presenters;
 
 import org.jonasribeiro.admin.catalogo.application.category.retrieve.get.CategoryOutput;
-import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CategoryApiOutput;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiOutput;
 
 public interface CategoryApiPresenter {
 
-    static CategoryApiOutput present(final CategoryOutput output) {
-        return new CategoryApiOutput(
+    static CreateCategoryApiOutput present(final CategoryOutput output) {
+        return new CreateCategoryApiOutput(
                 output.id().getValue(),
                 output.name(),
                 output.description(),
