@@ -2,7 +2,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record CreateCategoryApiOutput(
+public record CategoryResponse(
         @JsonProperty("id") String id,
         @JsonProperty("name") String name,
         @JsonProperty("description") String description,

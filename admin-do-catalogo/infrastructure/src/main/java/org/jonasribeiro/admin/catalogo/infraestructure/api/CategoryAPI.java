@@ -5,9 +5,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
-import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiOutput;
-import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryApiInput;
-import org.jonasribeiro.admin.catalogo.infraestructure.category.models.UpdateCategoryApiInput;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CategoryListResponse;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CategoryResponse;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.CreateCategoryRequest;
+import org.jonasribeiro.admin.catalogo.infraestructure.category.models.UpdateCategoryRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "500",
                     description = "Internal server error, please try again later")
     })
-    ResponseEntity<?> createCategory(@RequestBody CreateCategoryApiInput input);
+    ResponseEntity<?> createCategory(@RequestBody CreateCategoryRequest input);
 
     @GetMapping
     @Operation(summary = "List categories with pagination")
@@ -53,7 +54,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "500",
                     description = "Internal server error, please try again later")
     })
-    Pagination<?> listCategories(
+    Pagination<CategoryListResponse> listCategories(
             @RequestParam(name = "search", required = false, defaultValue = "") final String search,
             @RequestParam(name = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") final int perPage,
@@ -74,7 +75,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "500", description = "An internal server error occurred, please try again later")
 
     })
-    CreateCategoryApiOutput getById(@PathVariable(name = "id") String id);
+    CategoryResponse getById(@PathVariable(name = "id") String id);
 
     @PutMapping(
             value = "{id}",
@@ -90,7 +91,7 @@ public interface CategoryAPI {
 
     })
     ResponseEntity<?> UpdateById(@PathVariable(name = "id") String id,
-                                       @RequestBody UpdateCategoryApiInput input);
+                                       @RequestBody UpdateCategoryRequest input);
 
     @DeleteMapping(
             value = "{id}",
