@@ -13,9 +13,9 @@ public interface CategoryApiPresenter {
                 output.name(),
                 output.description(),
                 output.isActive(),
-                output.createdAt() != null ? output.createdAt().toString() : null,
-                output.updatedAt() != null ? output.updatedAt().toString() : null,
-                output.deletedAt() != null ? output.deletedAt().toString() : null
+                output.createdAt(),
+                output.updatedAt(),
+                output.deletedAt()
         );
     }
 
