@@ -1,7 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.category.create;
 
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
-import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,14 +1,13 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
 
-import org.jonasribeiro.admin.catalogo.domain.AgreggateRoot;
-import org.jonasribeiro.admin.catalogo.domain.utils.InstantUtils;
+import org.jonasribeiro.admin.catalogo.domain.AggregateRoot;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.Objects;
 
-public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
+public class Category extends AggregateRoot<CategoryID> implements Cloneable {
     private String name;
     private String description;
     private boolean active;
@@ -36,7 +35,7 @@ public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
 
     public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
         final var id = CategoryID.unique();
-        final var now = InstantUtils.now();
+        final var now = Instant.now();
         final var deletedAt = isActive ? null : now;
         return new Category(id, aName, aDescription, isActive, now, now, deletedAt);
     }
@@ -81,17 +80,17 @@ public class Category extends AgreggateRoot<CategoryID> implements Cloneable {
     public Category activate() {
         this.deletedAt = null;
         this.active = true;
-        this.updatedAt = InstantUtils.now();
+        this.updatedAt = Instant.now();
         return this;
     }
 
     public Category deactivate() {
         if (getDeletedAt() == null) {
-            this.deletedAt = InstantUtils.now();
+            this.deletedAt = Instant.now();
         }
 
         this.active = false;
-        this.updatedAt = InstantUtils.now();
+        this.updatedAt = Instant.now();
         return this;
     }
 

@@ -2,9 +2,9 @@ package org.jonasribeiro.admin.catalogo.domain;
 
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 
-public class AgreggateRoot<ID extends Identifier> extends Entity<ID> {
+public class AggregateRoot<ID extends Identifier> extends Entity<ID> {
 
-    protected AgreggateRoot(final ID id) {
+    protected AggregateRoot(final ID id) {
         super(id);
     }
 

@@ -6,7 +6,6 @@ import io.vavr.control.Either;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
-import org.jonasribeiro.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 
 import java.util.Objects;
 

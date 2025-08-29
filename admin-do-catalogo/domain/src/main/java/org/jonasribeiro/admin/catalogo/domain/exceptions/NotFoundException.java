@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.domain.exceptions;
 
-import org.jonasribeiro.admin.catalogo.domain.AgreggateRoot;
+import org.jonasribeiro.admin.catalogo.domain.AggregateRoot;
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 
@@ -13,7 +13,7 @@ public class NotFoundException extends DomainException {
         super(aMessage, anErrors);
     }
 
-    public static NotFoundException with(final Class<? extends AgreggateRoot<?>> anAggregate,
+    public static NotFoundException with(final Class<? extends AggregateRoot<?>> anAggregate,
                                          final Identifier id
     ) {
         final var anError = "%s with ID %s was not found".formatted(
