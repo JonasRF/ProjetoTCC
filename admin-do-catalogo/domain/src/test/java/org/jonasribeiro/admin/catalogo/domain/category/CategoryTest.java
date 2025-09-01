@@ -210,7 +210,6 @@ public class CategoryTest {
 
         Assertions.assertDoesNotThrow(() -> category.validate(new ThrowsValidationHandler()));
 
-        final var updatedAt = category.getUpdatedAt();
         final var createdAt = category.getCreatedAt();
 
         final String newName = "Séries";
@@ -252,7 +251,6 @@ public class CategoryTest {
         Assertions.assertTrue(category.isActive());
         Assertions.assertNull(category.getDeletedAt());
 
-        final var updatedAt = category.getUpdatedAt();
         final var createdAt = category.getCreatedAt();
 
         final String newName = "Séries";

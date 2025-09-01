@@ -2,7 +2,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
-import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
@@ -204,7 +204,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 
@@ -237,7 +237,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 
@@ -256,7 +256,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 
@@ -286,7 +286,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "doc";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 
@@ -318,7 +318,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "sér";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 
@@ -350,7 +350,7 @@ public class CategoryMySQLGatewayTest {
         final var terms = "mais assistida";
         final var sort = "name";
         final var direction = "asc";
-        final var query = new CategorySearchQuery(page, perPage, terms, sort, direction);
+        final var query = new SearchQuery(page, perPage, terms, sort, direction);
 
         final var result = categoryMySQLGateway.findAll(query);
 

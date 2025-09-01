@@ -1,6 +1,6 @@
-package org.jonasribeiro.admin.catalogo.domain.category;
+package org.jonasribeiro.admin.catalogo.domain.pagination;
 
-public record CategorySearchQuery(
+public record SearchQuery(
         int page,
         int perPage,
         String terms,

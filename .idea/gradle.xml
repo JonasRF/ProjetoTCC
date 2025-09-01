@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/admin-do-catalogo" />
+            <option value="$PROJECT_DIR$/admin-do-catalogo/Catalogo" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/application" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/domain" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/infrastructure" />

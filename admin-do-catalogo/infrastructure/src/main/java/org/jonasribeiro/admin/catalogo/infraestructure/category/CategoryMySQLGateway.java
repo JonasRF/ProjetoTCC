@@ -3,7 +3,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
-import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
@@ -51,7 +51,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(CategorySearchQuery aQuery) {
+    public Pagination<Category> findAll(SearchQuery aQuery) {
         //Paginação
         final var page = PageRequest.of(
                 aQuery.page(),

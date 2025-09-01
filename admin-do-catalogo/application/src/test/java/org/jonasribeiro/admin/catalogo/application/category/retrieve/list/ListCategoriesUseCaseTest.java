@@ -2,7 +2,7 @@ package org.jonasribeiro.admin.catalogo.application.category.retrieve.list;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
-import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +46,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedSort = "createdAt";
         final var expectedDirection = "asc";
 
-        final var aQuery = new CategorySearchQuery(
+        final var aQuery = new SearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,
@@ -87,7 +87,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedSort = "createdAt";
         final var expectedDirection = "asc";
 
-        final var aQuery = new CategorySearchQuery(
+        final var aQuery = new SearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,
@@ -123,7 +123,7 @@ public class ListCategoriesUseCaseTest {
         final var expectedSort = "createdAt";
         final var expectedDirection = "asc";
 
-        final var aQuery = new CategorySearchQuery(
+        final var aQuery = new SearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,

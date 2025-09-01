@@ -2,7 +2,7 @@ package org.jonasribeiro.admin.catalogo.application.category.retrieve.list;
 
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
-import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
@@ -51,7 +51,7 @@ public class ListCategoriesUseCaseIT {
         final var expectedTotal = 0;
 
         final var aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -82,7 +82,7 @@ public class ListCategoriesUseCaseIT {
         final var expectedDirection = "asc";
 
         final var aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -112,7 +112,7 @@ public class ListCategoriesUseCaseIT {
         final var expectedTerms = "";
 
         final var aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final var actualResult = useCase.execute(aQuery);
 
@@ -142,7 +142,7 @@ public class ListCategoriesUseCaseIT {
         final var expectedTerms = "";
 
         final var aQuery =
-                new CategorySearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         final var actualResult = useCase.execute(aQuery);
 

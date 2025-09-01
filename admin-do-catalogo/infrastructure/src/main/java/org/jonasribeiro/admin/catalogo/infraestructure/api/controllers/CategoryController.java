@@ -9,7 +9,7 @@ import org.jonasribeiro.admin.catalogo.application.category.retrieve.list.ListCa
 import org.jonasribeiro.admin.catalogo.application.category.update.UpdateCategoryCommand;
 import org.jonasribeiro.admin.catalogo.application.category.update.UpdateCategoryOutput;
 import org.jonasribeiro.admin.catalogo.application.category.update.UpdateCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.domain.category.CategorySearchQuery;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
 import org.jonasribeiro.admin.catalogo.infraestructure.api.CategoryAPI;
@@ -72,7 +72,7 @@ public class CategoryController implements CategoryAPI {
             final String direction
     ) {
         return listCategoriesUseCase.execute(
-                new CategorySearchQuery(
+                new SearchQuery(
                         page,
                         perPage,
                         search,
