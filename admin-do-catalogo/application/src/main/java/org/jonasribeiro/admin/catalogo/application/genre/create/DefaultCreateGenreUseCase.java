@@ -36,11 +36,8 @@ public class DefaultCreateGenreUseCase extends CreateGenreUseCase {
 
         final var notification = Notification.create();
 
-        if (aName == null || aName.trim().isEmpty()) {
-            notification.append(new Error("'name' should not be empty"));
-        }
-
         notification.append(validateCategories(categories));
+
         final var aGenre =  notification.validate(() -> Genre.newGenre(aName, isActive));
 
         if (notification.hasErrors()) {

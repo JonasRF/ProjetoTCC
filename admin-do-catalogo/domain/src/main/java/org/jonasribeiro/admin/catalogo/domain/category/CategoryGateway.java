@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
+import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 

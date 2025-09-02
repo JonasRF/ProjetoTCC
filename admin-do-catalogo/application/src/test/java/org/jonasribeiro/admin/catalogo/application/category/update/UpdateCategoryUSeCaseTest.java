@@ -12,12 +12,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UpdateCategoryUSeCaseTest {
@@ -46,7 +46,7 @@ public class UpdateCategoryUSeCaseTest {
         );
 
         when(categoryGateway.findById(aCategory.getId()))
-                .thenReturn(java.util.Optional.of(aCategory.clone()));
+                .thenReturn(Optional.of(aCategory.clone()));
 
         when(categoryGateway.update(any()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -56,10 +56,10 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .findById(Mockito.eq(aCategory.getId()));
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .update(argThat(aCategoryUpdated -> {
                     return expectedName.equals(aCategoryUpdated.getName()) &&
                             expectedDescription.equals(aCategoryUpdated.getDescription()) &&
@@ -98,7 +98,7 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
 
-        Mockito.verify(categoryGateway, times(0))
+        verify(categoryGateway, times(0))
                 .update(any());
     }
 
@@ -132,10 +132,10 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .findById(Mockito.eq(aCategory.getId()));
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .update(argThat(aCategoryUpdated -> {
                     return expectedName.equals(aCategoryUpdated.getName()) &&
                             expectedDescription.equals(aCategoryUpdated.getDescription()) &&
@@ -177,10 +177,10 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
         Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .findById(Mockito.eq(aCategory.getId()));
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .update(argThat(aCategoryUpdated -> {
                     return expectedName.equals(aCategoryUpdated.getName()) &&
                             expectedDescription.equals(aCategoryUpdated.getDescription()) &&
@@ -222,10 +222,10 @@ public class UpdateCategoryUSeCaseTest {
         Assertions.assertNotNull(actualException.getMessage());
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
-        Mockito.verify(categoryGateway, times(1))
+        verify(categoryGateway, times(1))
                 .findById(eq(CategoryID.from(expectedId)));
 
-        Mockito.verify(categoryGateway, times(0))
+        verify(categoryGateway, times(0))
                 .update(any());
     }
 }

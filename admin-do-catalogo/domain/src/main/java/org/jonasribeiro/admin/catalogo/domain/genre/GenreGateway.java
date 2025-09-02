@@ -3,6 +3,7 @@ package org.jonasribeiro.admin.catalogo.domain.genre;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GenreGateway {
@@ -11,9 +12,11 @@ public interface GenreGateway {
 
     void deleteById(GenreID anId);
 
-    Genre update(Genre aGenre);
-
     Optional<Genre> findById(GenreID anId);
 
+    Genre update(Genre aGenre);
+
     Pagination<Genre> findAll(SearchQuery aQuery);
+
+    List<GenreID> existsByIds(Iterable<GenreID> ids);
 }

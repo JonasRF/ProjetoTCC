@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.domain.validation.handler;
 
+import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 
@@ -38,8 +39,8 @@ import java.util.List;
     public <T> T validate(Validation<T> aValidation) {
         try {
             return aValidation.validate();
-        } catch (final Exception ex) {
-            this.errors.add(new Error(ex.getMessage()));
+        } catch (final DomainException ex) {
+            this.errors.addAll(ex.getErrors());
         }catch ( final Throwable th) {
             this.errors.add(new Error(th.getMessage()));
         }

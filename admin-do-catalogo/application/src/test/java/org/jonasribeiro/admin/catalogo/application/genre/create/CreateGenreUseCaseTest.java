@@ -1,7 +1,5 @@
-package org.jonasribeiro.admin.catalogo.application.genre;
+package org.jonasribeiro.admin.catalogo.application.genre.create;
 
-import org.jonasribeiro.admin.catalogo.application.genre.create.CreateGenreCommand;
-import org.jonasribeiro.admin.catalogo.application.genre.create.DefaultCreateGenreUseCase;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
@@ -77,8 +75,8 @@ public class CreateGenreUseCaseTest {
 
         when(genreGateway.create(any()))
                 .thenAnswer(returnsFirstArg());
-        when(categoryGateway.existsByIds(any()))
-                .thenReturn(expectedCategories);
+
+        when(categoryGateway.existsByIds(any())).thenReturn(expectedCategories);
 
         // when
         final var actualOutput = useCase.execute(aCommand);
@@ -110,7 +108,7 @@ public class CreateGenreUseCaseTest {
         final var expectedCategories = List.<CategoryID>of();
 
         final var expectedErrorMessage = "'name' should not be empty";
-        final var expectedErrorCount = 2;
+        final var expectedErrorCount = 1;
 
         final var aCommand = CreateGenreCommand.with(expectedName, expectedIsActive, asString(expectedCategories));
 
@@ -131,7 +129,7 @@ public class CreateGenreUseCaseTest {
     }
 
     @Test
-    public void givenAvalidCommand_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_thenShouldReturnDomainException() {
+    public void givenAValidCommand_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_thenShouldReturnDomainException() {
         // given
         final var filmes = CategoryID.from("123");
         final var series = CategoryID.from("456");
@@ -168,7 +166,7 @@ public class CreateGenreUseCaseTest {
     }
 
     @Test
-    public void givenInvalidName_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_thenShouldReturnDomainException(){
+    public void givenAInvalidName_whenCallsCreateGenreAndSomeCategoriesDoesNotExists_thenShouldReturnDomainException(){
         // given
         final var filmes = CategoryID.from("123");
         final var series = CategoryID.from("456");
@@ -178,12 +176,13 @@ public class CreateGenreUseCaseTest {
         final var expectedIsActive = true;
         final var expectedCategories = List.of(filmes, series, documentarios);
 
-        final var expectedErrorMessageOne = "'name' should not be empty";
-        final var expectedErrorMessageTwo = "Some categories could not be found: 456, 789";
+        final var expectedErrorMessageOne = "Some categories could not be found: 456, 789";
+        final var expectedErrorMessageTwo = "'name' should not be empty";
+
         final var expectedErrorCount = 2;
 
         when(categoryGateway.existsByIds(any()))
-                .thenReturn(List.of(series));
+                .thenReturn(List.of(filmes));
 
 
         final var aCommand = CreateGenreCommand.with(
@@ -203,8 +202,9 @@ public class CreateGenreUseCaseTest {
         Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
         Assertions.assertEquals(expectedErrorMessageOne, actualException.getErrors().get(0).message());
         Assertions.assertEquals(expectedErrorMessageTwo, actualException.getErrors().get(1).message());
-        verify(categoryGateway, times(1)).existsByIds(any());
+        verify(categoryGateway, times(1)).existsByIds(eq(expectedCategories));
         verify(genreGateway, times(0)).create(any());
+
     }
 
     private List<String> asString(final List<CategoryID> categories) {

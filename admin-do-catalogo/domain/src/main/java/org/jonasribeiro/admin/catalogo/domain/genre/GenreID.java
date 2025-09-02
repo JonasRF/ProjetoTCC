@@ -2,6 +2,7 @@ package org.jonasribeiro.admin.catalogo.domain.genre;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -15,13 +16,10 @@ public class GenreID extends Identifier {
     }
 
     public static GenreID unique() {
-        return GenreID.from(UUID.randomUUID());
+        return GenreID.from(IdUtils.uuid());
     }
 
     public static GenreID from(final String anId) {
-        if (anId == null || anId.isBlank()) {
-            throw new IllegalArgumentException("Category ID cannot be null or blank");
-        }
         return new GenreID(anId);
     }
 
