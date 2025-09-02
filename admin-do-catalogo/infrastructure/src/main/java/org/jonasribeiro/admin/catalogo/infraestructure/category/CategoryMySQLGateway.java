@@ -3,8 +3,8 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
-import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.springframework.data.domain.PageRequest;
@@ -12,9 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
-import static org.hibernate.criterion.Restrictions.like;
 import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
 @Service
@@ -77,6 +78,11 @@ public class CategoryMySQLGateway implements CategoryGateway {
                 pageResult.getTotalElements(),
                 pageResult.map(CategoryJpaEntity::toAggregate).toList()
         );
+    }
+
+    @Override
+    public List<CategoryID> existsByIds(Iterable<CategoryID> ids) {
+      return Collections.emptyList();
     }
 
     private Category save(Category aCategory) {

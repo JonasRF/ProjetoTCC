@@ -35,15 +35,15 @@ import java.util.List;
     }
 
     @Override
-    public Notification validate(Validation aValidation) {
+    public <T> T validate(Validation<T> aValidation) {
         try {
-            aValidation.validate();
+            return aValidation.validate();
         } catch (final Exception ex) {
             this.errors.add(new Error(ex.getMessage()));
         }catch ( final Throwable th) {
             this.errors.add(new Error(th.getMessage()));
         }
-        return this;
+        return null;
     }
 
     @Override
