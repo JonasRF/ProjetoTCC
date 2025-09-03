@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.category.update;
 
+import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
@@ -13,20 +14,25 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
-public class UpdateCategoryUSeCaseTest {
+public class UpdateCategoryUSeCaseTest extends UseCaseTest {
 
     @InjectMocks
     private DefaultUpdateCategoryUseCase useCase;
 
     @Mock
     private CategoryGateway categoryGateway;
+
+    @Override
+    protected List<Object> getMocks() {
+        return List.of(categoryGateway);
+    }
 
     @Test
     public void givenAValidCommand_whenCallsUpdateCategory_ShouldReturnCategoryId() {
@@ -58,6 +64,8 @@ public class UpdateCategoryUSeCaseTest {
 
         verify(categoryGateway, times(1))
                 .findById(Mockito.eq(aCategory.getId()));
+
+        verify(categoryGateway, times(1)).findById(argThat(id -> Objects.equals(expectedId.getValue(), id.getValue())));
 
         verify(categoryGateway, times(1))
                 .update(argThat(aCategoryUpdated -> {
