@@ -5,6 +5,7 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class GenreID extends Identifier {

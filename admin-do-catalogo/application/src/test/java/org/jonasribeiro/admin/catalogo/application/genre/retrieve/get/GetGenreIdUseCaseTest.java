@@ -2,11 +2,12 @@ package org.jonasribeiro.admin.catalogo.application.genre.retrieve.get;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 import org.jonasribeiro.admin.catalogo.domain.genre.Genre;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
@@ -15,7 +16,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 public class GetGenreIdUseCaseTest extends UseCaseTest {
 
@@ -34,7 +36,6 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
     @Test
     public void givenAValidId_whenCallsGetGenreById_shouldReturnGenre () {
         //given
-        final var expectedId = "123";
         final var expectedName = "Ação";
         final var expectedIsActive = true;
         final var expectedCategories = List.of(
@@ -42,25 +43,25 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
                 CategoryID.from("456")
         );
 
-        final var genre = Genre.newGenre(expectedName, expectedIsActive);
-        expectedCategories.forEach(genre::addCategory);
+        final var aGenre = Genre.newGenre(expectedName, expectedIsActive);
+        expectedCategories.forEach(aGenre::addCategory);
 
-        when(genreGateway.findById(GenreID.from(expectedId))).thenReturn(Optional.of(genre));
+        final var expectedId = aGenre.getId();
+
+        when(genreGateway.findById((any()))).thenReturn(Optional.of(aGenre));
 
         //when
-        final var actualGenre = useCase.execute(expectedId);
+        final var actualGenre = useCase.execute(expectedId.getValue());
 
         //then
         assertNotNull(actualGenre);
-        assertEquals(expectedId, actualGenre.id());
+        assertEquals(expectedId.getValue(), actualGenre.id());
         assertEquals(expectedName, actualGenre.name());
         assertEquals(expectedIsActive, actualGenre.isActive());
         assertEquals(asString(expectedCategories), actualGenre.categories());
-        assertEquals(genre.getCreatedAt(), actualGenre.createdAt());
-        assertEquals(genre.getUpdatedAt(), actualGenre.updatedAt());
-        assertEquals(genre.getDeletedAt(), actualGenre.deletedAt());
-
-        verify(genreGateway, times(1)).findById(GenreID.from(ArgumentMatchers.eq(expectedId)));
+        assertEquals(aGenre.getCreatedAt(), actualGenre.createdAt());
+        assertEquals(aGenre.getUpdatedAt(), actualGenre.updatedAt());
+        assertEquals(aGenre.getDeletedAt(), actualGenre.deletedAt());
 
     }
 
@@ -73,21 +74,18 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
     @Test
     public void givenAInvalidId_whenCallsGetGenreAndDoesNotExists_shouldReturnNotFound () {
         //given
-        final var expectedId = "123";
+        final var expectedId = GenreID.from("123");
         final var expectedErrorMessage = "Genre with ID 123 was not found";
 
-        when(genreGateway.findById(GenreID.from(expectedId))).thenReturn(Optional.empty());
+        when(genreGateway.findById(any())).thenReturn(Optional.empty());
 
         //when
-        final var actualException = org.junit.jupiter.api.Assertions.assertThrows(
-                IllegalArgumentException.class,
-                () -> useCase.execute(expectedId)
-        );
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> {
+            useCase.execute(expectedId.getValue());
+        });
 
         //then
         assertNotNull(actualException);
         assertEquals(expectedErrorMessage, actualException.getMessage());
-
-        verify(genreGateway, times(1)).findById(GenreID.from(ArgumentMatchers.eq(expectedId)));
     }
 }

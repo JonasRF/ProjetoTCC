@@ -7,11 +7,9 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Objects;
@@ -196,7 +194,7 @@ public class UpdateCategoryUSeCaseTest extends UseCaseTest {
                             aCategoryUpdated.getId().equals(aCategory.getId()) &&
                             aCategoryUpdated.getCreatedAt().equals(aCategory.getCreatedAt()) &&
                             aCategory.getUpdatedAt().isBefore(aCategoryUpdated.getUpdatedAt()) &&
-                            aCategoryUpdated.getDeletedAt() == null;
+                            (expectedIsActive ? aCategoryUpdated.getDeletedAt() == null : aCategoryUpdated.getDeletedAt() != null);
                 }));
     }
 

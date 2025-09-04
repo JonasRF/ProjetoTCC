@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class CategoryID extends Identifier {
 
+    public static Object getValue;
     private final String value;
 
     private CategoryID(final String value) {
