@@ -3,7 +3,6 @@ package org.jonasribeiro.admin.catalogo.infraestructure.category;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
-import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryJpaEntity;
@@ -11,16 +10,17 @@ import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.Cate
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
-@Service
+@Component
 public class CategoryMySQLGateway implements CategoryGateway {
 
     private final CategoryRepository categoryRepository;
@@ -83,13 +83,18 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public List<CategoryID> existsByIds(final Iterable<CategoryID> categoryIDs) {
-        final var ids = StreamSupport.stream(categoryIDs.spliterator(), false)
-                .map(CategoryID::getValue)
-                .toList();
-        return this.categoryRepository.existsByIds(ids).stream()
+    public List<CategoryID> existsByIds(Iterable<CategoryID> ids) {
+        if (!ids.iterator().hasNext()) {
+            return Collections.emptyList();
+        }
+        return Stream.of(
+                StreamSupport.stream(ids.spliterator(), false)
+                        .map(CategoryID::getValue)
+                        .toArray(String[]::new)
+        )
                 .map(CategoryID::from)
-                .toList();
+                .toList(
+        );
     }
 
     private Category save(Category aCategory) {

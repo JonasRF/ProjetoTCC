@@ -49,4 +49,5 @@ public class CategoryID extends Identifier {
     public int hashCode() {
         return value.hashCode();
     }
+
 }

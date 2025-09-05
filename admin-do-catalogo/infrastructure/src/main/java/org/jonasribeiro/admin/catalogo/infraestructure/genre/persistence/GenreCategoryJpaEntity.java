@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "genres_categories")
+@Table(name = "genre_categories")
 public class GenreCategoryJpaEntity {
 
     @EmbeddedId
