@@ -39,7 +39,6 @@ public class GenreMySQLGateway implements GenreGateway {
     public Genre update(Genre aGenre) {
         return null;
     }
-
     @Override
     public Pagination<Genre> findAll(SearchQuery aQuery) {
         return null;

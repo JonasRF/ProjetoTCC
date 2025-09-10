@@ -13,5 +13,4 @@ public record CategoryListResponse(
         @JsonProperty("updated_at") Instant updatedAt,
         @JsonProperty("deleted_at") Instant deletedAt
 ) {
-
 }

@@ -10,10 +10,11 @@ import javax.persistence.Table;
 import java.time.Instant;
 
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class CategoryJpaEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Column(name = "name", nullable = false)
@@ -37,13 +38,14 @@ public class CategoryJpaEntity {
     public CategoryJpaEntity() {
     }
 
-    public CategoryJpaEntity(final String id,
-                             final String name,
-                             final String description,
-                             final boolean active,
-                             final Instant createdAt,
-                             final Instant updatedAt,
-                             final Instant deletedAt
+    private CategoryJpaEntity(
+            final String id,
+            final String name,
+            final String description,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
     ) {
         this.id = id;
         this.name = name;
@@ -69,12 +71,12 @@ public class CategoryJpaEntity {
     public Category toAggregate() {
         return Category.with(
                 CategoryID.from(getId()),
-                this.name,
-                this.description,
-                this.active,
-                this.createdAt,
-                this.updatedAt,
-                this.deletedAt
+                getName(),
+                getDescription(),
+                isActive(),
+                getCreatedAt(),
+                getUpdatedAt(),
+                getDeletedAt()
         );
     }
 
@@ -107,7 +109,7 @@ public class CategoryJpaEntity {
     }
 
     public void setActive(boolean active) {
-        active = active;
+        this.active = active;
     }
 
     public Instant getCreatedAt() {

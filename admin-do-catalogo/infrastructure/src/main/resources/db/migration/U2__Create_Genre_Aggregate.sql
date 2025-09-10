@@ -1,4 +1,4 @@
 
-DROP TABLE genres,
-DROP TABLE genre_categories;
+DROP TABLE tb_genres,
+DROP TABLE tb_genres_categories;
 

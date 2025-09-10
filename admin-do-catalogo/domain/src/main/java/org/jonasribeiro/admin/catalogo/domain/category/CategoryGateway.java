@@ -1,8 +1,7 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
-import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
-import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
+import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +19,5 @@ public interface CategoryGateway {
     Pagination<Category> findAll(SearchQuery aQuery);
 
     List<CategoryID> existsByIds(Iterable<CategoryID> ids);
+
 }

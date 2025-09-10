@@ -8,49 +8,51 @@ import java.util.Objects;
 @Embeddable
 public class GenreCategoryID implements Serializable {
 
-    @Column(name = "category_id", nullable = false)
-    private String categoryId;
-
     @Column(name = "genre_id", nullable = false)
     private String genreId;
 
-    public GenreCategoryID() {
+    @Column(name = "category_id", nullable = false)
+    private String categoryId;
+
+    public GenreCategoryID() {}
+
+    private GenreCategoryID(final String aGenreId, final String aCategoryId) {
+        this.genreId = aGenreId;
+        this.categoryId = aCategoryId;
     }
 
-    private GenreCategoryID(final String genreId, final String categoryId) {
-        this.categoryId = categoryId;
-        this.genreId = genreId;
+    public static GenreCategoryID from(final String aGenreId, final String aCategoryId) {
+        return new GenreCategoryID(aGenreId, aCategoryId);
     }
 
-    public static GenreCategoryID from(final String genreId, final String categoryId) {
-        return new GenreCategoryID(genreId, categoryId);
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final GenreCategoryID that = (GenreCategoryID) o;
+        return Objects.equals(getGenreId(), that.getGenreId()) && Objects.equals(getCategoryId(), that.getCategoryId());
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getGenreId(), getCategoryId());
     }
 
     public String getGenreId() {
         return genreId;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setGenreId(String genreId) {
+    public GenreCategoryID setGenreId(String genreId) {
         this.genreId = genreId;
+        return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        GenreCategoryID that = (GenreCategoryID) o;
-        return Objects.equals(categoryId, that.categoryId) && Objects.equals(genreId, that.genreId);
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(categoryId, genreId);
+    public GenreCategoryID setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+        return this;
     }
 }

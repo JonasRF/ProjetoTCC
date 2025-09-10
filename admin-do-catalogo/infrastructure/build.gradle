@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'org.flywaydb:flyway-mysql:8.5.10'
+        classpath 'org.flywaydb:flyway-mysql:9.11.0'
     }
 }
 
@@ -12,7 +12,7 @@ plugins {
     id 'application'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.flywaydb.flyway' version '8.5.10'
+    id 'org.flywaydb.flyway' version '9.11.0'
 }
 
 group = 'org.jonasribeiro.admin.catalogo.infraestructure'
@@ -63,8 +63,8 @@ flyway {
     url = System.getenv('FLYWAY_DB') ?: 'jdbc:mysql://localhost:3306/adm_videos'
     user = System.getenv('FLYWAY_USER') ?: 'root'
     password = System.getenv('FLYWAY_PASS') ?: '123456'
+}
 
     test {
         useJUnitPlatform()
     }
-}

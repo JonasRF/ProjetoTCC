@@ -55,10 +55,10 @@ public class DefaultCreateGenreUseCase extends CreateGenreUseCase {
         if (ids == null || ids.isEmpty()) {
             return notification;
         }
-        final var existingIds = categoryGateway.existsByIds(ids);
-        if (ids.size() != existingIds.size()) {
-           final var missingIds = new ArrayList<>(ids);
-              missingIds.removeAll(existingIds);
+        final var existingCategories = this.categoryGateway.existsByIds(ids);
+        if (ids.size() != existingCategories.size()) {
+            final var missingIds = new ArrayList<>(ids);
+            missingIds.removeAll(existingCategories);
 
               final var missingIdsMessage = missingIds.stream()
                      .map(CategoryID::getValue)

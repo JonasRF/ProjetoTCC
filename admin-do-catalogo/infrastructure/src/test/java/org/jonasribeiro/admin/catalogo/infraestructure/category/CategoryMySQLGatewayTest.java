@@ -197,7 +197,6 @@ public class CategoryMySQLGatewayTest {
                         CategoryJpaEntity.from(category3)
                 )
         );
-        categoryRepository.flush();
 
         final var page = 0;
         final var perPage = 2;

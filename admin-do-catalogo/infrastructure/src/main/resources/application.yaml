@@ -26,10 +26,11 @@ spring:
       open-in-view: false # Disable Open EntityManager in View
       show-sql: true # Show SQL statements in logs
       hibernate:
-        ddl-auto: update # Update the database schema automatically
+        ddl-auto: none # Disable automatic schema generation
       properties:
          "[hibernate.dialect]": org.hibernate.dialect.MySQL8Dialect # Use MySQL 8 dialect
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
+
 
 

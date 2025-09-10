@@ -1,36 +1,23 @@
 package org.jonasribeiro.admin.catalogo.domain.category;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class CategoryID extends Identifier {
-
-    public static Object getValue;
     private final String value;
 
     private CategoryID(final String value) {
-        Objects.requireNonNull(value);
-        this.value = value;
+        this.value = Objects.requireNonNull(value);
     }
 
     public static CategoryID unique() {
-        return CategoryID.from(UUID.randomUUID());
+        return CategoryID.from(IdUtils.uuid());
     }
 
     public static CategoryID from(final String anId) {
-        if (anId == null || anId.isBlank()) {
-            throw new IllegalArgumentException("Category ID cannot be null or blank");
-        }
         return new CategoryID(anId);
-    }
-
-    public static CategoryID from(final UUID anId) {
-        if (anId == null) {
-            throw new IllegalArgumentException("Category ID cannot be null");
-        }
-        return new CategoryID(anId.toString().toLowerCase());
     }
 
     @Override
@@ -41,13 +28,13 @@ public class CategoryID extends Identifier {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CategoryID that)) return false;
-        return value.equals(that.value);
+        if (o == null || getClass() != o.getClass()) return false;
+        final CategoryID that = (CategoryID) o;
+        return getValue().equals(that.getValue());
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hash(getValue());
     }
-
 }

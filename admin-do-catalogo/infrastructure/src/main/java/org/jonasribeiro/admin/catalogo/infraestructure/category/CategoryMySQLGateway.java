@@ -9,42 +9,43 @@ import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.Cate
 import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
+
 @Component
 public class CategoryMySQLGateway implements CategoryGateway {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
-    public CategoryMySQLGateway(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryMySQLGateway(final CategoryRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Category create(Category aCategory) {
+    public Category create(final Category aCategory) {
         return save(aCategory);
     }
 
     @Override
     public void deleteById(final CategoryID anId) {
-        if (this.categoryRepository.existsById(anId.getValue())) {
-            this.categoryRepository.deleteById(anId.getValue());
+        final String anIdValue = anId.getValue();
+        if (this.repository.existsById(anIdValue)) {
+            this.repository.deleteById(anIdValue);
         }
     }
 
     @Override
-    public Optional<Category> findById(CategoryID anId) {
-        return this.categoryRepository
-                .findById(anId.getValue())
+    public Optional<Category> findById(final CategoryID anId) {
+        return this.repository.findById(anId.getValue())
                 .map(CategoryJpaEntity::toAggregate);
     }
 
@@ -54,25 +55,22 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(SearchQuery aQuery) {
-        //Paginação
+    public Pagination<Category> findAll(final SearchQuery aQuery) {
+        // Paginação
         final var page = PageRequest.of(
                 aQuery.page(),
                 aQuery.perPage(),
-                Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
+                Sort.by(Direction.fromString(aQuery.direction()), aQuery.sort())
         );
 
-        //Busca dinâmica pelo critério terms(name ou descripition)
-       final var specification = Optional.ofNullable(aQuery.terms())
+        // Busca dinamica pelo criterio terms (name ou description)
+        final var specifications = Optional.ofNullable(aQuery.terms())
                 .filter(str -> !str.isBlank())
-                .map(str -> {
-                        final Specification<CategoryJpaEntity> nameLike = like("name", str);
-                        final Specification<CategoryJpaEntity> descriptionLike = like("description", str);
-                        return Specification.where(nameLike).or(descriptionLike);
-                })
+                .map(this::assembleSpecification)
                 .orElse(null);
 
-        final var pageResult = this.categoryRepository.findAll(Specification.where(specification), page);
+        final var pageResult =
+                this.repository.findAll(Specification.where(specifications), page);
 
         return new Pagination<>(
                 pageResult.getNumber(),
@@ -84,20 +82,16 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public List<CategoryID> existsByIds(Iterable<CategoryID> ids) {
-        if (!ids.iterator().hasNext()) {
-            return Collections.emptyList();
-        }
-        return Stream.of(
-                StreamSupport.stream(ids.spliterator(), false)
-                        .map(CategoryID::getValue)
-                        .toArray(String[]::new)
-        )
-                .map(CategoryID::from)
-                .toList(
-        );
+        return Collections.emptyList();
     }
 
-    private Category save(Category aCategory) {
-        return this.categoryRepository.save(CategoryJpaEntity.from(aCategory)).toAggregate();
+    private Category save(final Category aCategory) {
+        return this.repository.save(CategoryJpaEntity.from(aCategory)).toAggregate();
+    }
+
+    private Specification<CategoryJpaEntity> assembleSpecification(final String str) {
+        final Specification<CategoryJpaEntity> nameLike = like("name", str);
+        final Specification<CategoryJpaEntity> descriptionLike = like("description", str);
+        return nameLike.or(descriptionLike);
     }
 }

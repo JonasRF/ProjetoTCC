@@ -1,5 +1,7 @@
 package org.jonasribeiro.admin.catalogo;
 
+import org.jonasribeiro.admin.catalogo.infraestructure.category.persistence.CategoryRepository;
+import org.jonasribeiro.admin.catalogo.infraestructure.genre.persistence.GenreRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -15,12 +17,13 @@ public class MySQLCleanUpExtension implements BeforeEachCallback {
     public void beforeEach(final ExtensionContext context) {
         final var appContext =  SpringExtension.getApplicationContext(context);
                 cleanUp(List.of(
-                        appContext.getBean("categoryRepository", CrudRepository.class),
-                        appContext.getBean("genreRepository", CrudRepository.class)
+                        appContext.getBean(GenreRepository.class),
+                        appContext.getBean(CategoryRepository.class)
                 ));
-                final var em = appContext.getBean("testEntityManager", TestEntityManager.class);
-                em.flush();
-                em.clear();
+        final var entityManager = appContext.getBean(TestEntityManager.class);
+        entityManager.flush();
+        entityManager.clear();
+
     }
 
     private void cleanUp(final Collection<CrudRepository> repositories) {

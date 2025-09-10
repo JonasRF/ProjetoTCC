@@ -1,12 +1,10 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:adm_videos_test;MODE=MYSQL;DATABASE_TO_LOWER=TRUE # É possível persistir em um arquivo alterando "mem:adm_videos_test" para "file:./.h2/dev"
     username: root
     password: 123456
-    url: jdbc:h2:mem:adm_videos_test;MODE=MYSQL;DATABASE_TO_LOWER=TRUE # H2 in-memory database for testing
-  jpa:
-    deferred-datasource-initialization: true
   h2:
     console:
-      enabled: true # Enable H2 console for testing
-      path: /h2-console
+      enabled: true
+      path: /h2
