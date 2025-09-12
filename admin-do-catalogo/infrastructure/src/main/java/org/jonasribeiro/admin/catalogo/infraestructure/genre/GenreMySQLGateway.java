@@ -7,6 +7,7 @@ import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.genre.persistence.GenreJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.genre.persistence.GenreRepository;
+import org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.Optional;
-
-import static org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils.like;
 
 @Component
 public class GenreMySQLGateway implements GenreGateway {
@@ -54,33 +53,23 @@ public class GenreMySQLGateway implements GenreGateway {
                 Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
         );
 
-        final var whereClause = assembleSpecification(aQuery.terms());
+        final var where = Optional.ofNullable(aQuery.terms())
+                .filter(str -> !str.isBlank())
+                .map(this::assembleSpecification)
+                .orElse(Specification.where(null));
 
-        final var pageResult = this.genreRepository.findAll(whereClause, page);
+       final var results = this.genreRepository.findAll(Specification.where(where), page);
 
-        return new Pagination<>(
-                pageResult.getNumber(),
-                pageResult.getSize(),
-                pageResult.getTotalElements(),
-                pageResult.map(GenreJpaEntity::toAggregate).toList()
-        );
+       return new Pagination<>(
+               results.getNumber(),
+               results.getSize(),
+               results.getTotalElements(),
+               results.map(GenreJpaEntity::toAggregate).toList()
+       );
     }
 
-    private Specification<GenreJpaEntity> assembleSpecification(final String str) {
-        final Specification<GenreJpaEntity> name = like("name", str);
-        final Specification<GenreJpaEntity> categoriesIdIn = (root, query, criteriaBuilder) -> {
-            if (str.isBlank()) {
-                return null;
-            }
-            query.distinct(true);
-            final var join = root.join("categories");
-            return criteriaBuilder.like(
-                    criteriaBuilder.lower(join.get("id")),
-                    "%" + str.toLowerCase() + "%"
-            );
-        };
-
-        return name.or(categoriesIdIn);
+    private Specification<GenreJpaEntity> assembleSpecification(final String terms) {
+        return SpecificationUtils.like("name", terms);
     }
 
     private Genre save(final Genre aGenre) {
