@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.create;
+package org.jonasribeiro.admin.catalogo.application.create;
 
 import static io.vavr.API.*;
 import io.vavr.API;

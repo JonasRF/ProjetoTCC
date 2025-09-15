@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.retrieve.list;
+package org.jonasribeiro.admin.catalogo.application.retrieve.list;
 
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;

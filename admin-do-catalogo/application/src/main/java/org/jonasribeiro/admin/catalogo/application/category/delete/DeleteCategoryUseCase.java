@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.delete;
+package org.jonasribeiro.admin.catalogo.application.delete;
 
 import org.jonasribeiro.admin.catalogo.application.UnitUseCase;
 

@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.genre.create;
+package org.jonasribeiro.admin.catalogo.application.genre;
 
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
@@ -55,6 +55,7 @@ public class DefaultCreateGenreUseCase extends CreateGenreUseCase {
         if (ids == null || ids.isEmpty()) {
             return notification;
         }
+
         final var existingCategories = this.categoryGateway.existsByIds(ids);
         if (ids.size() != existingCategories.size()) {
             final var missingIds = new ArrayList<>(ids);

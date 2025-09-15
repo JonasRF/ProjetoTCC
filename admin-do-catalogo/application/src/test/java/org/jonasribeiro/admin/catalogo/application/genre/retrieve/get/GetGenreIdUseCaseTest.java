@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.genre.retrieve.get;
+package org.jonasribeiro.admin.catalogo.application.genre.retrieve;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
@@ -26,7 +26,6 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
 
     @Mock
     private GenreGateway genreGateway;
-
 
     @Override
     protected List<Object> getMocks() {
@@ -62,7 +61,6 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
         assertEquals(aGenre.getCreatedAt(), actualGenre.createdAt());
         assertEquals(aGenre.getUpdatedAt(), actualGenre.updatedAt());
         assertEquals(aGenre.getDeletedAt(), actualGenre.deletedAt());
-
     }
 
     private List<String> asString(final List<CategoryID> categories) {

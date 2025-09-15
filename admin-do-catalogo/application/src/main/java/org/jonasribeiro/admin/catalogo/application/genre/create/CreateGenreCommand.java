@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.genre.create;
+package org.jonasribeiro.admin.catalogo.application.genre;
 
 import java.util.List;
 

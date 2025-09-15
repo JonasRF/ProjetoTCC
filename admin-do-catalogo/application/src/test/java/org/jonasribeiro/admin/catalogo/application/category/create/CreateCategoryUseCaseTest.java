@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.create;
+package org.jonasribeiro.admin.catalogo.application.create;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;

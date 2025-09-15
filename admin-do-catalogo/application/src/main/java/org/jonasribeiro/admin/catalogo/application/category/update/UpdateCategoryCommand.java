@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.update;
+package org.jonasribeiro.admin.catalogo.application.update;
 
 public record UpdateCategoryCommand (
     String id,

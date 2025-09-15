@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.category.update;
+package org.jonasribeiro.admin.catalogo.application.update;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
