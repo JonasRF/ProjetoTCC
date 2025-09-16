@@ -1,15 +1,5 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.configuration.usecases;
 
-import org.jonasribeiro.admin.catalogo.application.category.create.CreateCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.create.DefaultCreateCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.delete.DefaultDeleteCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.delete.DeleteCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.retrieve.get.GetCategoryByUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.retrieve.list.DefaultListCategoriesUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.retrieve.list.ListCategoriesUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.update.DefaultUpdateCategoryUseCase;
-import org.jonasribeiro.admin.catalogo.application.category.update.UpdateCategoryUseCase;
 import org.jonasribeiro.admin.catalogo.application.genre.create.CreateGenreUseCase;
 import org.jonasribeiro.admin.catalogo.application.genre.create.DefaultCreateGenreUseCase;
 import org.jonasribeiro.admin.catalogo.application.genre.delete.DefaultDeleteGenreUseCase;

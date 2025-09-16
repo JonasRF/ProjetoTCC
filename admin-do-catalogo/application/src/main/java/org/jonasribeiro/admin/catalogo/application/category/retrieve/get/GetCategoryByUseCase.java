@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.retrieve.get;
+package org.jonasribeiro.admin.catalogo.application.category.retrieve.get;
 
 import org.jonasribeiro.admin.catalogo.application.UseCase;
 

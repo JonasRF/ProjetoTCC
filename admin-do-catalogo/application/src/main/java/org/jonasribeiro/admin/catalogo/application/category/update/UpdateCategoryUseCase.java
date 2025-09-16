@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.update;
+package org.jonasribeiro.admin.catalogo.application.category.update;
 
 import io.vavr.control.Either;
 import org.jonasribeiro.admin.catalogo.application.UseCase;

@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.genre.retrieve;
+package org.jonasribeiro.admin.catalogo.application.genre.retrieve.get;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;

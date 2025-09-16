@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.retrieve.list;
+package org.jonasribeiro.admin.catalogo.application.category.retrieve.list;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;

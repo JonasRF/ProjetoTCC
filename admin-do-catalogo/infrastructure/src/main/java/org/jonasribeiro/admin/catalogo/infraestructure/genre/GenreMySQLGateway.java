@@ -32,7 +32,9 @@ public class GenreMySQLGateway implements GenreGateway {
 
     @Override
     public void deleteById(GenreID anId) {
-        this.genreRepository.deleteById(anId.getValue());
+        if(this.genreRepository.existsById(anId.getValue())) {
+            this.genreRepository.deleteById(anId.getValue());
+        }
     }
 
     @Override

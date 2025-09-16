@@ -13,4 +13,6 @@ public interface CategoryRepository extends JpaRepository<CategoryJpaEntity, Str
 
     Page<CategoryJpaEntity> findAll(Specification<CategoryJpaEntity> whereClause, Pageable page);
 
+    @Query(value = "SELECT c.id FROM Category c WHERE c.id IN :ids")
+    List<String> existsByIds(@Param("ids") List<String> ids);
 }

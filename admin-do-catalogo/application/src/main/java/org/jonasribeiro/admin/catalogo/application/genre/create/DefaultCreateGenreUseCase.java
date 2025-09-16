@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.genre;
+package org.jonasribeiro.admin.catalogo.application.genre.create;
 
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;

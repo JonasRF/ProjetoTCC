@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.update;
+package org.jonasribeiro.admin.catalogo.application.category.update;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 

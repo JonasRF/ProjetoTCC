@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.create;
+package org.jonasribeiro.admin.catalogo.application.category.create;
 
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 

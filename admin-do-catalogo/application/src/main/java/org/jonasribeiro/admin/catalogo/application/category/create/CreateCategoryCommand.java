@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.create;
+package org.jonasribeiro.admin.catalogo.application.category.create;
 
 public record CreateCategoryCommand(
         String name,

@@ -82,7 +82,12 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public List<CategoryID> existsByIds(Iterable<CategoryID> ids) {
-        return Collections.emptyList();
+        final var idsValues = StreamSupport.stream(ids.spliterator(), false)
+                .map(CategoryID::getValue)
+                .toList();
+        return this.repository.existsByIds(idsValues).stream()
+                .map(CategoryID::from)
+                .toList();
     }
 
     private Category save(final Category aCategory) {

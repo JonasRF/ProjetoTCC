@@ -17,6 +17,5 @@ public class DefaultDeleteGenreUseCase extends DeleteGenreUseCase {
     @Override
     public void execute(final String anIn) {
         this.genreGateway.deleteById(GenreID.from(anIn));
-
     }
 }
