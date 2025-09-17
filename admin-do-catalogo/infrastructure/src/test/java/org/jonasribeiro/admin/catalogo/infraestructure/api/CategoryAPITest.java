@@ -282,7 +282,7 @@ public class CategoryAPITest {
                 ));
     }
     @Test
-    public void givenValidId_whenCallsDeleteCategory_shouldReturnNoCOntent() throws Exception {
+    public void givenValidId_whenCallsDeleteCategory_shouldReturnNoContent() throws Exception {
         //given
         final var expectedId = "123";
 

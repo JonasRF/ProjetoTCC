@@ -7,3 +7,4 @@ mysql:
   schema: adm_videos
   url: localhost:${mysql.port}
 
+
