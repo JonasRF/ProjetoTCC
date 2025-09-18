@@ -41,7 +41,7 @@ public class GenreController implements GenreAPI {
     public ResponseEntity<?> create(final CreateGenreRequest input) {
         final var aCommand = CreateGenreCommand.with(
                 input.name(),
-                input.active(),
+                input.isActive(),
                 input.categories()
         );
 

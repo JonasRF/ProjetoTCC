@@ -12,10 +12,10 @@ public record CreateGenreRequest (
         ) {
 
     public boolean isActive() {
-        return active != null ? this.active : true;
+        return this.active != null ? this.active : true;
     }
 
     public List<String> categories() {
-        return categories != null ? this.categories : Collections.emptyList();
+        return this.categories != null ? this.categories : Collections.emptyList();
     }
 }
