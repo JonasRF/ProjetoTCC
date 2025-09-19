@@ -59,4 +59,5 @@ import java.util.List;
         public static Notification create(final Throwable th) {
         return create(new Error(th.getMessage()));
         }
+
     }
