@@ -2,9 +2,7 @@ package org.jonasribeiro.admin.catalogo.domain.castmember;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
 
-import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 public class CastMemberID extends Identifier {
 
@@ -22,21 +20,17 @@ public class CastMemberID extends Identifier {
         return new CastMemberID(anId);
     }
 
-    public static CastMemberID from(final UUID anId) {
-        return new CastMemberID(anId.toString().toLowerCase());
-    }
-
     @Override
     public String getValue() {
         return this.value;
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final CastMemberID that = (CastMemberID) o;
-        return Objects.equals(value, that.value);
+        return getValue().equals(that.getValue());
     }
 
     @Override
