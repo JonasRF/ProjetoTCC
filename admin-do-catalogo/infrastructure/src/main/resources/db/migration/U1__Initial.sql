@@ -1,1 +1,1 @@
-DROP TABLE tb_categories;
+DROP TABLE categories;

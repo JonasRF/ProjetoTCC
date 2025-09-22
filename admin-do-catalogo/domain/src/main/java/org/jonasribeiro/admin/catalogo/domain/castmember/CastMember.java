@@ -29,6 +29,22 @@ public class CastMember  extends AggregateRoot<CastMemberID> {
         selfValidate();
     }
 
+    public static CastMember with(
+            CastMemberID from,
+            String name,
+            String type,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        return new CastMember(
+                from,
+                name,
+                CastMemberType.valueOf(type),
+                createdAt,
+                updatedAt
+        );
+    }
+
     public CastMember update(final String aName, final CastMemberType aType) {
         this.name = aName;
         this.type = aType;

@@ -50,7 +50,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
                 expectedType
         );
 
-        // then
+
         when(castMemberGateway.findById(expectedId))
                 .thenReturn(Optional.of(CastMember.with(aMember)));
 
@@ -58,7 +58,7 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
                 .thenAnswer(returnsFirstArg());
 
         final var actualOutput = useCase.execute(aCommand);
-
+        // then
         Assertions.assertNotNull(actualOutput);
         Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
 
@@ -88,11 +88,9 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
                 expectedName,
                 expectedType
         );
-
-        // then
         when(castMemberGateway.findById(expectedId))
                 .thenReturn(Optional.empty());
-
+        //then
         final var actualException = Assertions.assertThrows(
                 NotFoundException.class,
                 () -> useCase.execute(aCommand)
