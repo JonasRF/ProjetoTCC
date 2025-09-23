@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.castmember.create;
+package org.jonasribeiro.admin.catalogo.application.castmember;
 
 import org.jonasribeiro.admin.catalogo.application.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;

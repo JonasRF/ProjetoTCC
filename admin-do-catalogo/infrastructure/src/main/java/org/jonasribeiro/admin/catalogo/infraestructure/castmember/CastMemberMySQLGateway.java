@@ -7,6 +7,10 @@ import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.castmember.persistence.CastMemberJpaEntity;
 import org.jonasribeiro.admin.catalogo.infraestructure.castmember.persistence.CastMemberRepository;
+import org.jonasribeiro.admin.catalogo.infraestructure.utils.SpecificationUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -32,17 +36,42 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     @Override
     public void deleteById(final CastMemberID anId) {
-
+        this.castMemberRepository.deleteById(anId.getValue());
     }
 
     @Override
     public Optional<CastMember> findById(final CastMemberID anId) {
-        return Optional.empty();
+        return this.castMemberRepository.findById(anId.getValue())
+                .map(CastMemberJpaEntity::toAggregate);
     }
 
     @Override
     public Pagination<CastMember> findAll(final SearchQuery aQuery) {
-        return null;
+        final var page = PageRequest.of(
+                aQuery.page(),
+                aQuery.perPage(),
+                Sort.by(
+                        Sort.Direction.fromString(aQuery.direction()),
+                        aQuery.sort()));
+
+        final var where = Optional.ofNullable(
+                aQuery.terms()
+        ).filter(str -> !str.isBlank())
+                .map(this::assembleSpecification)
+                .orElse(null);
+
+        final var result = this.castMemberRepository.findAll(where, page);
+
+        return new Pagination<>(
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalElements(),
+                result.map(CastMemberJpaEntity::toAggregate).toList()
+        );
+    }
+
+    private Specification<CastMemberJpaEntity> assembleSpecification(final String terms) {
+        return SpecificationUtils.like("name", terms);
     }
 
     private CastMember save(final CastMember aCastMember) {

@@ -1,6 +1,7 @@
 package org.jonasribeiro.admin.catalogo;
 
 import com.github.javafaker.Faker;
+import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
 
 public class Fixture {
