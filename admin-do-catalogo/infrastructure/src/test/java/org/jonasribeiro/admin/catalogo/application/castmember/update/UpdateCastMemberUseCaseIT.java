@@ -60,7 +60,7 @@ public class UpdateCastMemberUseCaseIT {
         assertEquals(expectedName, actualMember.getName());
         assertEquals(expectedType, actualMember.getType());
         assertEquals(aMember.getCreatedAt().truncatedTo(java.time.temporal.ChronoUnit.MILLIS), actualMember.getCreatedAt().truncatedTo(java.time.temporal.ChronoUnit.MILLIS));
-        assertTrue(aMember.getUpdatedAt().isBefore(actualMember.getUpdatedAt()));
+        assertTrue(actualMember.getUpdatedAt().isAfter(aMember.getUpdatedAt()));
 
         verify(castMemberGateway).update(any());
     }

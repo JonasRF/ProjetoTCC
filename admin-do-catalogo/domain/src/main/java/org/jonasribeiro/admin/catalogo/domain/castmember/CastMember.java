@@ -2,12 +2,13 @@ package org.jonasribeiro.admin.catalogo.domain.castmember;
 
 import org.jonasribeiro.admin.catalogo.domain.AggregateRoot;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
+import org.jonasribeiro.admin.catalogo.domain.utils.InstantUtils;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
 
 import java.time.Instant;
 
-public class CastMember  extends AggregateRoot<CastMemberID> {
+public class CastMember extends AggregateRoot<CastMemberID> {
 
     private String name;
     private CastMemberType type;
@@ -29,28 +30,10 @@ public class CastMember  extends AggregateRoot<CastMemberID> {
         selfValidate();
     }
 
-    public static CastMember with(
-            CastMemberID from,
-            String name,
-            String type,
-            Instant createdAt,
-            Instant updatedAt
-    ) {
-        return new CastMember(
-                from,
-                name,
-                CastMemberType.valueOf(type),
-                createdAt,
-                updatedAt
-        );
-    }
-
-    public CastMember update(final String aName, final CastMemberType aType) {
-        this.name = aName;
-        this.type = aType;
-        this.updatedAt = Instant.now();
-        selfValidate();
-        return this;
+    public static CastMember newMember(final String aName, final CastMemberType aType) {
+        final var anId = CastMemberID.unique();
+        final var now = InstantUtils.now();
+        return new CastMember(anId, aName, aType, now, now);
     }
 
     public static CastMember with(
@@ -63,7 +46,7 @@ public class CastMember  extends AggregateRoot<CastMemberID> {
         return new CastMember(anId, aName, aType, aCreationDate, aUpdateDate);
     }
 
-    public static CastMember with( final CastMember aMember) {
+    public static CastMember with(final CastMember aMember) {
         return new CastMember(
                 aMember.id,
                 aMember.name,
@@ -73,15 +56,17 @@ public class CastMember  extends AggregateRoot<CastMemberID> {
         );
     }
 
-    public static CastMember newMember(final String aName, final CastMemberType aType) {
-        final var id = CastMemberID.unique();
-        final var now = Instant.now();
-        return new CastMember(id, aName, aType, now, now);
+    public CastMember update(final String aName, final CastMemberType aType) {
+        this.name = aName;
+        this.type = aType;
+        this.updatedAt = InstantUtils.now();
+        selfValidate();
+        return this;
     }
 
     @Override
-    public void validate(final ValidationHandler handler) {
-        new CastMemberValidator(this, handler).validate();
+    public void validate(final ValidationHandler aHandler) {
+        new CastMemberValidator(this, aHandler).validate();
     }
 
     public String getName() {
@@ -103,6 +88,7 @@ public class CastMember  extends AggregateRoot<CastMemberID> {
     private void selfValidate() {
         final var notification = Notification.create();
         validate(notification);
+
         if (notification.hasErrors()) {
             throw new NotificationException("Failed to create a Aggregate CastMember", notification);
         }

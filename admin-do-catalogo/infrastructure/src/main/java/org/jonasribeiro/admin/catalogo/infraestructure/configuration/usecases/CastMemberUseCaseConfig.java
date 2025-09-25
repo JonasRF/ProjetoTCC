@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.configuration.usecases;
 
-import org.jonasribeiro.admin.catalogo.application.castmember.CreateCastMemberUseCase;
-import org.jonasribeiro.admin.catalogo.application.castmember.DefaultCreateCastMemberUseCase;
+import org.jonasribeiro.admin.catalogo.application.castmember.create.CreateCastMemberUseCase;
+import org.jonasribeiro.admin.catalogo.application.castmember.create.DefaultCreateCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.delete.DefaultDeleteCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.delete.DeleteCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.get.DefaultGetCastMemberUseCase;

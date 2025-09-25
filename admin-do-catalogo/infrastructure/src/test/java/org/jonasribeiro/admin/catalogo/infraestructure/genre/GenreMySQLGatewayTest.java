@@ -463,6 +463,7 @@ public class GenreMySQLGatewayTest {
     }
 
     private void mockGenres() {
+        genreRepository.deleteAll(); // Limpa o repositório antes de inserir os gêneros
         genreRepository.saveAllAndFlush(List.of(
                 GenreJpaEntity.from(Genre.newGenre("Comédia romântica", true)),
                 GenreJpaEntity.from(Genre.newGenre("Ação", true)),

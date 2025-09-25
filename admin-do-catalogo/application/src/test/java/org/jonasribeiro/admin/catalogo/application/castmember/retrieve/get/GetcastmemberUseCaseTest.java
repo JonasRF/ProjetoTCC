@@ -53,7 +53,7 @@ public class GetcastmemberUseCaseTest extends UseCaseTest {
         Assertions.assertNotNull(actualMember);
         Assertions.assertEquals(expectedId.getValue(), actualMember.id());
         Assertions.assertEquals(expectedName, actualMember.name());
-        Assertions.assertEquals(expectedType.name(), actualMember.type());
+        Assertions.assertEquals(expectedType, actualMember.type());
         Assertions.assertEquals(aMember.getCreatedAt(), actualMember.createdAt());
         Assertions.assertEquals(aMember.getUpdatedAt(), actualMember.updatedAt());
 

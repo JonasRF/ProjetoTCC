@@ -2,6 +2,8 @@ package org.jonasribeiro.admin.catalogo.application.castmember;
 
 import org.jonasribeiro.admin.catalogo.application.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
+import org.jonasribeiro.admin.catalogo.application.castmember.create.CreateCastMemberCommand;
+import org.jonasribeiro.admin.catalogo.application.castmember.create.DefaultCreateCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;

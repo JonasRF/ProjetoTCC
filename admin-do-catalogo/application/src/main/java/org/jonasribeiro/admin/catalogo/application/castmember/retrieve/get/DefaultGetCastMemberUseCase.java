@@ -5,7 +5,7 @@ import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 
-public final class DefaultGetCastMemberUseCase extends  GetCastMemberByIdUseCase {
+public non-sealed class DefaultGetCastMemberUseCase extends  GetCastMemberByIdUseCase {
 
     private final CastMemberGateway castMemberGateway;
 

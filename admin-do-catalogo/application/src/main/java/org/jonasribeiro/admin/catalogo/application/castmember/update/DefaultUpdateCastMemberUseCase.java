@@ -11,7 +11,7 @@ import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public final class DefaultUpdateCastMemberUseCase extends UpdateCasMemberUseCase {
+public non-sealed class DefaultUpdateCastMemberUseCase extends UpdateCasMemberUseCase {
 
     private final CastMemberGateway castMemberGateway;
 
