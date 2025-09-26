@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.category.models;
 
+
 import org.jonasribeiro.admin.catalogo.JacksonTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import java.time.Instant;
 
 @JacksonTest
-public class CategoryListResponseTest {
+class CategoryListResponseTest {
 
     @Autowired
     private JacksonTester<CategoryListResponse> json;

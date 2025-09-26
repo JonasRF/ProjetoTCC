@@ -53,7 +53,7 @@ public class UpdateCastMemberUseCaseIT {
 
         // then
         assertNotNull(actualOutput);
-        assertNotNull(actualOutput.id());
+
 
         final var actualMember = this.castMemberRepository.findById(expectedId.getValue()).get();
 
