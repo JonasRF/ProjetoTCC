@@ -30,7 +30,7 @@ public class DeleteCastMemberUseCaseTest extends UseCaseTest {
     @Test
     public void givenAValidId_whenCallsDeleteCastMember_shouldBeOk() {
         // given
-        final  var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMember.type());
+        final  var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMembers.type());
 
         final var expectedId = aMember.getId();
 
@@ -60,7 +60,7 @@ public class DeleteCastMemberUseCaseTest extends UseCaseTest {
     @Test
     public void givenAValidId_whenCallsDeleteCastMemberAndGatewayException_shouldReceiveException() {
         // given
-        final  var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMember.type());
+        final  var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMembers.type());
 
         final var expectedId = aMember.getId();
 
