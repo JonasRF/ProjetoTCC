@@ -260,10 +260,4 @@ import static org.mockito.Mockito.when;
             Mockito.verify(categoryGateway, times(1)).existsByIds(any());
             Mockito.verify(genreGateway, times(0)).create(any());
         }
-
-    private List<String> asString(List<CategoryID> expectedCategories) {
-        return expectedCategories.stream()
-                .map(CategoryID::getValue)
-                .toList();
-    }
 }

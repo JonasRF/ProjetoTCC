@@ -1,15 +1,14 @@
 package org.jonasribeiro.admin.catalogo.application;
 
 import com.github.javafaker.Faker;
-import io.vavr.API;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.genre.Genre;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
+import org.jonasribeiro.admin.catalogo.domain.video.Resource;
 
-import java.lang.reflect.Type;
-import java.util.ResourceBundle;
+import java.util.Arrays;
 
 import static io.vavr.API.*;
 
@@ -79,19 +78,22 @@ public class Fixture {
 
     public static final class Videos {
 
-        public static Rating rating() {
-            return FAKER.options().option(
-                    Rating.values()
-            );
+        public static String rating() {
+            final var values = Arrays.stream(Rating.values())
+                    .map(Rating::name)
+                    .toList().toArray(new String[0]);
+
+            return FAKER.options().option(values);
         }
-        public static Rating resource(final Resource.Type type) {
+
+        public static Resource resource(final Resource.Type type) {
             final String contentType = Match(type).of(
-                    Case($(List(Type.VIDEO, Type.TRAILER)), "video/mp4"),
+                    Case($(List(Resource.Type.VIDEO, Resource.Type.TRAILER)::contains), "video/mp4"),
                     Case($(), "image/jpg")
             );
             final byte[] content = "Conteudo".getBytes();
 
-            return Resource.of(content, contentType, type.name().toLowerCase(), type);
+            return Resource.with(content, contentType, type.name().toLowerCase(), type);
         }
 
         public static String description() {

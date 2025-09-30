@@ -63,12 +63,6 @@ public class GetGenreIdUseCaseTest extends UseCaseTest {
         assertEquals(aGenre.getDeletedAt(), actualGenre.deletedAt());
     }
 
-    private List<String> asString(final List<CategoryID> categories) {
-        return categories.stream()
-                .map(CategoryID::getValue)
-                .toList();
-    }
-
     @Test
     public void givenAInvalidId_whenCallsGetGenreAndDoesNotExists_shouldReturnNotFound () {
         //given

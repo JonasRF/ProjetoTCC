@@ -3,6 +3,7 @@ package org.jonasribeiro.admin.catalogo.domain.castmember;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CastMemberGateway {
@@ -16,4 +17,6 @@ public interface CastMemberGateway {
     Optional<CastMember> findById(CastMemberID anId);
 
     Pagination<CastMember> findAll(SearchQuery aQuery);
+
+    List<CastMemberID> existsByIds(Iterable<CastMemberID> ids);
 }
