@@ -48,6 +48,7 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
     @Override
     public CreateVideoOutput execute(CreateVideoCommand aCommand) {
         final var aRating =  Rating.of(aCommand.rating()).orElseThrow(invalidRating(aCommand.rating()));
+        final var aLaunchYear = Year.of(aCommand.launchedAt());
         final var categories = toIdentifier(aCommand.categories(), CategoryID::from);
         final var genres = toIdentifier(aCommand.genres(), GenreID::from);
         final var members = toIdentifier(aCommand.members(), CastMemberID::from);
@@ -60,7 +61,7 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
        final var aVideo = Video.newVideo(
                 aCommand.title(),
                 aCommand.description(),
-                Year.of(aCommand.launchedAt()),
+                aLaunchYear,
                 aCommand.duration(),
                 aCommand.opened(),
                 aCommand.published(),
@@ -68,7 +69,6 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
                 categories,
                 genres,
                 members
-
         );
           aVideo.validate(notification);
 

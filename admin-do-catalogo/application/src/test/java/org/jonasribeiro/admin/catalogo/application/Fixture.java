@@ -7,6 +7,10 @@ import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.genre.Genre;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
+import org.jonasribeiro.admin.catalogo.domain.video.Video;
+
+import java.time.Year;
+import java.util.Set;
 
 import static io.vavr.API.*;
 
@@ -36,6 +40,21 @@ public class Fixture {
                 "The Shawshank Redemption",
                 "The Godfather",
                 "The Dark Knight"
+        );
+    }
+
+    public static Video video() {
+        return Video.newVideo(
+                Fixture.title(),
+                Videos.description(),
+                Year.of(Fixture.year()),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                Videos.rating(),
+                Set.of(Categories.aulas().getId()),
+                Set.of(Genres.tech().getId()),
+                Set.of(CastMembers.jonas().getId(), CastMembers.maria().getId())
         );
     }
 
@@ -75,6 +94,20 @@ public class Fixture {
     }
 
     public static final class Videos {
+
+        private static final Video SYSTEM_DESIGN = Video.newVideo(
+                "System Design no Mercado Livre na prática",
+                description(),
+                Year.of(2022),
+                Fixture.duration(),
+                Fixture.bool(),
+                Fixture.bool(),
+                rating(),
+                Set.of(Categories.aulas().getId()),
+                Set.of(Genres.tech().getId()),
+                Set.of(CastMembers.jonas().getId(), CastMembers.maria().getId())
+        );
+
 
         public static Rating rating() {
             return FAKER.options().option(Rating.values());

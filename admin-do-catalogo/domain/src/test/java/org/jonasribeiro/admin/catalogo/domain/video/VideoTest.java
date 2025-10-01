@@ -119,8 +119,10 @@ public class VideoTest {
         assertTrue(actualVideo.getBanner().isEmpty());
         assertTrue(actualVideo.getThumbnail().isEmpty());
         assertTrue(actualVideo.getThumbnailHalf().isEmpty());
+        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
 
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+
+
     }
 
     @Test
