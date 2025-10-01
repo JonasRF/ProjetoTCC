@@ -71,11 +71,11 @@ public class CreateVideoUseCaseTest extends UseCaseTest {
         final var aCommand = CreateVideoCommand.with(
                 expectedTitle,
                 expectedDescription,
-                expectedLaunchYear,
+                expectedLaunchYear.getValue(),
                 expectedDuration,
                 expectedOpened,
                 expectedPublished,
-                expectedRating,
+                expectedRating.getName(),
                 asString(expectedCategories),
                 asString(expectedGenres),
                 asString(expectedMembers),
@@ -115,17 +115,13 @@ public class CreateVideoUseCaseTest extends UseCaseTest {
                 Objects.equals(expectedRating, aVideo.getRating()) &&
                 Objects.equals(expectedCategories, aVideo.getCategories()) &&
                 Objects.equals(expectedGenres, aVideo.getGenres()) &&
-                Objects.equals(expectedMembers, aVideo.getCastMembers()) &&
-                Objects.equals(expectedVideo, aVideo.getVideo().get()) &&
-                Objects.equals(expectedTrailer, aVideo.getTrailer().get()) &&
-                Objects.equals(expectedBanner, aVideo.getBanner().get()) &&
-                Objects.equals(expectedThumb, aVideo.getThumbnail().get()) &&
-                Objects.equals(expectedThumbHalf, aVideo.getThumbnailHalf().get())
-                        && aVideo.getVideo().isPresent()
-                        && aVideo.getTrailer().isPresent()
-                        && aVideo.getBanner().isPresent()
-                        && aVideo.getThumbnail().isPresent()
-                        && aVideo.getThumbnailHalf().isPresent()
+                Objects.equals(expectedMembers, aVideo.getCastMembers())&&
+                Objects.equals(expectedVideo, aVideo.getVideo().orElse(null)) &&
+                        Objects.equals(expectedTrailer, aVideo.getTrailer().orElse(null)) &&
+                        Objects.equals(expectedBanner, aVideo.getBanner().orElse(null)) &&
+                        Objects.equals(expectedThumb, aVideo.getThumbnail().orElse(null)) &&
+                        Objects.equals(expectedThumbHalf, aVideo.getThumbnailHalf().orElse(null))
+
         ));
     }
 }

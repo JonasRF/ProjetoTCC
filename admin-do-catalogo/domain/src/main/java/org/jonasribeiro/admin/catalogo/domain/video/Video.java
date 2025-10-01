@@ -18,7 +18,7 @@ public class Video extends AggregateRoot<VideoID> {
     private String title;
     private String description;
     private Year launchedAt;
-    private Double duration;
+    private double duration;
 
     private boolean opened;
     private boolean published;

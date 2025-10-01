@@ -8,8 +8,6 @@ import org.jonasribeiro.admin.catalogo.domain.genre.Genre;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
 
-import java.util.Arrays;
-
 import static io.vavr.API.*;
 
 public class Fixture {
@@ -24,10 +22,10 @@ public class Fixture {
         return FAKER.random().nextInt(2020,2030);
     }
 
-    public static Rating duration() {
-        return FAKER.options().option(
-                Rating.values());
+    public static double duration() {
+        return FAKER.options().option(120.0, 15.5, 35.5, 10.0, 2.0);
     }
+
 
     public static boolean bool(){
         return FAKER.bool().bool();
@@ -78,12 +76,8 @@ public class Fixture {
 
     public static final class Videos {
 
-        public static String rating() {
-            final var values = Arrays.stream(Rating.values())
-                    .map(Rating::name)
-                    .toList().toArray(new String[0]);
-
-            return FAKER.options().option(values);
+        public static Rating rating() {
+            return FAKER.options().option(Rating.values());
         }
 
         public static Resource resource(final Resource.Type type) {
