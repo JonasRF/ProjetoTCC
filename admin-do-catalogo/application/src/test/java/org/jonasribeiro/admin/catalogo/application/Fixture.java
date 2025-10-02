@@ -89,7 +89,7 @@ public class Fixture {
         private static final Genre TECH = Genre.newGenre("Tech",  true);
 
         public static Genre tech() {
-            return TECH.with(TECH);
+            return Genre.with(TECH);
         }
     }
 
@@ -107,7 +107,6 @@ public class Fixture {
                 Set.of(Genres.tech().getId()),
                 Set.of(CastMembers.jonas().getId(), CastMembers.maria().getId())
         );
-
 
         public static Rating rating() {
             return FAKER.options().option(Rating.values());

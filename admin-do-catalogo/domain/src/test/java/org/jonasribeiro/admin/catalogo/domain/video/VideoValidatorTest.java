@@ -46,12 +46,10 @@ public class VideoValidatorTest {
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
-               DomainException.class,
-                () -> validator.validate()
+                DomainException.class,
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
 
         //then
@@ -92,18 +90,15 @@ public class VideoValidatorTest {
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
                 DomainException.class,
-                () -> validator.validate()
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
 
         //then
         Assertions.assertEquals(expectedErrorCount, actualError.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, actualError.getErrors().get(0).message());
-
     }
 
     @Test
@@ -145,12 +140,10 @@ final var expectedDescription = """
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
                 DomainException.class,
-                () -> validator.validate()
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
 
         //then
@@ -187,12 +180,10 @@ final var expectedDescription = """
                     expectedCastMembers
             );
 
-            final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
             //when
             final var actualError = Assertions.assertThrows(
                     DomainException.class,
-                    () -> validator.validate()
+                    () -> actualVideo.validate(new ThrowsValidationHandler())
             );
 
             //then
@@ -289,14 +280,11 @@ final var expectedDescription = """
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
                 DomainException.class,
-                () -> validator.validate()
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
-
         //then
         Assertions.assertEquals(expectedErrorCount, actualError.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, actualError.getErrors().get(0).message());
@@ -331,12 +319,10 @@ final var expectedDescription = """
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
                 DomainException.class,
-                () -> validator.validate()
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
 
         //then
@@ -378,12 +364,10 @@ final var expectedDescription = """
                 expectedCastMembers
         );
 
-        final var validator = new VideoValidator(actualVideo, new ThrowsValidationHandler());
-
         //when
         final var actualError = Assertions.assertThrows(
                 DomainException.class,
-                () -> validator.validate()
+                () -> actualVideo.validate(new ThrowsValidationHandler())
         );
 
         //then

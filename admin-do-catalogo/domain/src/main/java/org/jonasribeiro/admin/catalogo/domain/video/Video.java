@@ -79,6 +79,7 @@ public class Video extends AggregateRoot<VideoID> {
     public void validate(final ValidationHandler handler) {
         new VideoValidator(this, handler).validate();
     }
+
     public Video update(
             final String aTitle,
             final String aDescription,
@@ -289,7 +290,7 @@ public class Video extends AggregateRoot<VideoID> {
 
     public Video setBanner(final ImageMedia banner) {
         this.banner = banner;
-     //   this.updatedAt = Instant.now();
+        this.updatedAt = Instant.now();
         return this;
     }
 

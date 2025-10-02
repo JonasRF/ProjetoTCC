@@ -1,11 +1,9 @@
 package org.jonasribeiro.admin.catalogo.domain.genre;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
-import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 public class GenreID extends Identifier {
@@ -39,9 +37,11 @@ public class GenreID extends Identifier {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CategoryID that)) return false;
-        return value.equals(that.getValue());
+        if (o == null || getClass() != o.getClass()) return false;
+        final GenreID that = (GenreID) o;
+        return getValue().equals(that.getValue());
     }
+
 
     @Override
     public int hashCode() {
