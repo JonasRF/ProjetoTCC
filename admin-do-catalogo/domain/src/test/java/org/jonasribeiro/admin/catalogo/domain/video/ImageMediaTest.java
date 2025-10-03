@@ -45,27 +45,17 @@ public class ImageMediaTest extends UnitTest {
     public void givenInvalidParams_whenCallsWith_ShouldReturnError() {
         Assertions.assertThrows(
                 NullPointerException.class,
-                () ->AudioVideoMedia.with(
-                        null, "Random", "/images", "/videos", MediaStatus.COMPLETED));
+                () -> ImageMedia.with(
+                        null, "Random", "/videos"));
 
         Assertions.assertThrows(
                 NullPointerException.class,
-                () ->AudioVideoMedia.with(
-                        "abc ", "Random", null, "/videos", MediaStatus.COMPLETED));
+                () -> ImageMedia.with(
+                        "abc", null, "/videos"));
 
         Assertions.assertThrows(
                 NullPointerException.class,
-                () ->AudioVideoMedia.with(
-                        "abc", null, "/images", "/videos", MediaStatus.COMPLETED));
-
-        Assertions.assertThrows(
-                NullPointerException.class,
-                () ->AudioVideoMedia.with(
-                        "abc", " ", "/images", null, MediaStatus.COMPLETED));
-
-        Assertions.assertThrows(
-                NullPointerException.class,
-                () ->AudioVideoMedia.with(
-                        "abc", "Random", null, "/videos", MediaStatus.COMPLETED));
+                () -> ImageMedia.with(
+                        "abc", "Random", null));
     }
 }

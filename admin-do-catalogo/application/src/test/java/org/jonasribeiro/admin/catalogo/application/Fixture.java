@@ -5,12 +5,12 @@ import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
 import org.jonasribeiro.admin.catalogo.domain.category.Category;
 import org.jonasribeiro.admin.catalogo.domain.genre.Genre;
-import org.jonasribeiro.admin.catalogo.domain.video.Rating;
-import org.jonasribeiro.admin.catalogo.domain.video.Resource;
-import org.jonasribeiro.admin.catalogo.domain.video.Video;
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
+import org.jonasribeiro.admin.catalogo.domain.video.*;
 
 import java.time.Year;
 import java.util.Set;
+import java.util.UUID;
 
 import static io.vavr.API.*;
 
@@ -41,6 +41,10 @@ public class Fixture {
                 "The Godfather",
                 "The Dark Knight"
         );
+    }
+
+    public static String checksum() {
+        return "03fe62de";
     }
 
     public static Video video() {
@@ -116,14 +120,16 @@ public class Fixture {
             return FAKER.options().option(Rating.values());
         }
 
-        public static Resource resource(final Resource.Type type) {
+        public static Resource resource(final VideoMediaType type) {
             final String contentType = Match(type).of(
-                    Case($(List(Resource.Type.VIDEO, Resource.Type.TRAILER)::contains), "video/mp4"),
+                    Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
                     Case($(), "image/jpg")
             );
+
+            final String checksum = IdUtils.uuid();
             final byte[] content = "Conteudo".getBytes();
 
-            return Resource.with(content, contentType, type.name().toLowerCase(), type);
+            return Resource.with(content, checksum, contentType, type.name().toLowerCase());
         }
 
         public static String description() {
@@ -146,5 +152,24 @@ public class Fixture {
                     """
             );
         }
+
+        public static AudioVideoMedia audioVideo(final VideoMediaType type) {
+            final var checksum = UUID.randomUUID().toString();
+            return AudioVideoMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "video/mp4" + checksum
+            );
+        }
+
+        public static ImageMedia image(final VideoMediaType type) {
+            final var checksum = UUID.randomUUID().toString();
+            return ImageMedia.with(
+                    checksum,
+                    type.name().toLowerCase(),
+                    "/images/" + checksum
+            );
+        }
+
     }
 }

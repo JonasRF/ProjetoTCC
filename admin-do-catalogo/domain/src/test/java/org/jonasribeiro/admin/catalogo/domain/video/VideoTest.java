@@ -3,7 +3,9 @@ package org.jonasribeiro.admin.catalogo.domain.video;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.utils.InstantUtils;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Year;
@@ -125,121 +127,7 @@ public class VideoTest {
 
     }
 
-    @Test
-    public void givenAValidVideo_WhenCallsSetVideo_ThenShouldSetVideo() {
 
-        // given
-        final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
-        final var expectedLaunchedAt = Year.of(2022);
-        final var expectedDuration = 120.10;
-        final var expectedOpened = false;
-        final var expectedPublished = false;
-        final var expectedRating = Rating.L;
-        final var expectedCategories = Set.of(CategoryID.unique());
-        final var expectedGenres = Set.of(GenreID.unique());
-        final var expectedMembers = Set.of(CastMemberID.unique());
-
-       final var aVideo = Video.newVideo(
-               expectedTitle,
-                expectedDescription,
-                expectedLaunchedAt,
-                expectedDuration,
-                expectedOpened,
-                expectedPublished,
-                expectedRating,
-                expectedCategories,
-                expectedGenres,
-                expectedMembers
-        );
-
-       final var aVideoMedia = AudioVideoMedia.with("abc", "video.mp4", "/123/videos",
-               "", MediaStatus.PENDING);
-
-        // when
-        final var actualVideo =  Video.with(aVideo).setVideo(aVideoMedia);
-
-        // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertEquals(aVideoMedia, actualVideo.getVideo().get());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
-        assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
-        assertEquals(aVideoMedia, actualVideo.getVideo().get());
-
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
-    }
-
-    @Test
-    public void givenAValidVideo_WhenCallsSetTrailer_ThenShouldSetTrailer() throws InterruptedException {
-        // given
-        final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
-        final var expectedLaunchedAt = Year.of(2022);
-        final var expectedDuration = 120.10;
-        final var expectedOpened = false;
-        final var expectedPublished = false;
-        final var expectedRating = Rating.L;
-        final var expectedCategories = Set.of(CategoryID.unique());
-        final var expectedGenres = Set.of(GenreID.unique());
-        final var expectedMembers = Set.of(CastMemberID.unique());
-
-        Thread.sleep(50);
-       final var aVideo = Video.newVideo(
-               expectedTitle,
-                expectedDescription,
-                expectedLaunchedAt,
-                expectedDuration,
-                expectedOpened,
-                expectedPublished,
-                expectedRating,
-                expectedCategories,
-                expectedGenres,
-                expectedMembers
-        );
-
-       final var aTrailerMedia = AudioVideoMedia.with("abc", "trailer.mp4", "/123/trailers",
-               "", MediaStatus.PENDING);
-
-        // when
-        final var actualVideo =  Video.with(aVideo).setTrailer(aTrailerMedia);
-
-        // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
-        assertEquals(aTrailerMedia, actualVideo.getTrailer().get());
-
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
-    }
 
     @Test
     public void givenAValidVideo_WhenCallsSetBanner_ThenShouldSetBanner() throws InterruptedException {

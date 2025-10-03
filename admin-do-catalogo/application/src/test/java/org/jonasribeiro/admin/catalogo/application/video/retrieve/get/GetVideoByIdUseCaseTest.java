@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.audioVideo;
+import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.image;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -47,11 +49,11 @@ public class GetVideoByIdUseCaseTest extends UseCaseTest {
                 Fixture.CastMembers.jonas().getId(),
                 Fixture.CastMembers.maria().getId());
 
-        final var expectedVideo = audioVideo(Resource.Type.VIDEO);
-        final var expectedTrailer = audioVideo(Resource.Type.TRAILER);
-        final var expectedBanner = image(Resource.Type.BANNER);
-        final var expectedThumb = image(Resource.Type.THUMBNAIL);
-        final var expectedThumbHalf = image(Resource.Type.THUMBNAIL_HALF);
+        final var expectedVideo = audioVideo(VideoMediaType.VIDEO);
+        final var expectedTrailer = audioVideo(VideoMediaType.TRAILER);
+        final var expectedBanner = image(VideoMediaType.BANNER);
+        final var expectedThumb = image(VideoMediaType.THUMBNAIL);
+        final var expectedThumbHalf = image(VideoMediaType.THUMBNAIL_HALF);
 
         final var aVideo = Video.newVideo(
                 expectedTitle,
@@ -100,25 +102,6 @@ public class GetVideoByIdUseCaseTest extends UseCaseTest {
         Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.createdAt());
     }
 
-    private AudioVideoMedia audioVideo(final Resource.Type type) {
-       final var checksum = UUID.randomUUID().toString();
-       return AudioVideoMedia.with(
-               checksum,
-               type.name().toLowerCase(),
-               "video/mp4" + checksum,
-               "",
-               MediaStatus.PENDING
-       );
-    }
-
-    private ImageMedia image(final Resource.Type type) {
-        final var checksum = UUID.randomUUID().toString();
-        return ImageMedia.with(
-                checksum,
-                type.name().toLowerCase(),
-                "/images/" + checksum
-        );
-    }
 
     @Test
     public void givenAnInvalidId_whenCallsGetVideoById_shouldReturnNotFound() {

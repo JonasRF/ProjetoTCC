@@ -287,7 +287,6 @@ public class Video extends AggregateRoot<VideoID> {
         );
     }
 
-
     public Video setBanner(final ImageMedia banner) {
         this.banner = banner;
         this.updatedAt = Instant.now();
