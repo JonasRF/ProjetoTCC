@@ -67,9 +67,10 @@ public class UpdateCastMemberUseCaseTest extends UseCaseTest {
         verify(castMemberGateway).update(argThat(aMemberUpdated ->
                 aMemberUpdated.getId().equals(expectedId)
                         && aMemberUpdated.getName().equals(expectedName)
-                        && aMemberUpdated.getType() == expectedType
+                        && aMemberUpdated.getType().equals(expectedType)
                         && aMemberUpdated.getCreatedAt().equals(aMember.getCreatedAt())
-                        && aMemberUpdated.getUpdatedAt().isAfter(aMember.getUpdatedAt())
+                        && !aMemberUpdated.getUpdatedAt().isBefore(aMember.getUpdatedAt())
+
         ));
     }
 

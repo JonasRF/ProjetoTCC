@@ -1,11 +1,12 @@
-package org.jonasribeiro.admin.catalogo.application.video;
+package org.jonasribeiro.admin.catalogo.application.video.update;
 
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
 
 import java.util.Optional;
 import java.util.Set;
 
-public record CreateVideoCommand(
+public record UpdateVideoCommand(
+        String id,
         String title,
         String description,
         Integer launchedAt,
@@ -22,7 +23,8 @@ public record CreateVideoCommand(
         Resource thumbnail,
         Resource thumbnailHalf
 ) {
-    public static CreateVideoCommand with(
+    public static UpdateVideoCommand with(
+            final String id,
             final String title,
             final String description,
             final Integer launchedAt,
@@ -39,7 +41,8 @@ public record CreateVideoCommand(
             final Resource thumbnail,
             final Resource thumbnailHalf
     ) {
-        return new CreateVideoCommand(
+        return new UpdateVideoCommand(
+                id,
                 title,
                 description,
                 launchedAt,
@@ -78,7 +81,3 @@ public record CreateVideoCommand(
         return Optional.ofNullable(thumbnailHalf);
     }
 }
-
-
-
-

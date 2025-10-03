@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application.video;
+package org.jonasribeiro.admin.catalogo.application.video.create;
 
 import org.jonasribeiro.admin.catalogo.application.UseCase;
 

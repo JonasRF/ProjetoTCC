@@ -106,7 +106,11 @@ public class Fixture {
                 Set.of(Categories.aulas().getId()),
                 Set.of(Genres.tech().getId()),
                 Set.of(CastMembers.jonas().getId(), CastMembers.maria().getId())
-        );
+            );
+
+        public static Video systemDesign() {
+            return Video.with(SYSTEM_DESIGN);
+        }
 
         public static Rating rating() {
             return FAKER.options().option(Rating.values());
