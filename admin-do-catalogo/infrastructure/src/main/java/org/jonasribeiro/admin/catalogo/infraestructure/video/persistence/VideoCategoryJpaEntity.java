@@ -1,0 +1,62 @@
+package org.jonasribeiro.admin.catalogo.infraestructure.video.persistence;
+
+import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.UUID;
+
+@Entity(name = "VideoCategory")
+@Table(name = "videos_categories")
+public class VideoCategoryJpaEntity {
+
+    @EmbeddedId
+    private VideoCategoryID id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("videoId")
+    private VideoJpaEntity video;
+
+    public VideoCategoryJpaEntity() {
+    }
+
+    private VideoCategoryJpaEntity(final VideoJpaEntity video, final VideoCategoryID id) {
+        this.video = video;
+        this.id = id;
+    }
+
+    public static VideoCategoryJpaEntity from(final VideoJpaEntity video, final CategoryID category) {
+        return new VideoCategoryJpaEntity(
+                video,
+                VideoCategoryID.from(video.getId(), UUID.fromString(category.getValue()))
+                );
+    }
+
+    public VideoCategoryID getId() {
+        return id;
+    }
+
+    public void setId(VideoCategoryID id) {
+        this.id = id;
+    }
+
+    public VideoJpaEntity getVideo() {
+        return video;
+    }
+
+    public void setVideo(VideoJpaEntity video) {
+        this.video = video;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        VideoCategoryJpaEntity that = (VideoCategoryJpaEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(video, that.video);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, video);
+    }
+}
