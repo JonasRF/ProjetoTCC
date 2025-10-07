@@ -4,20 +4,19 @@ import org.jonasribeiro.admin.catalogo.domain.video.AudioVideoMedia;
 import org.jonasribeiro.admin.catalogo.domain.video.MediaStatus;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity(name = "AudioVideoMedia")
-@Table(name = "videos-audio_media")
+@Table(name = "videos_video_media")
 public class AudioVideoMediaJpaEntity {
 
     @Id
     private String id;
 
-    @Column(name = "checksum", nullable = false)
-    private String checksum;
-
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "checksum", nullable = false)
+    private String checksum;
 
     @Column(name = "file_path", nullable = false)
     private String filePath;

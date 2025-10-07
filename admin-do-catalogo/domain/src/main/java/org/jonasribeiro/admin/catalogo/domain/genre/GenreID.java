@@ -22,13 +22,6 @@ public class GenreID extends Identifier {
         return new GenreID(anId);
     }
 
-    public static GenreID from(final UUID anId) {
-        if (anId == null) {
-            throw new IllegalArgumentException("Category ID cannot be null");
-        }
-        return new GenreID(anId.toString().toLowerCase());
-    }
-
     @Override
     public String getValue() {
         return value;
@@ -41,7 +34,6 @@ public class GenreID extends Identifier {
         final GenreID that = (GenreID) o;
         return getValue().equals(that.getValue());
     }
-
 
     @Override
     public int hashCode() {

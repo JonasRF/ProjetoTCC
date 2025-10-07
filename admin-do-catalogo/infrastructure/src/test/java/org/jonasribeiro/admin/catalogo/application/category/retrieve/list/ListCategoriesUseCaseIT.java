@@ -41,7 +41,7 @@ public class ListCategoriesUseCaseIT {
     }
 
     @Test
-    public void givenAValidTerm_whenTermDoesntMatchsPrePersisted_shouldReturnEmptyPage() {
+    public void givenAValidTerm_whenTermDoesMatchPrePersisted_shouldReturnEmptyPage() {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "ji1j3i 1j3i1oj";

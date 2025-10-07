@@ -154,7 +154,7 @@ public class Fixture {
         }
 
         public static AudioVideoMedia audioVideo(final VideoMediaType type) {
-            final var checksum = UUID.randomUUID().toString();
+            final var checksum = IdUtils.uuid();
             return AudioVideoMedia.with(
                     checksum,
                     type.name().toLowerCase(),
@@ -163,7 +163,7 @@ public class Fixture {
         }
 
         public static ImageMedia image(final VideoMediaType type) {
-            final var checksum = UUID.randomUUID().toString();
+            final var checksum = IdUtils.uuid();
             return ImageMedia.with(
                     checksum,
                     type.name().toLowerCase(),

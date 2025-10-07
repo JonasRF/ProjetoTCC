@@ -4,7 +4,6 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity(name = "VideoCategory")
 @Table(name = "videos_categories")
@@ -20,15 +19,15 @@ public class VideoCategoryJpaEntity {
     public VideoCategoryJpaEntity() {
     }
 
-    private VideoCategoryJpaEntity(final VideoJpaEntity video, final VideoCategoryID id) {
+    private VideoCategoryJpaEntity(final VideoCategoryID id, final VideoJpaEntity video) {
         this.video = video;
         this.id = id;
     }
 
     public static VideoCategoryJpaEntity from(final VideoJpaEntity video, final CategoryID category) {
         return new VideoCategoryJpaEntity(
-                video,
-                VideoCategoryID.from(video.getId(), UUID.fromString(category.getValue()))
+                VideoCategoryID.from(video.getId(),category.getValue()),
+                video
                 );
     }
 

@@ -71,7 +71,7 @@ public class ListCastMemberUseCaseIT {
         Assertions.assertEquals(expectedPage, actualOutput.currentPage());
         Assertions.assertEquals(expectedPerPage, actualOutput.perPage());
         Assertions.assertEquals(expectedTotal, actualOutput.total());
-        Assertions.assertFalse(
+        Assertions.assertTrue(
                 expectedItems.size() == actualOutput.items().size()
                         && expectedItems.containsAll(actualOutput.items())
         );

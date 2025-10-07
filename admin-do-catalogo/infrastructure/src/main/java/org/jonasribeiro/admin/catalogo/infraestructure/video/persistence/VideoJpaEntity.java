@@ -1,6 +1,8 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.video.persistence;
 
+import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
 import org.jonasribeiro.admin.catalogo.domain.video.Video;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoID;
@@ -11,7 +13,6 @@ import java.time.Year;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Table(name = "videos")
@@ -19,7 +20,8 @@ import java.util.stream.Collectors;
 public class VideoJpaEntity {
 
     @Id
-    private UUID id;
+    @Column(name = "id", nullable = false)
+    private String id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -72,12 +74,20 @@ public class VideoJpaEntity {
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VideoCategoryJpaEntity> categories;
 
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VideoGenreJpaEntity> genres;
+
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<VideoCastMemberJpaEntity> castMembers;
+
     public VideoJpaEntity() {
-        this.categories = new HashSet<>();
+        this.categories = new HashSet<>(3);
+        this.genres = new HashSet<>(3);
+        this.castMembers = new HashSet<>(3);
     }
 
     private VideoJpaEntity(
-            final UUID id,
+            final String id,
             final String title,
             final String description,
             final Integer yearLaunched,
@@ -108,12 +118,14 @@ public class VideoJpaEntity {
         this.banner = banner;
         this.thumbnail = thumbnail;
         this.thumbnailHalf = thumbnailHalf;
-        this.categories = new HashSet<>();
+        this.categories = new HashSet<>(3);
+        this.genres = new HashSet<>(3);
+        this.castMembers = new HashSet<>(3);
     }
 
     public static VideoJpaEntity from(final Video aVideo) {
         final var entity = new VideoJpaEntity(
-                UUID.fromString(aVideo.getId().getValue()),
+                aVideo.getId().getValue(),
                 aVideo.getTitle(),
                 aVideo.getDescription(),
                 aVideo.getLaunchedAt().getValue(),
@@ -141,12 +153,26 @@ public class VideoJpaEntity {
         );
         aVideo.getCategories()
                 .forEach(entity::addCategory);
+
+        aVideo.getGenres()
+                .forEach(entity::addGenre);
+
+            aVideo.getCastMembers()
+                .forEach(entity::addCastMember);
         
         return  entity;
     }
 
     public void addCategory(final CategoryID categoryID) {
         this.categories.add(VideoCategoryJpaEntity.from(this, categoryID));
+    }
+
+    public void addGenre(final GenreID genreID) {
+        this.genres.add(VideoGenreJpaEntity.from(this, genreID));
+    }
+
+    public void addCastMember(final CastMemberID castMemberID) {
+        this.castMembers.add(VideoCastMemberJpaEntity.from(this, castMemberID));
     }
 
     public Video toAggregate() {
@@ -179,16 +205,20 @@ public class VideoJpaEntity {
                 getCategories().stream()
                         .map(it -> CategoryID.from(it.getId().getCategoryId()))
                         .collect(Collectors.toSet()),
-                null,
-                null
+                getGenres().stream()
+                .map(it -> GenreID.from(it.getId().getGenreId()))
+                        .collect(Collectors.toSet()),
+                getCastMembers().stream()
+                .map(it -> CastMemberID.from(it.getId().getCastMemberId()))
+                        .collect(Collectors.toSet())
         );
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -310,5 +340,21 @@ public class VideoJpaEntity {
 
     public void setCategories(Set<VideoCategoryJpaEntity> categories) {
         this.categories = categories;
+    }
+
+    public Set<VideoGenreJpaEntity> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<VideoGenreJpaEntity> genres) {
+        this.genres = genres;
+    }
+
+    public Set<VideoCastMemberJpaEntity> getCastMembers() {
+        return castMembers;
+    }
+
+    public void setCastMembers(Set<VideoCastMemberJpaEntity> castMembers) {
+        this.castMembers = castMembers;
     }
 }

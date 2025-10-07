@@ -9,6 +9,7 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 import org.jonasribeiro.admin.catalogo.domain.video.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -942,7 +943,7 @@ public class CreateVideoUseCaseTest extends UseCaseTest {
     private void mockImageMedia() {
         when(this.mediaResourceGateway.storeImage(any(), any())).thenAnswer(it -> {
             final var aResource = it.getArgument(1, Resource.class);
-            return ImageMedia.with(UUID.randomUUID().toString(), aResource.name(), "/img");
+            return ImageMedia.with(IdUtils.uuid(), aResource.name(), "/img");
         });
     }
 

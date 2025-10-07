@@ -1,6 +1,7 @@
 package org.jonasribeiro.admin.catalogo.domain.castmember;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 
 import java.util.Objects;
 
@@ -13,7 +14,7 @@ public class CastMemberID extends Identifier {
     }
 
     public static CastMemberID unique() {
-        return new CastMemberID(java.util.UUID.randomUUID().toString());
+        return new CastMemberID(IdUtils.uuid());
     }
 
     public static CastMemberID from(final String anId) {

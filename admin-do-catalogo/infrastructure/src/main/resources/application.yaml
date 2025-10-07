@@ -15,6 +15,7 @@ spring:
     url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=true&ServerTimezone=UTC&characterEncoding=UTF-8
     username: ${mysql.username}
     password: ${mysql.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       auto-commit: false # Enable auto-commit for transactions
       maximum-pool-size: 20 # Maximum number of connections in the pool
@@ -31,6 +32,7 @@ spring:
          "[hibernate.dialect]": org.hibernate.dialect.MySQL8Dialect # Use MySQL 8 dialect
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
+
 
 
 
