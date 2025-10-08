@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.video.retrieve.get;
 
-import org.jonasribeiro.admin.catalogo.application.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 import org.jonasribeiro.admin.catalogo.domain.video.*;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.audioVideo;
-import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.image;
+import static org.jonasribeiro.admin.catalogo.domain.Fixture.Videos.audioVideo;
+import static org.jonasribeiro.admin.catalogo.domain.Fixture.Videos.image;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

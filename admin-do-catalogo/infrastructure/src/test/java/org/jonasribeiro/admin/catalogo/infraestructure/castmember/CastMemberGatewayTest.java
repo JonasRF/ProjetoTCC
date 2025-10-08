@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.castmember;
 
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
@@ -13,8 +14,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.jonasribeiro.admin.catalogo.Fixture.CastMember.type;
-import static org.jonasribeiro.admin.catalogo.Fixture.name;
+import static org.jonasribeiro.admin.catalogo.domain.Fixture.CastMembers.type;
+import static org.jonasribeiro.admin.catalogo.domain.Fixture.name;
 
 @MySQLGatewayTest
 public class CastMemberGatewayTest {

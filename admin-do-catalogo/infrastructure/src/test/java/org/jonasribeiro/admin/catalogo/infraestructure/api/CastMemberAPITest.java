@@ -2,7 +2,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jonasribeiro.admin.catalogo.ControllerTest;
-import org.jonasribeiro.admin.catalogo.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.castmember.create.CreateCastMemberOutput;
 import org.jonasribeiro.admin.catalogo.application.castmember.create.DefaultCreateCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.delete.DefaultDeleteCastMemberUseCase;
@@ -66,7 +66,7 @@ public class CastMemberAPITest {
     public void givenAValidCommand_whenCallsCreateCastMember_shouldReturnItsIdentifier() throws Exception {
         // given
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var expectedId = CastMemberID.from("o1i2u3i1o");
 
         final var aCommand =
@@ -99,7 +99,7 @@ public class CastMemberAPITest {
     public void givenAnInvalidName_whenCallsCreateCastMember_thenShouldReturnNotification() throws Exception {
         // given
         final String expectedName = null;
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
         final var expectedErrorMessage = "'name' should not be null";
         final var expectedErrorCount = 1;
 
@@ -132,7 +132,7 @@ public class CastMemberAPITest {
     public void givenAValidatorId_whenCallsGetById_shouldReturnIt() throws Exception {
         // given
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         final var aMember = CastMember.newMember(expectedName, expectedType);
         final var expectedId = aMember.getId().getValue();
@@ -187,7 +187,7 @@ public class CastMemberAPITest {
     public void givenAValidCommand_whenCallsUpdateCastMember_shouldReturnItsIdentifier() throws Exception {
         // given
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         final var aMember = CastMember.newMember(expectedName, expectedType);
         final var expectedId = aMember.getId();
@@ -225,7 +225,7 @@ public class CastMemberAPITest {
         final var expectedId = aMember.getId();
 
         final String expectedName = null;
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         final var expectedErrorMessage = "'name' should not be null";
         final var expectedErrorCount = 1;
@@ -263,7 +263,7 @@ public class CastMemberAPITest {
         final var expectedId = CastMemberID.from("123");
 
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         final var aCommand = new UpdateCastMemberRequest(expectedName, expectedType);
 
@@ -314,7 +314,7 @@ public class CastMemberAPITest {
     @Test
     public void givenAValidParams_whenCallsListCastMembers_thenShouldReturn() throws Exception {
         // given
-       final var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMember.type());
+       final var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMembers.type());
 
         final var expectedPage = 0;
         final var expectedPerPage = 10;
@@ -366,7 +366,7 @@ public class CastMemberAPITest {
     @Test
     public void givenEmptyParams_whenCallsListCastMembers_thenShouldUseDefaultsAndReturnIt() throws Exception {
         // given
-        final var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMember.type());
+        final var aMember = CastMember.newMember(Fixture.name(), Fixture.CastMembers.type());
 
         final var expectedPage = 0;
         final var expectedPerPage = 10;

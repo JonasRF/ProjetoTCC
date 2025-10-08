@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.jonasribeiro.admin.catalogo.domain.utils.ColletionsUtils.mapTo;
-import static org.jonasribeiro.admin.catalogo.domain.utils.ColletionsUtils.nullIfEmpty;
+import static org.jonasribeiro.admin.catalogo.domain.utils.CollectionsUtils.mapTo;
+import static org.jonasribeiro.admin.catalogo.domain.utils.CollectionsUtils.nullIfEmpty;
 
 @Component
 public class DefaultVideoGateway implements VideoGateway {

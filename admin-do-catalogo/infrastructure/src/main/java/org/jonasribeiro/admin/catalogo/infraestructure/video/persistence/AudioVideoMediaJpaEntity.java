@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.video.persistence;
 
+import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 import org.jonasribeiro.admin.catalogo.domain.video.AudioVideoMedia;
 import org.jonasribeiro.admin.catalogo.domain.video.MediaStatus;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 public class AudioVideoMediaJpaEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Column(name = "name", nullable = false)
@@ -24,7 +26,7 @@ public class AudioVideoMediaJpaEntity {
     @Column(name = "encoded_path", nullable = false)
     private String encodedPath;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "media_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private MediaStatus status;
 
@@ -73,8 +75,9 @@ public class AudioVideoMediaJpaEntity {
         return id;
     }
 
-    public void setId(String id) {
+    public AudioVideoMediaJpaEntity setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getChecksum() {

@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.application;
+package org.jonasribeiro.admin.catalogo.domain;
 
 import com.github.javafaker.Faker;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;

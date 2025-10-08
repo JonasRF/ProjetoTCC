@@ -4,9 +4,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public final class ColletionsUtils {
+public final class CollectionsUtils {
 
-    private ColletionsUtils() {
+    private CollectionsUtils() {
     }
 
     public static <IN, OUT> Set<OUT> mapTo(final Set<IN> list, final Function<IN, OUT> mapper) {

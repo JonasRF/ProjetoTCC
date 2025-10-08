@@ -15,9 +15,9 @@ public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
 
     @Query("""
             select new org.jonasribeiro.admin.catalogo.domain.video.VideoPreview(
-               v.id as id, 
-               v.title as title, 
-               v.description as description, 
+               v.id as id,\s
+               v.title as title,\s
+               v.description as description,\s
                v.createdAt as createdAt,
                v.updatedAt as updatedAt
             )
@@ -25,7 +25,7 @@ public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
             join v.castMembers members
             join v.categories categories
             join v.genres genres
-            where 
+            where\s
                 ( :terms is null or UPPER(v.title) like :terms )
             and
                 ( :castMembers is null or members.id.castMemberId in :castMembers )
@@ -33,7 +33,7 @@ public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
                 ( :categories is null or categories.id.categoryId in :categories )
             and
                 ( :genres is null or genres.id.genreId in :genres )
-            """)
+           \s""")
     Page<VideoPreview> findAll(
           @Param("terms") String terms,
           @Param("castMembers") Iterable<String> castMembers,

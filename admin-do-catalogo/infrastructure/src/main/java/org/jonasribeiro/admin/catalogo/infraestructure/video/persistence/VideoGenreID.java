@@ -1,9 +1,11 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.video.persistence;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class VideoGenreID implements Serializable {
 
     @Column(name = "video_id", nullable = false)
@@ -40,15 +42,16 @@ public class VideoGenreID implements Serializable {
         return videoId;
     }
 
-    public void setVideoId(String videoId) {
+    public VideoGenreID setVideoId(String videoId) {
         this.videoId = videoId;
+        return this;
     }
-
     public String getGenreId() {
         return genreId;
     }
 
-    public void setGenreId(String genreId) {
+    public VideoGenreID setGenreId(String genreId) {
         this.genreId = genreId;
+        return this;
     }
 }

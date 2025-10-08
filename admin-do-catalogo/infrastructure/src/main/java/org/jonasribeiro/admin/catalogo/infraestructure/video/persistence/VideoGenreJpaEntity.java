@@ -35,16 +35,18 @@ public class VideoGenreJpaEntity {
         return id;
     }
 
-    public void setId(VideoGenreID id) {
+    public VideoGenreJpaEntity setId(VideoGenreID id) {
         this.id = id;
+        return this;
     }
 
     public VideoJpaEntity getVideo() {
         return video;
     }
 
-    public void setVideo(VideoJpaEntity video) {
+    public VideoGenreJpaEntity setVideo(VideoJpaEntity video) {
         this.video = video;
+        return this;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.castmember.models;
 
 import org.assertj.core.api.Assertions;
-import org.jonasribeiro.admin.catalogo.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.JacksonTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ class CastMemberResponseTest {
     public void testMarshall() throws Exception {
         final var expectedId = "123";
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type().name();
+        final var expectedType = Fixture.CastMembers.type().name();
         final var expectedCreatedAt = Instant.now().toString();
         final var expectedUpdatedAt = Instant.now().toString();
 

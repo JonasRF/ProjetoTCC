@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list;
 
-import org.jonasribeiro.admin.catalogo.application.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;

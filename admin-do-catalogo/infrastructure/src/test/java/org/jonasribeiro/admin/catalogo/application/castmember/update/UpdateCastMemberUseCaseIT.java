@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.castmember.update;
 
-import org.jonasribeiro.admin.catalogo.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
@@ -142,7 +142,7 @@ public class UpdateCastMemberUseCaseIT {
         // given
         final var expecteId = CastMemberID.from("");
         final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMember.type();
+        final var expectedType = Fixture.CastMembers.type();
 
         final var expectedErrorMessage = "CastMember with ID 123 was not found".formatted(expecteId.getValue());
 

@@ -317,16 +317,4 @@ public class Video extends AggregateRoot<VideoID> {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Video video = (Video) o;
-        return Objects.equals(title, video.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), title);
-    }
 }

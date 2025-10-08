@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.video.retrieve.list;
 
-import org.jonasribeiro.admin.catalogo.application.Fixture;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoGateway;

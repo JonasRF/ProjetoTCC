@@ -21,7 +21,7 @@ public class AudioVideoMedia extends ValueObject {
             final String encodedLocation,
             final MediaStatus status
     ) {
-        this.id = Objects.requireNonNull(id);
+        this.id = Objects.requireNonNull(id, IdUtils::uuid);
         this.checksum = Objects.requireNonNull(checksum);
         this.name = Objects.requireNonNull(name);
         this.rawLocation = Objects.requireNonNull(rawLocation);

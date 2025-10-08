@@ -17,12 +17,12 @@ CREATE TABLE videos_image_media (
 
 CREATE TABLE videos(
     id CHAR(32) NOT NULL PRIMARY KEY,
-   title VARCHAR(255) NOT NULL,
-   description VARCHAR(1000) NOT NULL,
-   year_launched INT NOT NULL,
-   opened BOOLEAN NOT NULL DEFAULT FALSE,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    year_launched INT NOT NULL,
+    opened BOOLEAN NOT NULL DEFAULT FALSE,
     published BOOLEAN NOT NULL DEFAULT FALSE,
-    rating VARCHAR(5),
+    rating VARCHAR(20),
     duration DECIMAL(5, 2) NOT NULL,
     created_at DATETIME(6) NOT NULL,
     updated_at DATETIME(6) NOT NULL,

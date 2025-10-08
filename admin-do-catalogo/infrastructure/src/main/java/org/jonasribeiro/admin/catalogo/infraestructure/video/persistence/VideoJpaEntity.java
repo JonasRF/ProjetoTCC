@@ -3,9 +3,11 @@ package org.jonasribeiro.admin.catalogo.infraestructure.video.persistence;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.utils.CollectionsUtils;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
 import org.jonasribeiro.admin.catalogo.domain.video.Video;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoID;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -357,4 +359,17 @@ public class VideoJpaEntity {
     public void setCastMembers(Set<VideoCastMemberJpaEntity> castMembers) {
         this.castMembers = castMembers;
     }
+
+    public Set<CategoryID> getCategoryIDs() {
+        return CollectionsUtils.mapTo(getCategories(), it -> CategoryID.from(it.getId().getCategoryId()));
+    }
+
+    public Set<GenreID> getGenreIDs() {
+        return CollectionsUtils.mapTo(getGenres(), it -> GenreID.from(it.getId().getGenreId()));
+    }
+
+    public Set<CastMemberID> getCastMemberIDs() {
+        return CollectionsUtils.mapTo(getCastMembers(), it -> CastMemberID.from(it.getId().getCastMemberId()));
+    }
+
 }
