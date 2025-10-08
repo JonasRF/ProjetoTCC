@@ -1,7 +1,6 @@
 package org.jonasribeiro.admin.catalogo;
 
 import com.github.javafaker.Faker;
-import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
 
 public class Fixture {
@@ -16,6 +15,10 @@ public class Fixture {
 
         public static CastMemberType type() {
             return FAKER.options().option(CastMemberType.ACTOR, CastMemberType.DIRECTOR);
+        }
+
+        public static String name() {
+            return FAKER.options().option(name());
         }
     }
 }

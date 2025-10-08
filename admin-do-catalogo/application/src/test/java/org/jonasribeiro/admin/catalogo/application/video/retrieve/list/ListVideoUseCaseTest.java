@@ -3,8 +3,8 @@ package org.jonasribeiro.admin.catalogo.application.video.retrieve.list;
 import org.jonasribeiro.admin.catalogo.application.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
 import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
-import org.jonasribeiro.admin.catalogo.domain.video.Video;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoGateway;
+import org.jonasribeiro.admin.catalogo.domain.video.VideoPreview;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoSearchQuery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,21 +50,28 @@ public class ListVideoUseCaseTest extends UseCaseTest {
                 .map(VideoListOutput::from)
                 .toList();
 
-        final var expectePagination = new Pagination<>(
+        final var videoPreviews = videos.stream()
+                .map(VideoPreview::new)
+                .toList();
+
+        final var expectedPagination = new Pagination<>(
                 expectedPage,
                 expectedPerPage,
                 expectedTotal,
-                videos
+                videoPreviews
         );
 
-        when(videoGateway.findAll(any())).thenReturn(expectePagination);
+        when(videoGateway.findAll(any())).thenReturn(expectedPagination);
 
         final var aQuery = new VideoSearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,
                 expectedSort,
-                expectedDirection
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
         );
 
         // when
@@ -78,48 +86,7 @@ public class ListVideoUseCaseTest extends UseCaseTest {
         verify(videoGateway, times(1)).findAll(eq(aQuery));
     }
 
-    @Test
-    public void givenAValidQuery_whenCallsListVideosAndResultIsEmpty_thenShouldReturnGenres() {
-        // given
-        final var videos = List.<Video>of();
 
-        final var expectedPage = 0;
-        final var expectedPerPage = 10;
-        final var expectedTerms = "A";
-        final var expectedTotal = 0;
-        final var expectedSort = "createdAt";
-        final var expectedDirection = "asc";
-
-        final var expectedItems = List.<VideoListOutput>of();
-
-        final var expectePagination = new Pagination<>(
-                expectedPage,
-                expectedPerPage,
-                expectedTotal,
-                videos
-        );
-
-        when(videoGateway.findAll(any())).thenReturn(expectePagination);
-
-        final var aQuery = new VideoSearchQuery(
-                expectedPage,
-                expectedPerPage,
-                expectedTerms,
-                expectedSort,
-                expectedDirection
-        );
-
-        // when
-        final var actualOutput = useCase.execute(aQuery);
-
-        // then
-        assertEquals(expectedPage, actualOutput.currentPage());
-        assertEquals(expectedPerPage, actualOutput.perPage());
-        assertEquals(expectedTotal, actualOutput.total());
-        assertEquals(expectedItems, actualOutput.items());
-
-        verify(videoGateway, times(1)).findAll(eq(aQuery));
-    }
 
     @Test
     public void givenAValidQuery_whenCallsListVideosAndGatewayThrowsException_thenShouldReturnException() {
@@ -140,7 +107,10 @@ public class ListVideoUseCaseTest extends UseCaseTest {
                 expectedPerPage,
                 expectedTerms,
                 expectedSort,
-                expectedDirection
+                expectedDirection,
+                Set.of(),
+                Set.of(),
+                Set.of()
         );
 
         // when

@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.application.castmember.delete;
 
-import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
+import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.infraestructure.castmember.persistence.CastMemberJpaEntity;
@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-
-import javax.validation.constraints.AssertTrue;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;

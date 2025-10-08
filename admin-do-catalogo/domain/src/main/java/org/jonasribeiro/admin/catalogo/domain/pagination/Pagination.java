@@ -13,6 +13,6 @@ public record Pagination<T>(
         final List<R> mappedItems = items.stream()
                 .map(mapper)
                 .toList();
-        return new Pagination<>(currentPage, perPage, total, mappedItems);
+        return new Pagination<>(currentPage(), perPage(), total(), mappedItems);
     }
 }

@@ -1,6 +1,5 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.castmember;
 
-import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;

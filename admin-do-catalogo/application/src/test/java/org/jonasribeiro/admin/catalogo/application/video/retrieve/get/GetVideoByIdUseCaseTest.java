@@ -13,7 +13,6 @@ import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.audioVideo;
 import static org.jonasribeiro.admin.catalogo.application.Fixture.Videos.image;

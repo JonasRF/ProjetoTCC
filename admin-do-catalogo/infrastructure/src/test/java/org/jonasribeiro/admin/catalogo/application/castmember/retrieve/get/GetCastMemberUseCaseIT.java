@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.application.castmember.retrieve.get;
 
-import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
+import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;

@@ -1,10 +1,7 @@
-package org.jonasribeiro.admin.catalogo.application.castmember;
+package org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list;
 
 import org.jonasribeiro.admin.catalogo.Fixture;
 import org.jonasribeiro.admin.catalogo.IntegrationTest;
-import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list.CastMemberListOutput;
-import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list.ListCastMembersUseCase;
-import org.jonasribeiro.admin.catalogo.application.castmember.update.UpdateCasMemberUseCase;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.pagination.SearchQuery;
@@ -18,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 

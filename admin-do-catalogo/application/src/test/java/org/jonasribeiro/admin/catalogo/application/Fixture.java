@@ -10,7 +10,6 @@ import org.jonasribeiro.admin.catalogo.domain.video.*;
 
 import java.time.Year;
 import java.util.Set;
-import java.util.UUID;
 
 import static io.vavr.API.*;
 
@@ -110,7 +109,7 @@ public class Fixture {
                 Set.of(Categories.aulas().getId()),
                 Set.of(Genres.tech().getId()),
                 Set.of(CastMembers.jonas().getId(), CastMembers.maria().getId())
-            );
+        );
 
         public static Video systemDesign() {
             return Video.with(SYSTEM_DESIGN);
@@ -142,14 +141,14 @@ public class Fixture {
                              Disclaimer: The following description contains spoilers for the movie "Inception." 
                             If you haven't seen the film yet, proceed with caution.
                             """,
-            """
-                    Neste vídeo você entenderá o conceito de Inception,
-                    um thriller de ficção científica dirigido por Christopher Nolan.
-                    A trama gira em torno de Dom Cobb, um ladrão especializado em extrair segredos
-                    do subconsciente durante o estado de sonho.
-                    Cobb é oferecido uma chance de redenção: plantar uma ideia na mente de alguém,
-                    um processo conhecido como "inception".
                     """
+                            Neste vídeo você entenderá o conceito de Inception,
+                            um thriller de ficção científica dirigido por Christopher Nolan.
+                            A trama gira em torno de Dom Cobb, um ladrão especializado em extrair segredos
+                            do subconsciente durante o estado de sonho.
+                            Cobb é oferecido uma chance de redenção: plantar uma ideia na mente de alguém,
+                            um processo conhecido como "inception".
+                            """
             );
         }
 
