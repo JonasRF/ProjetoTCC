@@ -31,6 +31,19 @@ public class VideoGenreJpaEntity {
         );
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VideoGenreJpaEntity that = (VideoGenreJpaEntity) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getVideo(), that.getVideo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getVideo());
+    }
+
     public VideoGenreID getId() {
         return id;
     }
@@ -47,17 +60,5 @@ public class VideoGenreJpaEntity {
     public VideoGenreJpaEntity setVideo(VideoJpaEntity video) {
         this.video = video;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        VideoGenreJpaEntity that = (VideoGenreJpaEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(video, that.video);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, video);
     }
 }

@@ -17,17 +17,18 @@ public class VideoGenreID implements Serializable {
     public VideoGenreID() {
     }
 
-    private VideoGenreID( final String genreId, final String videoId) {
-        this.genreId = genreId;
+    private VideoGenreID(final String videoId, final String genreId) {
         this.videoId = videoId;
+        this.genreId = genreId;
     }
 
-    public static VideoGenreID from( final String genreId, final String videoId) {
-        return new VideoGenreID(genreId, videoId);
+    public static VideoGenreID from(final String videoId, final String genreId) {
+        return new VideoGenreID(videoId, genreId);
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VideoGenreID that = (VideoGenreID) o;
         return Objects.equals(videoId, that.videoId) && Objects.equals(genreId, that.genreId);
@@ -46,6 +47,7 @@ public class VideoGenreID implements Serializable {
         this.videoId = videoId;
         return this;
     }
+
     public String getGenreId() {
         return genreId;
     }

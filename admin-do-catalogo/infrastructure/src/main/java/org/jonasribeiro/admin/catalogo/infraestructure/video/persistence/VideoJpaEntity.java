@@ -7,7 +7,6 @@ import org.jonasribeiro.admin.catalogo.domain.utils.CollectionsUtils;
 import org.jonasribeiro.admin.catalogo.domain.video.Rating;
 import org.jonasribeiro.admin.catalogo.domain.video.Video;
 import org.jonasribeiro.admin.catalogo.domain.video.VideoID;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -41,7 +40,6 @@ public class VideoJpaEntity {
     private boolean published;
 
     @Column(name = "rating")
-    @Enumerated(EnumType.STRING)
     private Rating rating;
 
     @Column(name = "duration", precision = 2)
@@ -340,35 +338,37 @@ public class VideoJpaEntity {
         return categories;
     }
 
-    public void setCategories(Set<VideoCategoryJpaEntity> categories) {
+    public VideoJpaEntity setCategories(Set<VideoCategoryJpaEntity> categories) {
         this.categories = categories;
+        return this;
     }
-
     public Set<VideoGenreJpaEntity> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<VideoGenreJpaEntity> genres) {
+    public VideoJpaEntity setGenres(Set<VideoGenreJpaEntity> genres) {
         this.genres = genres;
+        return this;
     }
 
     public Set<VideoCastMemberJpaEntity> getCastMembers() {
         return castMembers;
     }
 
-    public void setCastMembers(Set<VideoCastMemberJpaEntity> castMembers) {
+    public VideoJpaEntity setCastMembers(Set<VideoCastMemberJpaEntity> castMembers) {
         this.castMembers = castMembers;
+        return this;
     }
 
-    public Set<CategoryID> getCategoryIDs() {
+    public Set<CategoryID> getCategoriesID() {
         return CollectionsUtils.mapTo(getCategories(), it -> CategoryID.from(it.getId().getCategoryId()));
     }
 
-    public Set<GenreID> getGenreIDs() {
+    public Set<GenreID> getGenreID() {
         return CollectionsUtils.mapTo(getGenres(), it -> GenreID.from(it.getId().getGenreId()));
     }
 
-    public Set<CastMemberID> getCastMemberIDs() {
+    public Set<CastMemberID> getCastMemberID() {
         return CollectionsUtils.mapTo(getCastMembers(), it -> CastMemberID.from(it.getId().getCastMemberId()));
     }
 

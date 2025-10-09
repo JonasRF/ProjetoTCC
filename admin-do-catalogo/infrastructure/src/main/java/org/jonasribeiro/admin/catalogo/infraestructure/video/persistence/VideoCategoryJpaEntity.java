@@ -35,23 +35,26 @@ public class VideoCategoryJpaEntity {
         return id;
     }
 
-    public void setId(VideoCategoryID id) {
+    public VideoCategoryJpaEntity setId(VideoCategoryID id) {
         this.id = id;
+        return this;
     }
 
     public VideoJpaEntity getVideo() {
         return video;
     }
 
-    public void setVideo(VideoJpaEntity video) {
+    public VideoCategoryJpaEntity setVideo(VideoJpaEntity video) {
         this.video = video;
+        return this;
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VideoCategoryJpaEntity that = (VideoCategoryJpaEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(video, that.video);
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getVideo(), that.getVideo());
     }
 
     @Override
