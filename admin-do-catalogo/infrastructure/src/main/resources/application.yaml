@@ -1,3 +1,22 @@
+google:
+  cloud:
+    credentials: ${GOOGLE_CLOUD_CREDENTIALS}
+    project-id: ${GOOGLE_CLOUD_PROJECT_ID}
+    storage:
+      catalogo-videos:
+        bucket: catalogo_videos_tcc
+        connectTimeout: 1000
+        readTimeout: 2000
+        retryDelay: 50
+        retry-max-attempts: 2
+        retry-max-delay: 50
+        retry-multiplier: 1.0
+
+logging:
+  level:
+    ROOT: INFO
+    org.jonasribeiro.admin.catalogo: DEBUG
+
 server:
     port: 8080
     servlet:
@@ -32,6 +51,10 @@ spring:
          "[hibernate.dialect]": org.hibernate.dialect.MySQL8Dialect # Use MySQL 8 dialect
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
+storage:
+  catalogo-videos:
+    filename-pattern: type-{type}
+    location-pattern: videoId-{videoId}
 
 
 

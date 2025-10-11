@@ -1,7 +1,6 @@
 package org.jonasribeiro.admin.catalogo.application.video.create;
 
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
-
 import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
@@ -10,7 +9,7 @@ import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
-import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
+import org.jonasribeiro.admin.catalogo.domain.resource.VideoResource;
 import org.jonasribeiro.admin.catalogo.domain.video.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -943,19 +945,15 @@ public class CreateVideoUseCaseTest extends UseCaseTest {
 
     private void mockImageMedia() {
         when(this.mediaResourceGateway.storeImage(any(), any())).thenAnswer(it -> {
-            final var aResource = it.getArgument(1, Resource.class);
-            return ImageMedia.with(IdUtils.uuid(), aResource.name(), "/img");
+            final var aResource = it.getArgument(1, VideoResource.class);
+            return Fixture.Videos.image(aResource.type());
         });
     }
 
     private void mockAudioVideoMedia() {
         when(mediaResourceGateway.storeAudioVideo(any(), any())).thenAnswer(t -> {
-            final var resource = t.getArgument(1, Resource.class); // Corrigido aqui
-            return AudioVideoMedia.with(
-                    resource.checksum(),
-                    resource.name(),
-                    "/img"
-            );
+            final var resource = t.getArgument(1, VideoResource.class); // Corrigido aqui
+            return Fixture.Videos.audioVideo(resource.type());
         });
     }
 }

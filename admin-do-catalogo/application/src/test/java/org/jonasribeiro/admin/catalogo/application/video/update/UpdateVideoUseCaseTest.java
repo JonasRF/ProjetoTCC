@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.application.video.update;
 
-import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.UseCaseTest;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberGateway;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryGateway;
@@ -11,7 +11,7 @@ import org.jonasribeiro.admin.catalogo.domain.exceptions.InternalErrorException;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
-import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
+import org.jonasribeiro.admin.catalogo.domain.resource.VideoResource;
 import org.jonasribeiro.admin.catalogo.domain.video.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -1121,20 +1121,15 @@ public class UpdateVideoUseCaseTest extends UseCaseTest {
 
     private void mockImageMedia() {
         when(this.mediaResourceGateway.storeImage(any(), any())).thenAnswer(it -> {
-            final var aResource = it.getArgument(1, Resource.class);
-            return ImageMedia.with(IdUtils.uuid(), aResource.name(), "/img");
+            final var aResource = it.getArgument(1, VideoResource.class);
+            return Fixture.Videos.image(aResource.type());
         });
     }
 
     private void mockAudioVideoMedia() {
-        when(this.mediaResourceGateway.storeAudioVideo(any(), any())).thenAnswer(it -> {
-            final var aResource = it.getArgument(1, Resource.class);
-
-            return AudioVideoMedia.with(
-                    aResource.checksum(),
-                    aResource.name(),
-                    "/img"
-            );
+        when(mediaResourceGateway.storeAudioVideo(any(), any())).thenAnswer(t -> {
+            final var resource = t.getArgument(1, VideoResource.class); // Corrigido aqui
+            return Fixture.Videos.audioVideo(resource.type());
         });
     }
 }

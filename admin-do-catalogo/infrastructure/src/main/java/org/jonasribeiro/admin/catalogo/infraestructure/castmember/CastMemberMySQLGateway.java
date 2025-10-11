@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Component
 public class CastMemberMySQLGateway implements CastMemberGateway {
@@ -73,7 +74,12 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
 
     @Override
     public List<CastMemberID> existsByIds(Iterable<CastMemberID> ids) {
-        throw new UnsupportedOperationException();
+        final var idsValues = StreamSupport.stream(ids.spliterator(), false)
+                .map(CastMemberID::getValue)
+                .toList();
+        return this.castMemberRepository.existsByIds(idsValues).stream()
+                .map(CastMemberID::from)
+                .toList();
     }
 
     private Specification<CastMemberJpaEntity> assembleSpecification(final String terms) {

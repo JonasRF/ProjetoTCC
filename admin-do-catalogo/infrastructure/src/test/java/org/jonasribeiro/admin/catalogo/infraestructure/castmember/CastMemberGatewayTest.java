@@ -1,6 +1,5 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.castmember;
 
-import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.MySQLGatewayTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
@@ -13,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.jonasribeiro.admin.catalogo.domain.Fixture.CastMembers.type;
 import static org.jonasribeiro.admin.catalogo.domain.Fixture.name;
@@ -161,6 +162,29 @@ public class CastMemberGatewayTest {
         //then
         Assertions.assertTrue(actualMember.isEmpty());
         Assertions.assertEquals(0, actualMember.stream().count());
+    }
+
+    @Test
+    public void givenTwoGenresAndOnePersisted_whenCallsExistsById_thenShouldReturnPersistedID(){
+        //given
+        final var aMember = CastMember.newMember("Vin", CastMemberType.DIRECTOR);
+
+        final var expectedItems = 1;
+        final var expectedId = aMember.getId();
+
+        Assertions.assertEquals(0, castMemberRepository.count());
+
+        castMemberRepository.saveAndFlush(CastMemberJpaEntity.from(aMember));
+
+        //when
+        final var actualMember = castMemberMySQLGateway.existsByIds(List.of(
+                CastMemberID.from("123"), expectedId));
+
+        // then
+
+        Assertions.assertEquals(expectedItems, actualMember.size());
+        Assertions.assertEquals(expectedId.getValue(), actualMember.get(0).getValue());
+
     }
 
     @Test

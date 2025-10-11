@@ -10,19 +10,22 @@ import org.jonasribeiro.admin.catalogo.domain.exceptions.InternalErrorException;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.resource.VideoResource;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
-import org.jonasribeiro.admin.catalogo.domain.video.MediaResourceGateway;
-import org.jonasribeiro.admin.catalogo.domain.video.Rating;
-import org.jonasribeiro.admin.catalogo.domain.video.Video;
-import org.jonasribeiro.admin.catalogo.domain.video.VideoGateway;
+import org.jonasribeiro.admin.catalogo.domain.video.*;
 
 import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static org.jonasribeiro.admin.catalogo.domain.video.VideoMediaType.*;
 
 public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
 
@@ -83,23 +86,23 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
 
         try {
             final var aVideoMedia = aCommand.getVideo()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, VIDEO)))
                     .orElse(null);
 
             final var aTrailerMedia = aCommand.getTrailer()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, TRAILER)))
                     .orElse(null);
 
             final var aBannerMedia = aCommand.getBanner()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, BANNER)))
                     .orElse(null);
 
             final var aThumbnailMedia = aCommand.getThumbnail()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL)))
                     .orElse(null);
 
             final var aThumbnailHalfMedia = aCommand.getThumbnailHalf()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL_HALF)))
                     .orElse(null);
 
             return this.videoGateway.create(

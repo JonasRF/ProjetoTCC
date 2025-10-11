@@ -11,6 +11,7 @@ import org.jonasribeiro.admin.catalogo.domain.exceptions.NotFoundException;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreGateway;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.resource.VideoResource;
 import org.jonasribeiro.admin.catalogo.domain.validation.Error;
 import org.jonasribeiro.admin.catalogo.domain.validation.ValidationHandler;
 import org.jonasribeiro.admin.catalogo.domain.validation.handler.Notification;
@@ -24,6 +25,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static org.jonasribeiro.admin.catalogo.domain.video.VideoMediaType.*;
 
 public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
 
@@ -88,23 +91,23 @@ public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
 
         try {
             final var aVideoMedia = aCommand.getVideo()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, VIDEO)))
                     .orElse(null);
 
             final var aTrailerMedia = aCommand.getTrailer()
-                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeAudioVideo(anId, VideoResource.with(it, TRAILER)))
                     .orElse(null);
 
             final var aBannerMedia = aCommand.getBanner()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, BANNER)))
                     .orElse(null);
 
             final var aThumbnailMedia = aCommand.getThumbnail()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL)))
                     .orElse(null);
 
             final var aThumbnailHalfMedia = aCommand.getThumbnailHalf()
-                    .map(it -> this.mediaResourceGateway.storeImage(anId, it))
+                    .map(it -> this.mediaResourceGateway.storeImage(anId, VideoResource.with(it, THUMBNAIL_HALF)))
                     .orElse(null);
 
             return this.videoGateway.update(

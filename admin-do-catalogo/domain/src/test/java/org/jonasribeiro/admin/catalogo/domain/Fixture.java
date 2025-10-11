@@ -130,6 +130,10 @@ public class Fixture {
             return FAKER.options().option(Rating.values());
         }
 
+        public static VideoMediaType mediaType() {
+            return FAKER.options().option(VideoMediaType.values());
+        }
+
         public static Resource resource(final VideoMediaType type) {
             final String contentType = Match(type).of(
                     Case($(List(VideoMediaType.VIDEO, VideoMediaType.TRAILER)::contains), "video/mp4"),
@@ -139,7 +143,7 @@ public class Fixture {
             final String checksum = IdUtils.uuid();
             final byte[] content = "Conteudo".getBytes();
 
-            return Resource.with(content, checksum, contentType, type.name().toLowerCase());
+            return Resource.with(content,checksum, contentType, type.name().toLowerCase());
         }
 
         public static String description() {
@@ -180,6 +184,5 @@ public class Fixture {
                     "/images/" + checksum
             );
         }
-
     }
 }

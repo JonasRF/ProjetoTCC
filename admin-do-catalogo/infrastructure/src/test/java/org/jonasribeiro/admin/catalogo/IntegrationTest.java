@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo;
 
-import org.jonasribeiro.admin.catalogo.infraestructure.configuration.WebServerConfig;
+import org.jonasribeiro.admin.catalogo.infraestructure.config.WebServerConfig;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
