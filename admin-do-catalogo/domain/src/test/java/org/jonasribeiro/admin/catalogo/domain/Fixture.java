@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static io.vavr.API.*;
 
-public class Fixture {
+public final class Fixture {
 
     public static final Faker FAKER = new Faker();
 
@@ -143,7 +143,7 @@ public class Fixture {
             final String checksum = IdUtils.uuid();
             final byte[] content = "Conteudo".getBytes();
 
-            return Resource.with(content,checksum, contentType, type.name().toLowerCase());
+            return Resource.with(content, checksum, contentType, type.name().toLowerCase());
         }
 
         public static String description() {

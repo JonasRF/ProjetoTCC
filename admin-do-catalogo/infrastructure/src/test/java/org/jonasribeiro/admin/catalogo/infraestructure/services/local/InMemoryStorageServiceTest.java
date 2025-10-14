@@ -42,7 +42,7 @@ public class InMemoryStorageServiceTest {
     }
 
     @Test
-    public void givenValidResource_whenCallsGet_shouldBeEmpty() {
+    public void givenInValidResource_whenCallsGet_shouldBeEmpty() {
 
         final var expectedName = IdUtils.uuid();
 

@@ -57,7 +57,7 @@ public class DefaultMediaResourceGatewayTest {
         // when
         final var actualMedia = this.mediaResourceGateway.storeAudioVideo(
                 expectedVideoId,
-                VideoResource.with(expectedResource, expectedType));
+                VideoResource.with(expectedType, expectedResource));
 
         // then
         Assertions.assertNotNull(actualMedia.id());
@@ -83,7 +83,7 @@ public class DefaultMediaResourceGatewayTest {
 
         // when
         final var actualMedia =
-                this.mediaResourceGateway.storeImage(expectedVideoId, VideoResource.with(expectedResource, expectedType));
+                this.mediaResourceGateway.storeImage(expectedVideoId, VideoResource.with(expectedType, expectedResource));
 
         // then
         Assertions.assertNotNull(actualMedia.id());
