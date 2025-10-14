@@ -1,3 +1,16 @@
+amqp:
+  admin:
+    auto-create: false
+  queues:
+    video-created:
+      exchange: video.events
+      routing-key: video.created
+      queue: video-created.queue
+    video-encoded:
+      exchange: video.events
+      routing-key: video.encoded
+      queue: video-encoded.queue
+
 google:
   cloud:
     credentials: ${GOOGLE_CLOUD_CREDENTIALS}
@@ -51,6 +64,12 @@ spring:
          "[hibernate.dialect]": org.hibernate.dialect.MySQL8Dialect # Use MySQL 8 dialect
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
+  rabbitmq:
+    host: ${amqp.host}
+    port: ${amqp.port}
+    username: ${amqp.username}
+    password: ${amqp.password}
+
 storage:
   catalogo-videos:
     filename-pattern: type-{type}
