@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo.infraestructure;
 
-import org.jonasribeiro.admin.catalogo.infraestructure.config.WebServerConfig;
+import org.jonasribeiro.admin.catalogo.infraestructure.configuration.config.WebServerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.AbstractEnvironment;

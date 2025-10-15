@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo;
 
 import org.jonasribeiro.admin.catalogo.infraestructure.configuration.config.WebServerConfig;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -12,6 +12,6 @@ import java.lang.annotation.*;
 @Inherited
 @ActiveProfiles("test-integration")
 @SpringBootTest(classes = WebServerConfig.class)
-@ExtendWith(MySQLCleanUpExtension.class)
-public @interface IntegrationTest {
+@Tag("integrationTest")
+public @interface AmqpTest {
 }

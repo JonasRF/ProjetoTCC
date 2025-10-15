@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.infraestructure.config;
+package org.jonasribeiro.admin.catalogo.infraestructure.configuration.config;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.auth.Credentials;

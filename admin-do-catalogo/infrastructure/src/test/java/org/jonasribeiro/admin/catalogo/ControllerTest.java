@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo;
 
-import org.jonasribeiro.admin.catalogo.infraestructure.config.ObjectMapperConfig;
+import org.jonasribeiro.admin.catalogo.infraestructure.configuration.config.ObjectMapperConfig;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;

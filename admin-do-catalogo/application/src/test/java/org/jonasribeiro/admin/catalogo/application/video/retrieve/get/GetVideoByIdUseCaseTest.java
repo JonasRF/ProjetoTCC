@@ -66,7 +66,7 @@ public class GetVideoByIdUseCaseTest extends UseCaseTest {
                 expectedGenres,
                 expectedMembers
         )
-                .setVideo(expectedVideo)
+                .updateVideo(expectedVideo)
                 .setTrailer(expectedTrailer)
                 .setBanner(expectedBanner)
                 .setThumbnail(expectedThumb)

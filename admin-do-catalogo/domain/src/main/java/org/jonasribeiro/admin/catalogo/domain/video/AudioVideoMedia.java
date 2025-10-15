@@ -6,6 +6,7 @@ import org.jonasribeiro.admin.catalogo.domain.utils.IdUtils;
 import java.util.Objects;
 
 public class AudioVideoMedia extends ValueObject {
+
     private final String id;
     private final String checksum;
     private final String name;
@@ -21,7 +22,7 @@ public class AudioVideoMedia extends ValueObject {
             final String encodedLocation,
             final MediaStatus status
     ) {
-        this.id = Objects.requireNonNull(id, IdUtils::uuid);
+        this.id = Objects.requireNonNull(id);
         this.checksum = Objects.requireNonNull(checksum);
         this.name = Objects.requireNonNull(name);
         this.rawLocation = Objects.requireNonNull(rawLocation);
@@ -74,8 +75,9 @@ public class AudioVideoMedia extends ValueObject {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AudioVideoMedia that = (AudioVideoMedia) o;
+        final AudioVideoMedia that = (AudioVideoMedia) o;
         return Objects.equals(checksum, that.checksum) && Objects.equals(rawLocation, that.rawLocation);
     }
 
@@ -86,23 +88,27 @@ public class AudioVideoMedia extends ValueObject {
 
     public AudioVideoMedia processing() {
         return AudioVideoMedia.with(
-                id,
-                checksum,
-                name,
-                rawLocation,
-                encodedLocation,
+                id(),
+                checksum(),
+                name(),
+                rawLocation(),
+                encodedLocation(),
                 MediaStatus.PROCESSING
         );
     }
 
-    public AudioVideoMedia completed(String encodedPath) {
+    public AudioVideoMedia completed(final String encodedPath) {
         return AudioVideoMedia.with(
-                id,
-                checksum,
-                name,
-                rawLocation,
+                id(),
+                checksum(),
+                name(),
+                rawLocation(),
                 encodedPath,
                 MediaStatus.COMPLETED
         );
+    }
+
+    public boolean isPendingEncode() {
+        return MediaStatus.PENDING == this.status;
     }
 }

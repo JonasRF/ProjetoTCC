@@ -5,11 +5,11 @@ amqp:
     video-created:
       exchange: video.events
       routing-key: video.created
-      queue: video-created.queue
+      queue: video.created.queue
     video-encoded:
       exchange: video.events
       routing-key: video.encoded
-      queue: video-encoded.queue
+      queue: video.encoded.queue
 
 google:
   cloud:
@@ -65,6 +65,7 @@ spring:
          "[hibernate.generate_statistics]": false # Enable Hibernate statistics
          "[hibernate.connection.provider_disables_autocommit]": true # Use C3P0 connection provider
   rabbitmq:
+    dynamic: ${amqp.admin.auto-create}
     host: ${amqp.host}
     port: ${amqp.port}
     username: ${amqp.username}

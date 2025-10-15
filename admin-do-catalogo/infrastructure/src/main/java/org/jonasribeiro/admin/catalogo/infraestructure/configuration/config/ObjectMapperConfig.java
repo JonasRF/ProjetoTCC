@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.infraestructure.config;
+package org.jonasribeiro.admin.catalogo.infraestructure.configuration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jonasribeiro.admin.catalogo.infraestructure.configuration.json.Json;

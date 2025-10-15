@@ -107,7 +107,7 @@ public class DefaultCreateVideoUseCase extends CreateVideoUseCase {
 
             return this.videoGateway.create(
                     aVideo
-                            .setVideo(aVideoMedia)
+                            .updateVideo(aVideoMedia)
                             .setTrailer(aTrailerMedia)
                             .setBanner(aBannerMedia)
                             .setThumbnail(aThumbnailMedia)

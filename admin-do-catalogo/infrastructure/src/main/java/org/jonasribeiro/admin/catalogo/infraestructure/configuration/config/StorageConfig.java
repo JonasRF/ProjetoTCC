@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.infraestructure.config;
+package org.jonasribeiro.admin.catalogo.infraestructure.configuration.config;
 
 import com.google.cloud.storage.Storage;
 import org.jonasribeiro.admin.catalogo.infraestructure.configuration.properties.google.GoogleStorageProperties;

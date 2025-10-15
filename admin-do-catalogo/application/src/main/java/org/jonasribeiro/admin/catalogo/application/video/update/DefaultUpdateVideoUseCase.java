@@ -112,7 +112,7 @@ public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
 
             return this.videoGateway.update(
                     aVideo
-                            .setVideo(aVideoMedia)
+                            .updateVideo(aVideoMedia)
                             .setTrailer(aTrailerMedia)
                             .setBanner(aBannerMedia)
                             .setThumbnail(aThumbnailMedia)

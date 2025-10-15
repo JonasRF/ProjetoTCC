@@ -1,6 +1,6 @@
 package org.jonasribeiro.admin.catalogo;
 
-import org.jonasribeiro.admin.catalogo.infraestructure.config.ObjectMapperConfig;
+import org.jonasribeiro.admin.catalogo.infraestructure.configuration.config.ObjectMapperConfig;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;

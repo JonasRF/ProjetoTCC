@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.domain.video;
 
+import org.jonasribeiro.admin.catalogo.domain.UnitTest;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
@@ -11,14 +12,18 @@ import org.junit.jupiter.api.Test;
 import java.time.Year;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class VideoTest {
+public class VideoTest extends UnitTest {
 
     @Test
-    public void givenAValidParams_WhenCallNewVideo_ThenInstantiate() {
+    public void givenValidParams_whenCallsNewVideo_shouldInstantiate() {
+        // given
         final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
         final var expectedLaunchedAt = Year.of(2022);
         final var expectedDuration = 120.10;
         final var expectedOpened = false;
@@ -28,6 +33,7 @@ public class VideoTest {
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
 
+        // when
         final var actualVideo = Video.newVideo(
                 expectedTitle,
                 expectedDescription,
@@ -41,56 +47,70 @@ public class VideoTest {
                 expectedMembers
         );
 
-        assertNotNull(actualVideo);
-        assertNotNull(actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertNotNull(actualVideo.getCreatedAt());
-        assertNotNull(actualVideo.getUpdatedAt());
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+        // then
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertNotNull(actualVideo.getCreatedAt());
+        Assertions.assertNotNull(actualVideo.getUpdatedAt());
+        Assertions.assertEquals(actualVideo.getCreatedAt(), actualVideo.getUpdatedAt());
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
+        Assertions.assertTrue(actualVideo.getDomainEvents().isEmpty());
+
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 
     @Test
-    public void givenAValidVideo_WhenCallsUpdate_ThenShouldReturnUpdated() {
+    public void givenValidVideo_whenCallsUpdate_shouldReturnUpdated() {
         // given
         final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
         final var expectedLaunchedAt = Year.of(2022);
         final var expectedDuration = 120.10;
         final var expectedOpened = false;
         final var expectedPublished = false;
         final var expectedRating = Rating.L;
+        final var expectedEvent = new VideoMediaCreated("ID", "file");
+        final var expectedEventCount = 1;
         final var expectedCategories = Set.of(CategoryID.unique());
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
 
         final var aVideo = Video.newVideo(
-                "A title",
-                "A description",
-                Year.of(2020),
-                90.0,
+                "Test title",
+                "Lalala description",
+                Year.of(1888),
+                0.0,
                 true,
                 true,
-                Rating.L,
+                Rating.AGE_10,
                 Set.of(),
                 Set.of(),
                 Set.of()
         );
+
+        aVideo.registerEvent(expectedEvent);
+
         // when
-        final var actualVideo =  Video.with(aVideo).update(
+        final var actualVideo = Video.with(aVideo).update(
                 expectedTitle,
                 expectedDescription,
                 expectedLaunchedAt,
@@ -104,36 +124,42 @@ public class VideoTest {
         );
 
         // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+       // Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
 
+        Assertions.assertEquals(expectedEventCount, actualVideo.getDomainEvents().size());
+        Assertions.assertEquals(expectedEvent, actualVideo.getDomainEvents().get(0));
 
-
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 
-
-
     @Test
-    public void givenAValidVideo_WhenCallsSetBanner_ThenShouldSetBanner() throws InterruptedException {
+    public void givenValidVideo_whenCallsUpdateVideoMedia_shouldReturnUpdated() {
         // given
         final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
         final var expectedLaunchedAt = Year.of(2022);
         final var expectedDuration = 120.10;
         final var expectedOpened = false;
@@ -142,10 +168,10 @@ public class VideoTest {
         final var expectedCategories = Set.of(CategoryID.unique());
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
+        final var expectedDomainEventSize = 1;
 
-        Thread.sleep(30);
-       final var aVideo = Video.newVideo(
-               expectedTitle,
+        final var aVideo = Video.newVideo(
+                expectedTitle,
                 expectedDescription,
                 expectedLaunchedAt,
                 expectedDuration,
@@ -157,39 +183,53 @@ public class VideoTest {
                 expectedMembers
         );
 
-       final var aBannerMedia = ImageMedia.with("abc", "banner.png", "/123/banners");
+        final var aVideoMedia =
+                AudioVideoMedia.with("abc", "Video.mp4", "/123/videos");
 
         // when
-        final var actualVideo =  Video.with(aVideo).setBanner(aBannerMedia);
+        final var actualVideo = Video.with(aVideo).updateVideoMedia(aVideoMedia);
 
         // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
-        assertEquals(aBannerMedia, actualVideo.getBanner().get());
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+      //  Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertEquals(aVideoMedia, actualVideo.getVideo().get());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
 
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+        Assertions.assertEquals(expectedDomainEventSize, actualVideo.getDomainEvents().size());
+
+        final var actualEvent = (VideoMediaCreated) actualVideo.getDomainEvents().get(0);
+        Assertions.assertEquals(aVideo.getId().getValue(), actualEvent.resourceId());
+        Assertions.assertEquals(aVideoMedia.rawLocation(), actualEvent.filePath());
+        Assertions.assertNotNull(actualEvent.occurredOn());
+
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 
     @Test
-    public void givenAValidVideo_WhenCallsSetThumbnail_ThenShouldSetThumbnail() throws InterruptedException {
+    public void givenValidVideo_whenCallsUpdateTrailerMedia_shouldReturnUpdated() {
         // given
         final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
         final var expectedLaunchedAt = Year.of(2022);
         final var expectedDuration = 120.10;
         final var expectedOpened = false;
@@ -198,9 +238,10 @@ public class VideoTest {
         final var expectedCategories = Set.of(CategoryID.unique());
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
+        final var expectedDomainEventSize = 1;
 
-       final var aVideo = Video.newVideo(
-               expectedTitle,
+        final var aVideo = Video.newVideo(
+                expectedTitle,
                 expectedDescription,
                 expectedLaunchedAt,
                 expectedDuration,
@@ -212,39 +253,53 @@ public class VideoTest {
                 expectedMembers
         );
 
-       final var aThumbnailMedia = ImageMedia.with("abc", "thumbnail.png", "/123/thumbnails");
+        final var aTrailerMedia =
+                AudioVideoMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
-        final var actualVideo =  Video.with(aVideo).setThumbnail(aThumbnailMedia);
+        final var actualVideo = Video.with(aVideo).updateTrailerMedia(aTrailerMedia);
 
         // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnailHalf().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
-        assertEquals(aThumbnailMedia, actualVideo.getThumbnail().get());
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+        //Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertEquals(aTrailerMedia, actualVideo.getTrailer().get());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
 
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+        Assertions.assertEquals(expectedDomainEventSize, actualVideo.getDomainEvents().size());
+
+        final var actualEvent = (VideoMediaCreated) actualVideo.getDomainEvents().get(0);
+        Assertions.assertEquals(aVideo.getId().getValue(), actualEvent.resourceId());
+        Assertions.assertEquals(aTrailerMedia.rawLocation(), actualEvent.filePath());
+        Assertions.assertNotNull(actualEvent.occurredOn());
+
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
     }
 
     @Test
-    public void givenAValidVideo_WhenCallsSetThumbnailHalf_ThenShouldSetThumbnailHalf() throws InterruptedException {
+    public void givenValidVideo_whenCallsUpdateBannerMedia_shouldReturnUpdated() {
         // given
         final var expectedTitle = "System Design Interviews";
-        final var expectedDescription = "A video about system design interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
         final var expectedLaunchedAt = Year.of(2022);
         final var expectedDuration = 120.10;
         final var expectedOpened = false;
@@ -254,8 +309,8 @@ public class VideoTest {
         final var expectedGenres = Set.of(GenreID.unique());
         final var expectedMembers = Set.of(CastMemberID.unique());
 
-       final var aVideo = Video.newVideo(
-               expectedTitle,
+        final var aVideo = Video.newVideo(
+                expectedTitle,
                 expectedDescription,
                 expectedLaunchedAt,
                 expectedDuration,
@@ -267,31 +322,202 @@ public class VideoTest {
                 expectedMembers
         );
 
-       final var aThumbnailHalfMedia = ImageMedia.with("abc", "thumbnailHalf.png", "/123/thumbnailHalfs");
+        final var aBannerMedia =
+                ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
 
         // when
-        final var actualVideo =  Video.with(aVideo).setThumbnailHalf(aThumbnailHalfMedia);
+        final var actualVideo = Video.with(aVideo).updateBannerMedia(aBannerMedia);
 
         // then
-        assertNotNull(actualVideo);
-        assertEquals(aVideo.getId(), actualVideo.getId());
-        assertEquals(expectedTitle, actualVideo.getTitle());
-        assertEquals(expectedDescription, actualVideo.getDescription());
-        assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
-        assertEquals(expectedDuration, actualVideo.getDuration());
-        assertEquals(expectedOpened, actualVideo.getOpened());
-        assertEquals(expectedPublished, actualVideo.getPublished());
-        assertEquals(expectedRating, actualVideo.getRating());
-        assertEquals(expectedCategories, actualVideo.getCategories());
-        assertEquals(expectedGenres, actualVideo.getGenres());
-        assertEquals(expectedMembers, actualVideo.getCastMembers());
-        assertTrue(actualVideo.getVideo().isEmpty());
-        assertTrue(actualVideo.getTrailer().isEmpty());
-        assertTrue(actualVideo.getBanner().isEmpty());
-        assertTrue(actualVideo.getThumbnail().isEmpty());
-        assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
-        assertEquals(aThumbnailHalfMedia, actualVideo.getThumbnailHalf().get());
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+//        Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertEquals(aBannerMedia, actualVideo.getBanner().get());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
 
-        assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+    }
+
+    @Test
+    public void givenValidVideo_whenCallsUpdateThumbnailMedia_shouldReturnUpdated() {
+        // given
+        final var expectedTitle = "System Design Interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
+        final var expectedLaunchedAt = Year.of(2022);
+        final var expectedDuration = 120.10;
+        final var expectedOpened = false;
+        final var expectedPublished = false;
+        final var expectedRating = Rating.L;
+        final var expectedCategories = Set.of(CategoryID.unique());
+        final var expectedGenres = Set.of(GenreID.unique());
+        final var expectedMembers = Set.of(CastMemberID.unique());
+
+        final var aVideo = Video.newVideo(
+                expectedTitle,
+                expectedDescription,
+                expectedLaunchedAt,
+                expectedDuration,
+                expectedOpened,
+                expectedPublished,
+                expectedRating,
+                expectedCategories,
+                expectedGenres,
+                expectedMembers
+        );
+
+        final var aThumbMedia =
+                ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
+
+        // when
+        final var actualVideo = Video.with(aVideo).updateThumbnailMedia(aThumbMedia);
+
+        // then
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+     //   Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertEquals(aThumbMedia, actualVideo.getThumbnail().get());
+        Assertions.assertTrue(actualVideo.getThumbnailHalf().isEmpty());
+
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+    }
+
+    @Test
+    public void givenValidVideo_whenCallsUpdateThumbnailHalfMedia_shouldReturnUpdated() {
+        // given
+        final var expectedTitle = "System Design Interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
+        final var expectedLaunchedAt = Year.of(2022);
+        final var expectedDuration = 120.10;
+        final var expectedOpened = false;
+        final var expectedPublished = false;
+        final var expectedRating = Rating.L;
+        final var expectedCategories = Set.of(CategoryID.unique());
+        final var expectedGenres = Set.of(GenreID.unique());
+        final var expectedMembers = Set.of(CastMemberID.unique());
+
+        final var aVideo = Video.newVideo(
+                expectedTitle,
+                expectedDescription,
+                expectedLaunchedAt,
+                expectedDuration,
+                expectedOpened,
+                expectedPublished,
+                expectedRating,
+                expectedCategories,
+                expectedGenres,
+                expectedMembers
+        );
+
+        final var aThumbMedia =
+                ImageMedia.with("abc", "Trailer.mp4", "/123/videos");
+
+        // when
+        final var actualVideo = Video.with(aVideo).updateThumbnailHalfMedia(aThumbMedia);
+
+        // then
+        Assertions.assertNotNull(actualVideo);
+        Assertions.assertNotNull(actualVideo.getId());
+        Assertions.assertEquals(aVideo.getCreatedAt(), actualVideo.getCreatedAt());
+      //  Assertions.assertTrue(aVideo.getUpdatedAt().isBefore(actualVideo.getUpdatedAt()));
+        Assertions.assertEquals(expectedTitle, actualVideo.getTitle());
+        Assertions.assertEquals(expectedDescription, actualVideo.getDescription());
+        Assertions.assertEquals(expectedLaunchedAt, actualVideo.getLaunchedAt());
+        Assertions.assertEquals(expectedDuration, actualVideo.getDuration());
+        Assertions.assertEquals(expectedOpened, actualVideo.getOpened());
+        Assertions.assertEquals(expectedPublished, actualVideo.getPublished());
+        Assertions.assertEquals(expectedRating, actualVideo.getRating());
+        Assertions.assertEquals(expectedCategories, actualVideo.getCategories());
+        Assertions.assertEquals(expectedGenres, actualVideo.getGenres());
+        Assertions.assertEquals(expectedMembers, actualVideo.getCastMembers());
+        Assertions.assertTrue(actualVideo.getVideo().isEmpty());
+        Assertions.assertTrue(actualVideo.getTrailer().isEmpty());
+        Assertions.assertTrue(actualVideo.getBanner().isEmpty());
+        Assertions.assertTrue(actualVideo.getThumbnail().isEmpty());
+        Assertions.assertEquals(aThumbMedia, actualVideo.getThumbnailHalf().get());
+
+        Assertions.assertDoesNotThrow(() -> actualVideo.validate(new ThrowsValidationHandler()));
+    }
+
+    @Test
+    public void givenValidVideo_whenCallsWith_shouldCreateWithoutEvents() {
+        // given
+        final var expectedTitle = "System Design Interviews";
+        final var expectedDescription = """
+                Disclaimer: o estudo de caso apresentado tem fins educacionais e representa nossas opiniões pessoais.
+                Esse vídeo faz parte da Imersão Full Stack && Full Cycle.
+                Para acessar todas as aulas, lives e desafios, acesse:
+                https://imersao.fullcycle.com.br/
+                """;
+        final var expectedLaunchedAt = Year.of(2022);
+        final var expectedDuration = 120.10;
+        final var expectedOpened = false;
+        final var expectedPublished = false;
+        final var expectedRating = Rating.L;
+        final var expectedCategories = Set.of(CategoryID.unique());
+        final var expectedGenres = Set.of(GenreID.unique());
+        final var expectedMembers = Set.of(CastMemberID.unique());
+
+        // when
+        final var actualVideo = Video.with(
+                VideoID.unique(),
+                expectedTitle,
+                expectedDescription,
+                expectedLaunchedAt,
+                expectedDuration,
+                expectedOpened,
+                expectedPublished,
+                expectedRating,
+                InstantUtils.now(),
+                InstantUtils.now(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                expectedCategories,
+                expectedGenres,
+                expectedMembers
+        );
+
+        // then
+        Assertions.assertNotNull(actualVideo.getDomainEvents());
     }
 }

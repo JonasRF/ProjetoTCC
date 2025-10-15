@@ -106,7 +106,7 @@ public class DefaultVideoGatewayTest {
                         expectedGenres,
                         expectedMembers
                 )
-                .setVideo(expectedVideo)
+                .updateVideo(expectedVideo)
                 .setTrailer(expectedTrailer)
                 .setBanner(expectedBanner)
                 .setThumbnail(expectedThumb)
@@ -296,7 +296,7 @@ public class DefaultVideoGatewayTest {
                         expectedGenres,
                         expectedMembers
                 )
-                .setVideo(expectedVideo)
+                .updateVideo(expectedVideo)
                 .setTrailer(expectedTrailer)
                 .setBanner(expectedBanner)
                 .setThumbnail(expectedThumb)
@@ -417,7 +417,7 @@ public class DefaultVideoGatewayTest {
                                 expectedGenres,
                                 expectedMembers
                         )
-                        .setVideo(expectedVideo)
+                        .updateVideo(expectedVideo)
                         .setTrailer(expectedTrailer)
                         .setBanner(expectedBanner)
                         .setThumbnail(expectedThumb)

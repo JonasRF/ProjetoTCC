@@ -1,4 +1,4 @@
-package org.jonasribeiro.admin.catalogo.infraestructure.config;
+package org.jonasribeiro.admin.catalogo.infraestructure.configuration.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
