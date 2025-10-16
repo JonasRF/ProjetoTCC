@@ -25,7 +25,7 @@ public final class Fixture {
         return FAKER.random().nextInt(2020,2030);
     }
 
-    public static double duration() {
+    public static Double duration() {
         return FAKER.options().option(120.0, 15.5, 35.5, 10.0, 2.0);
     }
 

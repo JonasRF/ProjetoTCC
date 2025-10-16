@@ -25,7 +25,7 @@ public class VideoEncoderResultTest {
         final var expectedResourceId = IdUtils.uuid();
         final var expectedFilePath = "any.mp4";
         final var expectedMetadata =
-                new VideoMetadata(expectedEncoderVideoFolder, expectedResourceId, expectedFilePath);
+                new VideoMetaData(expectedEncoderVideoFolder, expectedResourceId, expectedFilePath);
 
         final var json = """
                     {
@@ -61,7 +61,7 @@ public class VideoEncoderResultTest {
         final var expectedResourceId = IdUtils.uuid();
         final var expectedFilePath = "any.mp4";
         final var expectedMetadata =
-                new VideoMetadata(expectedEncoderVideoFolder, expectedResourceId, expectedFilePath);
+                new VideoMetaData(expectedEncoderVideoFolder, expectedResourceId, expectedFilePath);
 
         final var aResult = new VideoEncoderCompleted(expectedId, expectedOutputBucket, expectedMetadata);
 
