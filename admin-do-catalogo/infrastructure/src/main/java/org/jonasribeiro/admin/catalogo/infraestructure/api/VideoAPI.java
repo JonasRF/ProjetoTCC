@@ -4,11 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.jonasribeiro.admin.catalogo.infraestructure.video.models.CreateVideoRequest;
+import org.jonasribeiro.admin.catalogo.infraestructure.video.models.VideoResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
@@ -44,4 +45,48 @@ public interface VideoAPI {
             @RequestParam(name = "thumb_file", required = false) MultipartFile thumbFile,
             @RequestParam(name = "thumb_half_file", required = false) MultipartFile thumbHalfFile
     );
+
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Create a new video with all medias")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Genre created successfully"),
+            @ApiResponse(responseCode = "422", description = "A validation error was throw"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    ResponseEntity<?> createPartial(@RequestBody CreateVideoRequest payload);
+
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Get a video by its identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Video retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Video with given id was not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    VideoResponse getById(@PathVariable(name = "id") String anId);
+
+@PutMapping(
+            value = "{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Create a new video with all medias")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Video updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Video was not found"),
+            @ApiResponse(responseCode = "422", description = "A validation error was throw"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    ResponseEntity<?> update(@PathVariable (name = "id") String anId, @RequestBody CreateVideoRequest payload);
+
+    @DeleteMapping(value = "{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a video by its identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vídeo deleted successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    void deleteById(@PathVariable(name = "id") String id);
 }
