@@ -4,12 +4,19 @@ import org.jonasribeiro.admin.catalogo.application.video.create.CreateVideoComma
 import org.jonasribeiro.admin.catalogo.application.video.create.CreateVideoUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.delete.DeleteVideoUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.retrieve.get.GetVideoByIdUseCase;
+import org.jonasribeiro.admin.catalogo.application.video.retrieve.list.ListVideosUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.update.UpdateVideoCommand;
 import org.jonasribeiro.admin.catalogo.application.video.update.UpdateVideoUseCase;
+import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
+import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
+import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
+import org.jonasribeiro.admin.catalogo.domain.video.VideoSearchQuery;
 import org.jonasribeiro.admin.catalogo.infraestructure.api.VideoAPI;
 import org.jonasribeiro.admin.catalogo.infraestructure.utils.HashingUtils;
 import org.jonasribeiro.admin.catalogo.infraestructure.video.models.CreateVideoRequest;
+import org.jonasribeiro.admin.catalogo.infraestructure.video.models.VideoListResponse;
 import org.jonasribeiro.admin.catalogo.infraestructure.video.models.VideoResponse;
 import org.jonasribeiro.admin.catalogo.infraestructure.video.presenters.VideoApiPresenter;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +27,8 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
 
+import static org.jonasribeiro.admin.catalogo.domain.utils.CollectionsUtils.mapTo;
+
 @RestController
 public class VideoController implements VideoAPI {
 
@@ -27,13 +36,37 @@ public class VideoController implements VideoAPI {
     private final GetVideoByIdUseCase getVideoByIdUseCase;
     private final UpdateVideoUseCase updateVideoUseCase;
     private final DeleteVideoUseCase deleteVideoUseCase;
+    private final ListVideosUseCase listVideosUseCase;
 
-    public VideoController(CreateVideoUseCase createVideoUseCase, GetVideoByIdUseCase getVideoByIdUseCase, UpdateVideoUseCase updateVideoUseCase, DeleteVideoUseCase deleteVideoUseCase) {
+    public VideoController(CreateVideoUseCase createVideoUseCase, GetVideoByIdUseCase getVideoByIdUseCase, UpdateVideoUseCase updateVideoUseCase, DeleteVideoUseCase deleteVideoUseCase, ListVideosUseCase listVideosUseCase) {
         this.createVideoUseCase = Objects.requireNonNull(createVideoUseCase);
         this.getVideoByIdUseCase = Objects.requireNonNull(getVideoByIdUseCase);
         this.updateVideoUseCase = Objects.requireNonNull(updateVideoUseCase);
         this.deleteVideoUseCase = Objects.requireNonNull(deleteVideoUseCase);
+        this.listVideosUseCase = Objects.requireNonNull(listVideosUseCase);
     }
+
+    @Override
+    public Pagination<VideoListResponse> list(
+            final String search,
+            final int page,
+            final int perPage,
+            final String sort,
+            final String direction,
+            final Set<String> castMembers,
+            final Set<String> categories,
+            final Set<String> genres
+    ) {
+        final var castMemberIDs = mapTo(castMembers, CastMemberID::from);
+        final var categoriesIDs = mapTo(categories, CategoryID::from);
+        final var genresIDs = mapTo(genres, GenreID::from);
+
+        final var aQuery =
+                new VideoSearchQuery(page, perPage, search, sort, direction, castMemberIDs, categoriesIDs, genresIDs);
+
+        return VideoApiPresenter.present(this.listVideosUseCase.execute(aQuery));
+    }
+
 
     @Override
     public ResponseEntity<?> createFull(

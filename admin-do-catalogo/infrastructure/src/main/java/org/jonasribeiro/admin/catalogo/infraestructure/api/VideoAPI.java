@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.jonasribeiro.admin.catalogo.domain.pagination.Pagination;
 import org.jonasribeiro.admin.catalogo.infraestructure.video.models.CreateVideoRequest;
+import org.jonasribeiro.admin.catalogo.infraestructure.video.models.VideoListResponse;
 import org.jonasribeiro.admin.catalogo.infraestructure.video.models.VideoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,25 @@ import java.util.Set;
 @RequestMapping(value = "videos")
 @Tag(name = "video")
 public interface VideoAPI {
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "List videos paginated")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of videos paginated"),
+            @ApiResponse(responseCode = "422", description = "A query param is not valid"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    Pagination<VideoListResponse> list(
+            @RequestParam(name = "search", required = false, defaultValue = "") String search,
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "perPage", required = false, defaultValue = "25") int perPage,
+            @RequestParam(name = "sort", required = false, defaultValue = "title") String sort,
+            @RequestParam(name = "dir", required = false, defaultValue = "asc") String direction,
+            @RequestParam(name = "categories", required = false) Set<String> categories,
+            @RequestParam(name = "genres", required = false) Set<String> genres,
+            @RequestParam(name = "castMembers", required = false) Set<String> castMembers
+
+    );
 
     @PostMapping(
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
