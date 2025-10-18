@@ -6,7 +6,11 @@ import org.jonasribeiro.admin.catalogo.application.video.create.CreateVideoComma
 import org.jonasribeiro.admin.catalogo.application.video.create.CreateVideoOutput;
 import org.jonasribeiro.admin.catalogo.application.video.create.CreateVideoUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.delete.DeleteVideoUseCase;
+import org.jonasribeiro.admin.catalogo.application.video.media.get.GetMediaCommand;
 import org.jonasribeiro.admin.catalogo.application.video.media.get.GetMediaUseCase;
+import org.jonasribeiro.admin.catalogo.application.video.media.get.MediaOutput;
+import org.jonasribeiro.admin.catalogo.application.video.media.upload.UploadMediaCommand;
+import org.jonasribeiro.admin.catalogo.application.video.media.upload.UploadMediaOutput;
 import org.jonasribeiro.admin.catalogo.application.video.media.upload.UploadMediaUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.retrieve.get.GetVideoByIdUseCase;
 import org.jonasribeiro.admin.catalogo.application.video.retrieve.get.VideoOutput;
@@ -31,6 +35,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -562,7 +567,7 @@ public class VideoAPITest {
         Assertions.assertEquals(expectedDirection, actualQuery.direction());
         Assertions.assertEquals(expectedSort, actualQuery.sort());
         Assertions.assertEquals(expectedTerms, actualQuery.terms());
-        Assertions.assertTrue(actualQuery.categories().isEmpty());
+        Assertions.assertTrue(Set.of(CategoryID.from(expectedCategories)).equals(actualQuery.categories()));
         Assertions.assertEquals(Set.of(CastMemberID.from(expectedCastMembers)), actualQuery.castMembers());
         Assertions.assertEquals(Set.of(GenreID.from(expectedGenres)), actualQuery.genres());
     }
@@ -617,5 +622,101 @@ public class VideoAPITest {
         Assertions.assertTrue(actualQuery.categories().isEmpty());
         Assertions.assertTrue(actualQuery.castMembers().isEmpty());
         Assertions.assertTrue(actualQuery.genres().isEmpty());
+    }
+
+    @Test
+    public void givenAValidVideoIdAndFileType_whenCallsGetMediaById_shouldReturnContent() throws Exception {
+        // given
+        final var expectedId = VideoID.unique();
+
+        final var expectedMediaType = VideoMediaType.VIDEO;
+        final var expectedResource = Fixture.Videos.resource(expectedMediaType);
+
+        final var expectedMedia = new MediaOutput(expectedResource.content(), expectedResource.contentType(), expectedResource.name());
+
+        when(getMediaUseCase.execute(any())).thenReturn(expectedMedia);
+
+        // when
+        final var aRequest = get("/videos/{id}/medias/{type}", expectedId.getValue(), expectedMediaType.name());
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, expectedMedia.contentType()))
+                .andExpect(header().string(HttpHeaders.CONTENT_LENGTH, String.valueOf(expectedMedia.content().length)))
+                .andExpect(header().string(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=%s".formatted(expectedMedia.name())))
+                .andExpect(content().bytes(expectedMedia.content()));
+
+        final var captor = ArgumentCaptor.forClass(GetMediaCommand.class);
+
+        verify(this.getMediaUseCase).execute(captor.capture());
+
+        final var actualCmd = captor.getValue();
+        Assertions.assertEquals(expectedId.getValue(), actualCmd.videoId());
+        Assertions.assertEquals(expectedMediaType.name(), actualCmd.mediaType());
+    }
+
+    @Test
+    public void givenAValidVideoIdAndFile_whenCallsUploadMedia_shouldStoreIt() throws Exception {
+        // given
+        final var expectedId = VideoID.unique();
+        final var expectedType = VideoMediaType.VIDEO;
+        final var expectedResource = Fixture.Videos.resource(expectedType);
+
+        final var expectedVideo =
+                new MockMultipartFile("media_file", expectedResource.name(), expectedResource.contentType(), expectedResource.content());
+
+        when(uploadMediaUseCase.execute(any()))
+                .thenReturn(new UploadMediaOutput(expectedId.getValue(), expectedType));
+
+        // when
+        final var aRequest = multipart("/videos/{id}/medias/{type}", expectedId.getValue(), expectedType.name())
+                .file(expectedVideo)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.MULTIPART_FORM_DATA);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isCreated())
+                .andExpect(header().string(HttpHeaders.LOCATION, "/videos/%s/medias/%s".formatted(expectedId.getValue(), expectedType.name())))
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.video_id", equalTo(expectedId.getValue())))
+                .andExpect(jsonPath("$.media_type", equalTo(expectedType.name())));
+
+        final var captor = ArgumentCaptor.forClass(UploadMediaCommand.class);
+
+        verify(this.uploadMediaUseCase).execute(captor.capture());
+
+        final var actualCmd = captor.getValue();
+        Assertions.assertEquals(expectedId.getValue(), actualCmd.videoId());
+        Assertions.assertEquals(expectedResource.content(), actualCmd.videoResource().resource().content());
+        Assertions.assertEquals(expectedResource.name(), actualCmd.videoResource().resource().name());
+        Assertions.assertEquals(expectedResource.contentType(), actualCmd.videoResource().resource().contentType());
+        Assertions.assertEquals(expectedType, actualCmd.videoResource().type());
+    }
+
+    @Test
+    public void givenAnInvalidMediaType_whenCallsUploadMedia_shouldReturnError() throws Exception {
+        // given
+        final var expectedId = VideoID.unique();
+        final var expectedResource = Fixture.Videos.resource(VideoMediaType.VIDEO);
+
+        final var expectedVideo =
+                new MockMultipartFile("media_file", expectedResource.name(), expectedResource.contentType(), expectedResource.content());
+
+        // when
+        final var aRequest = multipart("/videos/{id}/medias/INVALID", expectedId.getValue())
+                .file(expectedVideo)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.MULTIPART_FORM_DATA);
+
+        final var response = this.mvc.perform(aRequest);
+
+        // then
+        response.andExpect(status().isUnprocessableEntity())
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.message", equalTo("Invalid INVALID for VideoMediaType")));
     }
 }

@@ -33,10 +33,9 @@ public interface VideoAPI {
             @RequestParam(name = "perPage", required = false, defaultValue = "25") int perPage,
             @RequestParam(name = "sort", required = false, defaultValue = "title") String sort,
             @RequestParam(name = "dir", required = false, defaultValue = "asc") String direction,
-            @RequestParam(name = "categories", required = false) Set<String> categories,
-            @RequestParam(name = "genres", required = false) Set<String> genres,
-            @RequestParam(name = "castMembers", required = false) Set<String> castMembers
-
+            @RequestParam(name = "cast_members_ids", required = false, defaultValue = "") Set<String> castMembers,
+            @RequestParam(name = "categories_ids", required = false, defaultValue = "") Set<String> categories,
+            @RequestParam(name = "genres_ids", required = false, defaultValue = "") Set<String> genres
     );
 
     @PostMapping(
@@ -110,4 +109,30 @@ public interface VideoAPI {
             @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
     })
     void deleteById(@PathVariable(name = "id") String id);
+
+    @GetMapping(value = "{id}/medias/{type}")
+    @Operation(summary = "Get a video media by it's type")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Media retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Media was not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    ResponseEntity<byte[]> getMediaVideoByType(
+            @PathVariable(name = "id") String anId,
+            @PathVariable(name = "type") String type
+    );
+
+    @PostMapping(value = "{id}/medias/{type}")
+    @Operation(summary = "Upload a video media by it's type")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Media retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Media was not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error, please try again later"),
+    })
+    ResponseEntity<?> uploadMediaVideoByType(
+            @PathVariable(name = "id") String anId,
+            @PathVariable(name = "type") String type,
+            @RequestParam("media_file") MultipartFile mediaFile
+    );
+
 }
