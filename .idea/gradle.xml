@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/admin-do-catalogo" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/Catalogo" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/application" />
+            <option value="$PROJECT_DIR$/admin-do-catalogo/buildSrc" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/domain" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/infrastructure" />
             <option value="$PROJECT_DIR$/admin-do-catalogo/teste" />

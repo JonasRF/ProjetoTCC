@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="admin-do-catalogo.Catalogo.main" target="17" />
       <module name="admin-do-catalogo.Catalogo.test" target="17" />
+      <module name="admin-do-catalogo.main" target="17" />
+      <module name="admin-do-catalogo.test" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
