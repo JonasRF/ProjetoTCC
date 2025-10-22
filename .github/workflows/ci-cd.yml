@@ -30,6 +30,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       # 3. Executar os testes da aplicação
+      - name: Torna gradlew executável
+        run: chmod +x ./gradlew
+
       - name: Run application tests
         run: ./gradlew test
 
