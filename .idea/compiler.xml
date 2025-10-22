@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="admin-do-catalogo.Catalogo.main" target="17" />
-      <module name="admin-do-catalogo.Catalogo.test" target="17" />
-      <module name="admin-do-catalogo.main" target="17" />
-      <module name="admin-do-catalogo.test" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
