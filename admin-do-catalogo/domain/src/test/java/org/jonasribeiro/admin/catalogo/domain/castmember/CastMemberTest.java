@@ -1,10 +1,11 @@
 package org.jonasribeiro.admin.catalogo.domain.castmember;
 
+import org.jonasribeiro.admin.catalogo.domain.UnitTest;
 import org.jonasribeiro.admin.catalogo.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CastMemberTest {
+public class CastMemberTest extends UnitTest {
 
     @Test
     public void givenValidParams_whenCallsNewCastMember_thenInstantiateACastMember() {

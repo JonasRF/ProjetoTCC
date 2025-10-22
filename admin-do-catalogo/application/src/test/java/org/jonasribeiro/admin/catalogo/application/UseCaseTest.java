@@ -1,7 +1,7 @@
 package org.jonasribeiro.admin.catalogo.application;
 
 import org.jonasribeiro.admin.catalogo.domain.Identifier;
-import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
+@Tag("unitTest")
 public abstract class UseCaseTest implements BeforeEachCallback {
 
     @Override
