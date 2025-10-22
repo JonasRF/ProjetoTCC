@@ -51,6 +51,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      # Exemplo: inserir este passo no arquivo `./github/workflows/ci-cd.yml` no job build, antes da validação
+      - name: Torna gradlew executável
+        run: chmod +x ./gradlew
       # 3. Valida a existência do gradle wrapper
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
