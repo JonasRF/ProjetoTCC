@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.*;
 import java.util.function.Function;
@@ -32,32 +34,47 @@ public class SecurityConfig {
         private static final String ROLE_GENRES = "CATALOGO_GENRES";
         private static final String ROLE_VIDEOS = "CATALOGO_VIDEOS";
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-            return http
-                    .csrf(csrf -> {
-                        csrf.disable();
-                    })
-                    .authorizeHttpRequests(authorize -> {
-                        authorize
-                                .antMatchers("/cast_members*").hasAnyRole(ROLE_ADMIN, ROLE_CAST_MEMBERS)
-                                .antMatchers("/categories*").hasAnyRole(ROLE_ADMIN, ROLE_CATEGORIES)
-                                .antMatchers("/genres*").hasAnyRole(ROLE_ADMIN, ROLE_GENRES)
-                                .antMatchers("/videos*").hasAnyRole(ROLE_ADMIN, ROLE_VIDEOS)
-                                .anyRequest().hasRole(ROLE_ADMIN);
-                    })
-                    .oauth2ResourceServer(oauth -> {
-                        oauth.jwt()
-                                .jwtAuthenticationConverter(new KeycloakJwtConverter());
-                    })
-                    .sessionManagement(session -> {
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                    })
-                    .headers(headers -> {
-                        headers.frameOptions().sameOrigin();
-                    })
-                    .build();
-        }
+    @Bean
+    public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+        return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // habilita CORS antes da autenticação
+                .csrf(csrf -> {
+                    csrf.disable();
+                })
+                .authorizeHttpRequests(authorize -> {
+                    authorize
+                            .antMatchers("/cast_members*").hasAnyRole(ROLE_ADMIN, ROLE_CAST_MEMBERS)
+                            .antMatchers("/categories*").hasAnyRole(ROLE_ADMIN, ROLE_CATEGORIES)
+                            .antMatchers("/genres*").hasAnyRole(ROLE_ADMIN, ROLE_GENRES)
+                            .antMatchers("/videos*").hasAnyRole(ROLE_ADMIN, ROLE_VIDEOS)
+                            .anyRequest().hasRole(ROLE_ADMIN);
+                })
+                .oauth2ResourceServer(oauth -> {
+                    oauth.jwt()
+                            .jwtAuthenticationConverter(new KeycloakJwtConverter());
+                })
+                .sessionManagement(session -> {
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                })
+                .headers(headers -> {
+                    headers.frameOptions().sameOrigin();
+                })
+                .build();
+    }
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        var config = new org.springframework.web.cors.CorsConfiguration();
+        config.setAllowedOrigins(java.util.List.of("http://localhost:3000")); // ajustar para suas origens
+        config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(java.util.List.of("*"));
+        config.setAllowCredentials(true);
+        config.setMaxAge(3600L);
+
+        var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
         static class KeycloakJwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 

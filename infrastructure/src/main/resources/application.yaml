@@ -78,7 +78,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwt-set-uri: ${keycloak.host}/realms/${keycloak.realm}/protocol/openid-connect/certs
+          jwk-set-uri: ${keycloak.host}/realms/${keycloak.realm}/protocol/openid-connect/certs
           issuer-uri: ${keycloak.host}/realms/${keycloak.realm}
 
 storage:
