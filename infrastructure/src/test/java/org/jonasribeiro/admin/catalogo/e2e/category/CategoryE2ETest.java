@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.e2e.category;
 
+import org.jonasribeiro.admin.catalogo.ApiTest;
 import org.jonasribeiro.admin.catalogo.E2ETest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.e2e.MockDsl;
@@ -203,6 +204,7 @@ public class CategoryE2ETest implements MockDsl {
         Assertions.assertEquals(0, categoryRepository.count());
 
         final var aRequest = get("/categories/123")
+                .with(ApiTest.ADMIN_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

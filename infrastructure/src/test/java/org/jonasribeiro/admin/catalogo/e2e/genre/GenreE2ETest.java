@@ -1,5 +1,6 @@
 package org.jonasribeiro.admin.catalogo.e2e.genre;
 
+import org.jonasribeiro.admin.catalogo.ApiTest;
 import org.jonasribeiro.admin.catalogo.E2ETest;
 import org.jonasribeiro.admin.catalogo.domain.category.CategoryID;
 import org.jonasribeiro.admin.catalogo.domain.genre.GenreID;
@@ -238,6 +239,7 @@ public class GenreE2ETest implements MockDsl {
         Assertions.assertEquals(0, genreRepository.count());
 
         final var aRequest = get("/genres/123")
+                .with(ApiTest.ADMIN_JWT)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE);
 
