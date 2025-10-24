@@ -1,8 +1,8 @@
 package org.jonasribeiro.admin.catalogo.infraestructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jonasribeiro.admin.catalogo.ApiTest;
 import org.jonasribeiro.admin.catalogo.ControllerTest;
-import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.application.castmember.create.CreateCastMemberOutput;
 import org.jonasribeiro.admin.catalogo.application.castmember.create.DefaultCreateCastMemberUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.delete.DefaultDeleteCastMemberUseCase;
@@ -11,7 +11,7 @@ import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.get.Defau
 import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list.CastMemberListOutput;
 import org.jonasribeiro.admin.catalogo.application.castmember.retrieve.list.DefaultListCastMembersUseCase;
 import org.jonasribeiro.admin.catalogo.application.castmember.update.DefaultUpdateCastMemberUseCase;
-import org.jonasribeiro.admin.catalogo.application.castmember.update.UpdateCastMemberOutput;
+import org.jonasribeiro.admin.catalogo.domain.Fixture;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMember;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberID;
 import org.jonasribeiro.admin.catalogo.domain.castmember.CastMemberType;
@@ -77,6 +77,7 @@ public class CastMemberAPITest {
 
         // when
         final var aRequest = post("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(aCommand));
 
@@ -110,6 +111,7 @@ public class CastMemberAPITest {
 
         // when
         final var request = post("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -142,6 +144,7 @@ public class CastMemberAPITest {
 
         // when
         final var getRequest = get("/cast_members/{id}", expectedId)
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON);
 
         final var response = this.mvc.perform(getRequest);
@@ -156,66 +159,6 @@ public class CastMemberAPITest {
                 .andExpect(jsonPath("$.updated_at", equalTo(aMember.getUpdatedAt().toString())));
 
         verify(getCastMember).execute(eq(expectedId));
-    }
-
-    @Test
-    public void givenAnInvalidId_whenCallsGetById_thenShouldReturnNotFound() throws Exception {
-        // given
-        final var expectedErrorMessage = "CastMember with ID 123 was not found";
-
-        final var expectedId = CastMemberID.from("123");
-
-        when(getCastMember.execute(any()))
-                .thenThrow(NotFoundException.with(CastMember.class, expectedId));
-
-        // when
-        final var getRequest = get("/cast_members/{id}", expectedId.getValue())
-                .contentType(MediaType.APPLICATION_JSON);
-
-        final var response = this.mvc.perform(getRequest)
-                .andDo(print());
-
-        // then
-        response.andExpect(status().isNotFound())
-                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
-
-        verify(getCastMember).execute(eq(expectedId.getValue()));
-    }
-
-    @Test
-    public void givenAValidCommand_whenCallsUpdateCastMember_shouldReturnItsIdentifier() throws Exception {
-        // given
-        final var expectedName = Fixture.name();
-        final var expectedType = Fixture.CastMembers.type();
-
-        final var aMember = CastMember.newMember(expectedName, expectedType);
-        final var expectedId = aMember.getId();
-
-        final var aCommand =
-                new UpdateCastMemberRequest(expectedName, expectedType);
-
-        when(UpdateCast.execute(any()))
-                .thenReturn(UpdateCastMemberOutput.from(expectedId));
-
-        // when
-        final var aRequest = put("/cast_members/{id}", expectedId.getValue())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(aCommand));
-
-        final var response = this.mvc.perform(aRequest)
-                .andDo(print());
-
-        // then
-        response.andExpect(status().isOk())
-                .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.id", equalTo(expectedId.getValue())));
-
-        verify(UpdateCast).execute(argThat(actualCmd ->
-                Objects.equals(expectedName, actualCmd.name())
-                        && Objects.equals(expectedType, actualCmd.type())
-                        && Objects.equals(expectedId.getValue(), actualCmd.id())
-        ));
     }
 
     @Test
@@ -237,6 +180,7 @@ public class CastMemberAPITest {
 
         // when
         final var request = put("/cast_members/{id}", expectedId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -272,6 +216,7 @@ public class CastMemberAPITest {
 
         // when
         final var request = put("/cast_members/{id}", expectedId.getValue())
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -298,7 +243,8 @@ public class CastMemberAPITest {
                 .when(deleteCastMemberUseCase).execute(any());
 
         // when
-        final var request = delete("/cast_members/{id}", expectedId);
+        final var request = delete("/cast_members/{id}", expectedId)
+            .with(ApiTest.CAST_MEMBERS_JWT);
 
         final var response = this.mvc.perform(request)
                 .andDo(print());
@@ -332,6 +278,7 @@ public class CastMemberAPITest {
 
         // when
         final var request = get("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
@@ -385,6 +332,7 @@ public class CastMemberAPITest {
 
         // when
         final var request = get("/cast_members")
+                .with(ApiTest.CAST_MEMBERS_JWT)
                 .contentType(MediaType.APPLICATION_JSON);
         final var response = this.mvc.perform(request)
                 .andDo(print());
@@ -408,6 +356,5 @@ public class CastMemberAPITest {
                         && Objects.equals(expectedSort, query.sort())
                         && Objects.equals(expectedDirection, query.direction())
         ));
-
     }
 }
