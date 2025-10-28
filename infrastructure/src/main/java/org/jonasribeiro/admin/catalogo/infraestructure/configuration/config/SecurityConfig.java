@@ -3,6 +3,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.configuration.config;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -15,8 +16,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.*;
 import java.util.function.Function;
@@ -26,6 +25,7 @@ import java.util.stream.Stream;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@Profile("!development")
 public class SecurityConfig {
 
         private static final String ROLE_ADMIN = "CATALOGO_ADMIN";
@@ -37,11 +37,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // habilita CORS antes da autenticação
-                .csrf(csrf -> {
-                    csrf.disable();
-                })
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> {
+                    // permite preflight OPTIONS usando AntPathRequestMatcher
+                    authorize.requestMatchers(new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/**", "OPTIONS"))
+                            .permitAll();
+
                     authorize
                             .antMatchers("/cast_members*").hasAnyRole(ROLE_ADMIN, ROLE_CAST_MEMBERS)
                             .antMatchers("/categories*").hasAnyRole(ROLE_ADMIN, ROLE_CATEGORIES)
@@ -49,16 +51,9 @@ public class SecurityConfig {
                             .antMatchers("/videos*").hasAnyRole(ROLE_ADMIN, ROLE_VIDEOS)
                             .anyRequest().hasRole(ROLE_ADMIN);
                 })
-                .oauth2ResourceServer(oauth -> {
-                    oauth.jwt()
-                            .jwtAuthenticationConverter(new KeycloakJwtConverter());
-                })
-                .sessionManagement(session -> {
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                })
-                .headers(headers -> {
-                    headers.frameOptions().sameOrigin();
-                })
+                .oauth2ResourceServer(oauth -> oauth.jwt().jwtAuthenticationConverter(new KeycloakJwtConverter()))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers.frameOptions().sameOrigin())
                 .build();
     }
 
