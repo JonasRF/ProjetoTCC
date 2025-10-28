@@ -16,13 +16,6 @@ public class EventConfig {
 
     @Bean
     @VideoCreatedQueue
-    @Profile({"development"})
-    EventService localVideoCreatedEventService() {
-        return new InMemoryEventService();
-    }
-
-    @Bean
-    @VideoCreatedQueue
     @ConditionalOnMissingBean
     EventService videoCreatedEventService(
             @VideoCreatedQueue final QueueProperties props,

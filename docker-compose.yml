@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  app:
+    container_name: adm_videos_app
+    #   build: .
+    image: jonasjrf/admin-do-catalogo-java:modulos_ci-cd-4
+    profiles: [ "app" ]
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+      - rabbitmq
+    networks:
+      - adm_videos_network
 
   mysql:
     container_name: adm_videos_mysql
@@ -16,7 +31,7 @@ services:
     volumes:
       - ../.docker/mysql:/var/lib/mysql:rw
     networks:
-      - adm_videos_services
+      - adm_videos_network
 
   rabbitmq:
     container_name: adm_videos_rabbitmq
@@ -30,7 +45,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     networks:
-      - adm_videos_services
+      - adm_videos_network
 
   keycloak:
     container_name: adm_videos_keycloak
@@ -41,12 +56,11 @@ services:
     ports:
       - 8443:8080
     command:
-       - start-dev --hostname-url=http://keycloak:8080
+       - start-dev
     volumes:
       - ../.docker/keycloak:/opt/keycloak/data/h2:rw
     networks:
-      - adm_videos_services
+      - adm_videos_network
 
 networks:
-  adm_videos_services:
-    external: true
+  adm_videos_network:

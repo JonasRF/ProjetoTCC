@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="admin-do-catalogo.application" target="17" />
+      <module name="admin-do-catalogo.application.main" target="17" />
+      <module name="admin-do-catalogo.application.test" target="17" />
+      <module name="admin-do-catalogo.buildSrc" target="17" />
+      <module name="admin-do-catalogo.buildSrc.main" target="17" />
+      <module name="admin-do-catalogo.buildSrc.test" target="17" />
+      <module name="admin-do-catalogo.domain" target="17" />
+      <module name="admin-do-catalogo.domain.main" target="17" />
+      <module name="admin-do-catalogo.domain.test" target="17" />
+      <module name="admin-do-catalogo.infrastructure" target="17" />
+      <module name="admin-do-catalogo.infrastructure.main" target="17" />
+      <module name="admin-do-catalogo.infrastructure.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
