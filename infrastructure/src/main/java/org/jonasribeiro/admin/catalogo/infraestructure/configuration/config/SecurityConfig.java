@@ -59,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         var config = new org.springframework.web.cors.CorsConfiguration();
-        config.setAllowedOrigins(java.util.List.of("http://localhost:3000")); // ajustar para suas origens
+        config.setAllowedOrigins(java.util.List.of("http://localhost:3001")); // ajustar para suas origens
         config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(java.util.List.of("*"));
         config.setAllowCredentials(true);
