@@ -52,9 +52,10 @@ Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: vide
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
 ```
-                        Fonte: Elaborado pelo autor (2025)
+                                    Fonte: Elaborado pelo autor (2025)
 
 Arquitetura do sistema
+
 A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, 
 organizados em microsserviços que se comunicam por meio de APIs REST e serviços de mensageria. Esse 
 modelo arquitetural permite que cada serviço seja especializado em um domínio específico, possibilitando 
@@ -70,7 +71,7 @@ Componentes
 
 O sistema é composto pelos seguintes módulos principais:
 
-	Serviços de Backend:
+Serviços de Backend:
 -	Backend Administrativo do Catálogo de Vídeos: gerencia o catálogo, incluindo processos de conversão e organização de vídeos.
 	Gerenciamento de Dados e Mídia:
 -	Database Administrativo do Catálogo de Vídeos (MySQL): mantém informações administrativas relacionadas ao catálogo.
@@ -107,98 +108,25 @@ o software entregue valor real aos stakeholders e reduza ambiguidades durante o 
  
 Tabela 01 – Requisitos Funcionais (RFs)
 
-```
-ID	Requisito Funcional	Descrição
-RF001	Cadastrar Categoria	Permitir o cadastro de novas categorias com nome, descrição e status ativo/inativo.
-RF002	Atualizar Categoria	Possibilitar a edição das informações de uma categoria existente.
-RF003	Excluir Categoria	Remover categorias do sistema de forma lógica ou definitiva.
-RF004	Listar/Consultar Categorias	Exibir categorias cadastradas, com filtros e paginação.
-RF005	Cadastrar Gênero	Permitir o cadastro de novos gêneros no sistema.
-RF006	Associar Gênero a Categoria	Possibilitar a associação de gêneros a uma ou mais categorias.
-RF007	Atualizar Gênero	Editar dados de um gênero já cadastrado.
-RF008	Excluir/Listar Gênero	Remover gêneros e listar os existentes.
-RF009	Cadastrar Elenco (Cast Member)	Registrar membros do elenco, como atores e diretores.
-RF010	Atualizar Elenco	Editar informações de membros do elenco.
-RF011	Excluir/Listar Elenco	Remover e consultar membros do elenco.
-RF012	Cadastrar Vídeo	Registrar vídeo com título, descrição, ano, duração e classificação etária.
-RF013	Associar Vídeo a Categorias e Gêneros	Relacionar vídeos a categorias, gêneros e elenco.
-RF014	Upload e Gerenciar Mídias	Realizar upload de arquivos de vídeo, trailer, thumbnails e banners.
-RF015	Atualizar Vídeo	Editar metadados ou informações de vídeos já cadastrados.
-RF016	Publicar/Desativar Vídeo	Alterar status de disponibilidade de vídeos no catálogo.
-RF017	Excluir Vídeo	Remover vídeos cadastrados.
-RF018	Listar/Consultar Vídeos	Consultar vídeos cadastrados com filtros por título, gênero, categoria e elenco.
-```
+<img width="739" height="755" alt="image" src="https://github.com/user-attachments/assets/d6e0d1c7-310e-432e-a289-de1c1dd2e949" />
 
                                                     Fonte: Elaborado pelo autor (2025)
 
 Já os Requisitos Não Funcionais conforme exposto na Tabela 02 especificam propriedades e restrições de qualidade que determinam como o sistema deve operar, sem descrever diretamente suas funcionalidades. No caso do microsserviço de administração do Codeflix, esses requisitos envolvem desempenho, disponibilidade, escalabilidade, tolerância a falhas, segurança, interoperabilidade e monitoramento contínuo. Em arquiteturas distribuídas, tais atributos são indispensáveis, pois garantem que cada microsserviço seja autônomo, resiliente e capaz de se comunicar de forma eficiente e assíncrona com os demais componentes do ecossistema. Como destacam Bass, Clements e Kazman (2021), requisitos de qualidade influenciam diretamente as decisões arquiteturais e são determinantes para assegurar a sustentabilidade e a confiabilidade de sistemas complexos.
 
                                                               Tabela 02 – Requisitos Não-Funcionais (RNFs)
+															  
+<img width="731" height="691" alt="image" src="https://github.com/user-attachments/assets/d352498e-1b17-42cf-b4d6-02f8440fbd5d" />
 
-ID	Requisito Não Funcional	Descrição
-
-RNF001	
-Arquitetura de Microsserviços	O serviço deve ser independente, seguindo princípios de microsserviços.
-RNF002	Padrões de Projeto	Adotar DDD e Clean Architecture.
-RNF003	Comunicação entre Serviços	Integração via REST e mensageria assíncrona.
-RNF004	Escalabilidade Horizontal	Suporte a escalonamento automático via Kubernetes.
-
-RNF005	
-Desempenho	Respostas de APIs em menos de 500 ms em operações simples.
-
-RNF006	
-Concorrência	Suporte a múltiplas requisições simultâneas sem perda de
-desempenho.
-RNF007	Alta Disponibilidade	Disponibilidade mínima de 99,5%.
-
-RNF008	
-Recuperação de Falhas	Suporte a rollback e recuperação automática em falhas críticas.
-RNF009	Observabilidade	Logs, métricas e monitoramento devem estar disponíveis.
-RNF010	Autenticação Segura	Uso de tokens JWT.
-RNF011	Persistência de Dados	Banco relacional para entidades (ex.: MySQL/Postgres).
-RNF012	Armazenamento de Mídias	Uso de storage distribuído (ex.: S3, GCP).
-RNF013	Auditoria	Registro de data/hora em operações de CRUD.
-
-RNF014	
-Testabilidade	Cobertura de testes automatizados (unitários, integração e e2e).
-RNF015	Integração Contínua	Pipeline CI/CD para build, testes e deploy.
-RNF016	Documentação de API	Documentação via OpenAPI/Swagger.
-RNF017	Portabilidade	Empacotamento em containers Docker.
-RNF018	Orquestração	Implantação em Kubernetes.
-
-                                                    Fonte: Elaborado pelo autor (2025)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7.7	Modelagem
+Modelagem
 
 Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.
+
                                                Figura 2.1 – Diagrama detalhado do DDD
 
+<img width="753" height="578" alt="image" src="https://github.com/user-attachments/assets/841dd242-f905-4afd-8237-360de163b10e" />
 
                                                     Fonte: Elaborado pelo autor (2025)
-
-
-
-
-
-
-
-
-
-
 
 A Figura 2.2 ilustra o diagrama da arquitetura da aplicação, que combina os princípios de Domain-Driven Design (DDD) com os componentes da Clean Architecture. O diagrama mostra a base do DDD com o uso de Value Objects (como Identifier, Name, Money) e Aggregates (como Category, Genre, Cast Member, Video), que encapsulam a lógica de negócio principal. Esses Aggregates são então mapeados para os Componentes da Clean Architecture, que incluem as Entidades do DDD, os Use Cases (responsáveis pela lógica da aplicação), os Gateways (que fazem a interface com a infraestrutura/persistência) e os Presenters (que preparam os dados para a interface). O diagrama estabelece a clareza e separação de responsabilidades entre as diferentes camadas.
                                         
