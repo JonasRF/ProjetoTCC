@@ -1,53 +1,66 @@
 # ProjetoTCC
 
-7	DESENVOLVIMENTO DA APLICAÇÃO
+DESENVOLVIMENTO DA APLICAÇÃO
 
-7.1	Introdução
+Introdução
 
-O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
+O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo desenvolvida sob o paradigma de microsserviços. 
+A estrutura do sistema, conforme ilustrada pelo diagrama C4, foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
+serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços será desenvolvido o backend do admin do catálogo 
+de vídeos pois esse microsserviço tem toda estrutura necessária para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
 <img width="646" height="502" alt="image" src="https://github.com/user-attachments/assets/7feca50f-71aa-46d5-bc9f-b5678fb50ac3" />
 
 Fonte: Elaborado pelo autor (2025)
- 
 
+Código plantuml
 
-7.2	Código plantuml
-
-O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner do serviço de administração do catálogo de vídeo, para auxiliar outros desenvolvedores a ter uma base de como é aplicado o código utilizando a ferramenta de código aberto plantuml.
+O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner do serviço de administração do catálogo de vídeo, 
+para auxiliar outros desenvolvedores a ter uma base de como é aplicado o código utilizando a ferramenta de código aberto plantuml.
 Código fonte 1: Diagrama C4 em container
+
 ```
 @startuml container
-!include	https://raw.githubusercontent.com/plantuml-stdlib/C4-
-PlantUML/master/C4_Container.puml ' Define o sistema principal System_Boundary(c1, "Codeflix") {
+!include	https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+' Define o sistema principal System_Boundary(c1, "Codeflix") {
+
 ' Define os sistemas externos (neste caso, "Frontend" e "Encoder")
+
 System(encoder, "Encoder de vídeos", "Realiza o encoding dos vídeos para mpeg-dash")
 Container(bucket_video,"Bucket	de	armazenamento	de	vídeos encodados","GCP")
 Rel(encoder,bucket_video,"Faz	upload	do	vídeo	convertido via","HTTPS")
+
 ' Define o limite do Backend
+
 System_Boundary(c2, "Backend: Admin do Catálogo de Vídeos") {
 Container(app, "App", "Linguagem livre", "Sistema que gerencia os vídeos, incluindo as categorias e gêneros")
 Container(db, "Banco de dados", "MySQL", "Armazena dados do catálogo")
 }
 Container(bucket, "Bucket de vídeos", "Google Cloud Storage", "Armazena os vídeos brutos")
 }
+
 ' Define as interações entre os componentes
+
 Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: video.encoded")
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
 ```
 Fonte: Elaborado pelo autor (2025)
- 
 
+Arquitetura do sistema
+A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, organizados em microsserviços que se comunicam 
+por meio de APIs REST e serviços de mensageria. Esse modelo arquitetural permite que cada serviço seja especializado em um domínio específico, 
+possibilitando a adoção de tecnologias distintas conforme a necessidade de cada módulo. Além disso, favorece escalabilidade, resiliência e manutenibilidade, 
+aspectos destacados por Newman (2017) como centrais na adoção de microsserviços.Segundo Fowler e Lewis (2014), a descentralização do desenvolvimento e da 
+persistência de dados constitui uma das principais vantagens da abordagem em microsserviços, uma vez que reduz o acoplamento entre módulos e viabiliza a 
+evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona via APIs e integração assíncrona por eventos, 
+o que está em consonância com o modelo de event-driven architecture defendido por Richardson (2018).
 
+Componentes
 
-7.3	Arquitetura do sistema
-A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, organizados em microsserviços que se comunicam por meio de APIs REST e serviços de mensageria. Esse modelo arquitetural permite que cada serviço seja especializado em um domínio específico, possibilitando a adoção de tecnologias distintas conforme a necessidade de cada módulo. Além disso, favorece escalabilidade, resiliência e manutenibilidade, aspectos destacados por Newman (2017) como centrais na adoção de microsserviços.
-Segundo Fowler e Lewis (2014), a descentralização do desenvolvimento e da persistência de dados constitui uma das principais vantagens da abordagem em microsserviços, uma vez que reduz o acoplamento entre módulos e viabiliza a evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona via APIs e integração assíncrona por eventos, o que está em consonância com o modelo de event-driven architecture defendido por Richardson (2018).
-
-7.4	Componentes
 O sistema é composto pelos seguintes módulos principais:
+
 •	Serviços de Backend:
 o	Backend Administrativo do Catálogo de Vídeos: gerencia o catálogo, incluindo processos de conversão e organização de vídeos.
 •	Gerenciamento de Dados e Mídia:
@@ -60,20 +73,32 @@ o	Encoder de Vídeos: converte os arquivos originais para o padrão MPEG-DASH, a
  
 
 
-•	Serviços de Infraestrutura Compartilhada:
-o	Keycloak: implementa autenticação e autorização, em conformidade com o modelo de Identity and Access Management (IAM).
-•	Interações e Papéis dos Atores
-o	Administrador do Catálogo de Vídeos: utiliza o Frontend Administrativo que será desenvolvido futuramente para realizar a manutenção do catálogo de vídeos e suas categorias, apoiado pelo Backend Administrativo.
+	Serviços de Infraestrutura Compartilhada:
+--	Keycloak: implementa autenticação e autorização, em conformidade com o modelo de Identity and Access Management (IAM).
+--	Interações e Papéis dos Atores
+o	Administrador do Catálogo de Vídeos: utiliza o Frontend Administrativo que será desenvolvido futuramente para realizar 
+    a manutenção do catálogo de vídeos e suas categorias, apoiado pelo Backend Administrativo.
+	
+Aplicação
 
-7.5	Aplicação
-Nesta subseção serão apresentados os principais trechos do microsserviço, bem como os testes, as integrações feitas com APIs e bancos de dados. Os requisitos funcionais (RFs) e não funcionais (RNFs) exercem papel essencial no processo de engenharia de software, especialmente em sistemas baseados em arquitetura de microsserviços, como o microsserviço de administração do catálogo de vídeos do projeto Codeflix. Esses requisitos estabelecem tanto as funções específicas que o sistema deve desempenhar quanto as características de qualidade e restrições que garantem sua eficiência, segurança e manutenibilidade (SOMMERVILLE, 2011).
+Nesta subseção serão apresentados os principais trechos do microsserviço, bem como os testes, as integrações feitas com APIs e bancos de dados. 
+Os requisitos funcionais (RFs) e não funcionais (RNFs) exercem papel essencial no processo de engenharia de software, especialmente em sistemas baseados 
+em arquitetura de microsserviços, como o microsserviço de administração do catálogo de vídeos do projeto Codeflix. Esses requisitos estabelecem tanto as 
+funções específicas que o sistema deve desempenhar quanto as características de qualidade e restrições que garantem sua eficiência, segurança e 
+manutenibilidade (SOMMERVILLE, 2011)
 
-7.6	Requisitos
+Requisitos
 
-Os Requisitos Funcionais conforme exposto na Tabela 01, definem as ações, serviços e comportamentos que o sistema deve realizar para atender aos objetivos de negócio e às necessidades dos usuários. No contexto do Codeflix, os RFs contemplam as operações de cadastro, atualização, exclusão e consulta de entidades como categorias, gêneros, elenco e vídeos. Também abrangem funcionalidades de upload e gerenciamento de mídias, controle de publicação de vídeos, além de mecanismos de autenticação, autorização e auditoria. Esses requisitos representam a espinha dorsal do microsserviço, garantindo que ele cumpra sua função de administrar o catálogo de vídeos de forma segura, escalável e coerente com as regras de negócio. Segundo Pressman e Maxim (2021), requisitos funcionais bem definidos são fundamentais para que o software entregue valor real aos stakeholders e reduza ambiguidades durante o processo de desenvolvimento.
+Os Requisitos Funcionais conforme exposto na Tabela 01, definem as ações, serviços e comportamentos que o sistema deve realizar para atender aos objetivos de 
+negócio e às necessidades dos usuários. No contexto do Codeflix, os RFs contemplam as operações de cadastro, atualização, exclusão e consulta de entidades como 
+categorias, gêneros, elenco e vídeos. Também abrangem funcionalidades de upload e gerenciamento de mídias, controle de publicação de vídeos, além de mecanismos de 
+autenticação, autorização e auditoria. Esses requisitos representam a espinha dorsal do microsserviço, garantindo que ele cumpra sua função de administrar o catálogo 
+de vídeos de forma segura, escalável e coerente com as regras de negócio. Segundo Pressman e Maxim (2021), requisitos funcionais bem definidos são fundamentais para que 
+o software entregue valor real aos stakeholders e reduza ambiguidades durante o processo de desenvolvimento.
  
 Tabela 01 – Requisitos Funcionais (RFs)
 
+```
 ID	Requisito Funcional	Descrição
 RF001	Cadastrar Categoria	Permitir o cadastro de novas categorias com nome, descrição e status ativo/inativo.
 RF002	Atualizar Categoria	Possibilitar a edição das informações de uma categoria existente.
@@ -93,6 +118,7 @@ RF015	Atualizar Vídeo	Editar metadados ou informações de vídeos já cadastra
 RF016	Publicar/Desativar Vídeo	Alterar status de disponibilidade de vídeos no catálogo.
 RF017	Excluir Vídeo	Remover vídeos cadastrados.
 RF018	Listar/Consultar Vídeos	Consultar vídeos cadastrados com filtros por título, gênero, categoria e elenco.
+```
 
                                                     Fonte: Elaborado pelo autor (2025)
 
