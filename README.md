@@ -11,7 +11,7 @@ foi concebida para operar como uma entidade coesa e escalável, embora seja comp
 serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
 será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
 para se ter um serviço escalável, resiliente, tolerante a falhas e seguro. 
-</center><br>
+</center><br/> 
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
 
@@ -19,14 +19,14 @@ Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de v
 
 Fonte: Elaborado pelo autor (2025)
 
-### Código plantuml
+## Código plantuml
 
 O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner
 do serviço de administração do catálogo de vídeo, para auxiliar outros 
 desenvolvedores a ter uma base de como é aplicado o código utilizando
 a ferramenta de código aberto plantuml.
 
-###Código fonte 1: Diagrama C4 em container
+##Código fonte 1: Diagrama C4 em container
 
 ```
 @startuml container
