@@ -11,8 +11,8 @@ foi concebida para operar como uma entidade coesa e escalável, embora seja comp
 serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
 será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
 para se ter um serviço escalável, resiliente, tolerante a falhas e seguro. 
-</center>
-<br>
+</center><br>
+
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
 
 <img width="646" height="502" alt="image" src="https://github.com/user-attachments/assets/7feca50f-71aa-46d5-bc9f-b5678fb50ac3" />
