@@ -56,7 +56,7 @@ Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: vide
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
 ```
-                               <p align="center> Fonte: Elaborado pelo autor (2025) <p/>
+<p align="center> Fonte: Elaborado pelo autor (2025) <p/>
 
 ## Arquitetura do sistema
 
@@ -76,8 +76,9 @@ defendido por Richardson (2018).
 <br>
 O sistema é composto pelos seguintes módulos principais:
 <br>
-
+<br>
 Serviços de Backend:
+<br>
 <br>
 -	Backend Administrativo do Catálogo de Vídeos: gerencia o catálogo, incluindo processos de conversão e organização de vídeos.
 	Gerenciamento de Dados e Mídia:
