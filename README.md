@@ -19,7 +19,7 @@ Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de v
 
 <img width="646" height="502" alt="image" src="https://github.com/user-attachments/assets/7feca50f-71aa-46d5-bc9f-b5678fb50ac3" />
 
-<h1 align="center"> Fonte: Elaborado pelo autor (2025)<h1/>
+<p align="center"> Fonte: Elaborado pelo autor (2025)<p/>
 
 ## Código plantuml
 
@@ -28,7 +28,7 @@ do serviço de administração do catálogo de vídeo, para auxiliar outros
 desenvolvedores a ter uma base de como é aplicado o código utilizando
 a ferramenta de código aberto plantuml.
 
-##Código fonte 1: Diagrama C4 em container
+## Código fonte 1: Diagrama C4 em container
 
 ```
 @startuml container
@@ -58,7 +58,7 @@ Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de v
 ```
                                 ""Fonte: Elaborado pelo autor (2025)""
 
-Arquitetura do sistema
+## Arquitetura do sistema
 
 A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, 
 organizados em microsserviços que se comunicam por meio de APIs REST e serviços de mensageria. Esse 
@@ -70,11 +70,10 @@ principais vantagens da abordagem em microsserviços, uma vez que reduz o acopla
 evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona 
 via APIs e integração assíncrona por eventos, o que está em consonância com o modelo de event-driven architecture 
 defendido por Richardson (2018).
-
-
-Componentes
-
-
+<br>
+<br>
+## Componentes
+<br>
 O sistema é composto pelos seguintes módulos principais:
 
 Serviços de Backend:
