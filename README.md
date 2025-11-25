@@ -17,7 +17,7 @@ Fonte: Elaborado pelo autor (2025)
 
 O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner do serviço de administração do catálogo de vídeo, para auxiliar outros desenvolvedores a ter uma base de como é aplicado o código utilizando a ferramenta de código aberto plantuml.
 Código fonte 1: Diagrama C4 em container
-'''
+"""
 @startuml container
 !include	https://raw.githubusercontent.com/plantuml-stdlib/C4-
 PlantUML/master/C4_Container.puml ' Define o sistema principal System_Boundary(c1, "Codeflix") {
@@ -36,7 +36,7 @@ Container(bucket, "Bucket de vídeos", "Google Cloud Storage", "Armazena os víd
 Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: video.encoded")
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
-'''
+"""
 Fonte: Elaborado pelo autor (2025)
  
 
