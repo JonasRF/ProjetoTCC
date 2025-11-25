@@ -2,7 +2,7 @@
 
 DESENVOLVIMENTO DA APLICAÇÃO
 
-Introdução
+###Introdução
 
 <p align="center"> 
 O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
@@ -18,14 +18,14 @@ Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de v
 
 Fonte: Elaborado pelo autor (2025)
 
-Código plantuml
+###Código plantuml
 
 O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner
 do serviço de administração do catálogo de vídeo, para auxiliar outros 
 desenvolvedores a ter uma base de como é aplicado o código utilizando
 a ferramenta de código aberto plantuml.
 
-Código fonte 1: Diagrama C4 em container
+###Código fonte 1: Diagrama C4 em container
 
 ```
 @startuml container
