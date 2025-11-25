@@ -4,12 +4,13 @@ DESENVOLVIMENTO DA APLICAÇÃO
 
 Introdução
 
+<h1 align="center"> 
 O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
 desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, 
 foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
 serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
 será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
-para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
+para se ter um serviço escalável, resiliente, tolerante a falhas e seguro. </h1>
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
 
@@ -67,7 +68,9 @@ evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princ
 via APIs e integração assíncrona por eventos, o que está em consonância com o modelo de event-driven architecture 
 defendido por Richardson (2018).
 
+
 Componentes
+
 
 O sistema é composto pelos seguintes módulos principais:
 
@@ -116,7 +119,9 @@ Já os Requisitos Não Funcionais conforme exposto na Tabela 02 especificam prop
                                                              															  
 <img width="731" height="691" alt="image" src="https://github.com/user-attachments/assets/d352498e-1b17-42cf-b4d6-02f8440fbd5d" />
 
+
 Modelagem
+
 
 Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.
 
