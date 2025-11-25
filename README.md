@@ -4,20 +4,26 @@ DESENVOLVIMENTO DA APLICAÇÃO
 
 Introdução
 
-O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo desenvolvida sob o paradigma de microsserviços. 
-A estrutura do sistema, conforme ilustrada pelo diagrama C4, foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
-serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços será desenvolvido o backend do admin do catálogo 
-de vídeos pois esse microsserviço tem toda estrutura necessária para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
+O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
+desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, 
+foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
+serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
+será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
+para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
+
 <img width="646" height="502" alt="image" src="https://github.com/user-attachments/assets/7feca50f-71aa-46d5-bc9f-b5678fb50ac3" />
 
 Fonte: Elaborado pelo autor (2025)
 
 Código plantuml
 
-O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner do serviço de administração do catálogo de vídeo, 
-para auxiliar outros desenvolvedores a ter uma base de como é aplicado o código utilizando a ferramenta de código aberto plantuml.
+O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner
+do serviço de administração do catálogo de vídeo, para auxiliar outros 
+desenvolvedores a ter uma base de como é aplicado o código utilizando
+a ferramenta de código aberto plantuml.
+
 Código fonte 1: Diagrama C4 em container
 
 ```
@@ -46,37 +52,40 @@ Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: vide
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
 ```
-Fonte: Elaborado pelo autor (2025)
+                        Fonte: Elaborado pelo autor (2025)
 
 Arquitetura do sistema
-A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, organizados em microsserviços que se comunicam 
-por meio de APIs REST e serviços de mensageria. Esse modelo arquitetural permite que cada serviço seja especializado em um domínio específico, 
-possibilitando a adoção de tecnologias distintas conforme a necessidade de cada módulo. Além disso, favorece escalabilidade, resiliência e manutenibilidade, 
-aspectos destacados por Newman (2017) como centrais na adoção de microsserviços.Segundo Fowler e Lewis (2014), a descentralização do desenvolvimento e da 
-persistência de dados constitui uma das principais vantagens da abordagem em microsserviços, uma vez que reduz o acoplamento entre módulos e viabiliza a 
-evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona via APIs e integração assíncrona por eventos, 
-o que está em consonância com o modelo de event-driven architecture defendido por Richardson (2018).
+A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, 
+organizados em microsserviços que se comunicam por meio de APIs REST e serviços de mensageria. Esse 
+modelo arquitetural permite que cada serviço seja especializado em um domínio específico, possibilitando 
+a adoção de tecnologias distintas conforme a necessidade de cada módulo. Além disso, favorece escalabilidade, 
+resiliência e manutenibilidade, aspectos destacados por Newman (2017) como centrais na adoção de microsserviços.
+Segundo Fowler e Lewis (2014), a descentralização do desenvolvimento e da persistência de dados constitui uma das 
+principais vantagens da abordagem em microsserviços, uma vez que reduz o acoplamento entre módulos e viabiliza a
+evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona 
+via APIs e integração assíncrona por eventos, o que está em consonância com o modelo de event-driven architecture 
+defendido por Richardson (2018).
 
 Componentes
 
 O sistema é composto pelos seguintes módulos principais:
 
-•	Serviços de Backend:
-o	Backend Administrativo do Catálogo de Vídeos: gerencia o catálogo, incluindo processos de conversão e organização de vídeos.
-•	Gerenciamento de Dados e Mídia:
-o	Database Administrativo do Catálogo de Vídeos (MySQL): mantém informações administrativas relacionadas ao catálogo.
-o	Buckets de Armazenamento:
-	Vídeos brutos (raw): guarda os arquivos originais enviados.
-o	Vídeos processados (encoded): contém os arquivos convertidos em formatos prontos para streaming.
-•	Processamento de Mídia:
-o	Encoder de Vídeos: converte os arquivos originais para o padrão MPEG-DASH, amplamente utilizado em soluções de streaming adaptativo (ISO/IEC 23009- 1:2019).
+	Serviços de Backend:
+-	Backend Administrativo do Catálogo de Vídeos: gerencia o catálogo, incluindo processos de conversão e organização de vídeos.
+	Gerenciamento de Dados e Mídia:
+-	Database Administrativo do Catálogo de Vídeos (MySQL): mantém informações administrativas relacionadas ao catálogo.
+	Buckets de Armazenamento:
+-	Vídeos brutos (raw): guarda os arquivos originais enviados.
+-	Vídeos processados (encoded): contém os arquivos convertidos em formatos prontos para streaming.
+	Processamento de Mídia:
+-	Encoder de Vídeos: converte os arquivos originais para o padrão MPEG-DASH, amplamente utilizado em soluções de streaming adaptativo (ISO/IEC 23009- 1:2019).
  
 
-
 	Serviços de Infraestrutura Compartilhada:
---	Keycloak: implementa autenticação e autorização, em conformidade com o modelo de Identity and Access Management (IAM).
---	Interações e Papéis dos Atores
-o	Administrador do Catálogo de Vídeos: utiliza o Frontend Administrativo que será desenvolvido futuramente para realizar 
+
+-	Keycloak: implementa autenticação e autorização, em conformidade com o modelo de Identity and Access Management (IAM).
+  	Interações e Papéis dos Atores
+-	Administrador do Catálogo de Vídeos: utiliza o Frontend Administrativo que será desenvolvido futuramente para realizar 
     a manutenção do catálogo de vídeos e suas categorias, apoiado pelo Backend Administrativo.
 	
 Aplicação
