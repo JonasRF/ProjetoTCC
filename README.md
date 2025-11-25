@@ -52,7 +52,7 @@ Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: vide
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
 ```
-                                    Fonte: Elaborado pelo autor (2025)
+                                ""Fonte: Elaborado pelo autor (2025)""
 
 Arquitetura do sistema
 
@@ -110,37 +110,28 @@ Tabela 01 – Requisitos Funcionais (RFs)
 
 <img width="739" height="755" alt="image" src="https://github.com/user-attachments/assets/d6e0d1c7-310e-432e-a289-de1c1dd2e949" />
 
-                                                    Fonte: Elaborado pelo autor (2025)
-
+                                            
 Já os Requisitos Não Funcionais conforme exposto na Tabela 02 especificam propriedades e restrições de qualidade que determinam como o sistema deve operar, sem descrever diretamente suas funcionalidades. No caso do microsserviço de administração do Codeflix, esses requisitos envolvem desempenho, disponibilidade, escalabilidade, tolerância a falhas, segurança, interoperabilidade e monitoramento contínuo. Em arquiteturas distribuídas, tais atributos são indispensáveis, pois garantem que cada microsserviço seja autônomo, resiliente e capaz de se comunicar de forma eficiente e assíncrona com os demais componentes do ecossistema. Como destacam Bass, Clements e Kazman (2021), requisitos de qualidade influenciam diretamente as decisões arquiteturais e são determinantes para assegurar a sustentabilidade e a confiabilidade de sistemas complexos.
 
-                                                              Tabela 02 – Requisitos Não-Funcionais (RNFs)
-															  
+                                                             															  
 <img width="731" height="691" alt="image" src="https://github.com/user-attachments/assets/d352498e-1b17-42cf-b4d6-02f8440fbd5d" />
 
 Modelagem
 
 Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.
 
-                                               Figura 2.1 – Diagrama detalhado do DDD
-
+                                              
 <img width="753" height="578" alt="image" src="https://github.com/user-attachments/assets/841dd242-f905-4afd-8237-360de163b10e" />
 
-                                                    Fonte: Elaborado pelo autor (2025)
-
+                                                   
 A Figura 2.2 ilustra o diagrama da arquitetura da aplicação, que combina os princípios de Domain-Driven Design (DDD) com os componentes da Clean Architecture. O diagrama mostra a base do DDD com o uso de Value Objects (como Identifier, Name, Money) e Aggregates (como Category, Genre, Cast Member, Video), que encapsulam a lógica de negócio principal. Esses Aggregates são então mapeados para os Componentes da Clean Architecture, que incluem as Entidades do DDD, os Use Cases (responsáveis pela lógica da aplicação), os Gateways (que fazem a interface com a infraestrutura/persistência) e os Presenters (que preparam os dados para a interface). O diagrama estabelece a clareza e separação de responsabilidades entre as diferentes camadas.
                                         
-                                     Figura 2.2 – Diagrama do DDD + Clean Architecture
-
-
-                                                 Fonte: Elaborado pelo autor (2025)
-
+<img width="796" height="460" alt="image" src="https://github.com/user-attachments/assets/b3c0377f-6674-40ac-9574-81aa901b146b" />
+                                
 Esses padrões e camadas trabalham juntos conforme a Figura 2.2, criam um sistema com um design robusto, que é fácil de manter, testar e evoluir. A combinação de DDD e Clean Architecture é muito comum, pois o DDD ajuda a modelar o domínio de forma clara, enquanto a Clean Architecture organiza o código para que o domínio seja o centro da aplicação, protegido de detalhes técnicos.
 
 
-
-
-               7.8   Descrição do domínio
+Descrição do domínio
 
 O agregado Categoria conforme observado na Tablela 03, representa a entidade central do domínio do catálogo de vídeos, responsável por agrupar e organizar conteúdos audiovisuais de acordo com critérios temáticos ou estratégicos, como “Filmes”, “Séries”, “Lançamentos” ou “Infantil”. Seu principal objetivo é estruturar o catálogo de forma lógica, permitindo melhor indexação, filtragem e recomendação de vídeos dentro do sistema. Cada categoria é definida por um nome e uma descrição opcional, além de possuir um estado de ativação, que indica se está ativa ou inativa. O agregado garante a integridade dos dados por meio de regras de negócio, como a obrigatoriedade do nome, que deve conter no mínimo três caracteres, e a validação do estado ativo. A descrição, por sua vez, é um campo flexível, podendo ser nula ou em branco.
                    Tabela 03 - Descrição de domínio do agregado de categoria:
