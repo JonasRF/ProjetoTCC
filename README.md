@@ -7,7 +7,7 @@
 O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
-
+<img width="646" height="502" alt="image" src="https://github.com/user-attachments/assets/7feca50f-71aa-46d5-bc9f-b5678fb50ac3" />
 
 Fonte: Elaborado pelo autor (2025)
  
@@ -17,7 +17,7 @@ Fonte: Elaborado pelo autor (2025)
 
 O código fonte 1 abaixo representa o diagrama C4 baseado em conteiner do serviço de administração do catálogo de vídeo, para auxiliar outros desenvolvedores a ter uma base de como é aplicado o código utilizando a ferramenta de código aberto plantuml.
 Código fonte 1: Diagrama C4 em container
-
+'''
 @startuml container
 !include	https://raw.githubusercontent.com/plantuml-stdlib/C4-
 PlantUML/master/C4_Container.puml ' Define o sistema principal System_Boundary(c1, "Codeflix") {
@@ -36,6 +36,7 @@ Container(bucket, "Bucket de vídeos", "Google Cloud Storage", "Armazena os víd
 Rel(app, encoder, "Consome dados do vídeo convertido via", "RabbitMQ Fila: video.encoded")
 Rel(encoder, app, "Publica dados do vídeo recém-criado via", "RabbitMQ Fila: video.created")
 Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de vídeo via", "HTTPS") @enduml
+'''
 Fonte: Elaborado pelo autor (2025)
  
 
