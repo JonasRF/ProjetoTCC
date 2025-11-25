@@ -4,13 +4,13 @@ DESENVOLVIMENTO DA APLICAÇÃO
 
 Introdução
 
-<h1 align="center"> 
+<p align="center"> 
 O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
 desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, 
 foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
 serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
 será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
-para se ter um serviço escalável, resiliente, tolerante a falhas e seguro. </h1>
+para se ter um serviço escalável, resiliente, tolerante a falhas e seguro. </p>
 
 Figura 2.0 – Diagrama C4 detalhado do microsserviço de admin do Catalogo de vídeos baseado em contêiner.
 
