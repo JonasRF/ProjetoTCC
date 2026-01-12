@@ -136,13 +136,13 @@ Esses padrões e camadas trabalham juntos conforme a Figura 2.2, criam um sistem
 
 Descrição do domínio
 
-O agregado Categoria conforme observado na Tablela 03, representa a entidade central do domínio do catálogo de vídeos, responsável por agrupar e organizar conteúdos audiovisuais de acordo com critérios temáticos ou estratégicos, como “Filmes”, “Séries”, “Lançamentos” ou “Infantil”. Seu principal objetivo é estruturar o catálogo de forma lógica, permitindo melhor indexação, filtragem e recomendação de vídeos dentro do sistema. Cada categoria é definida por um nome e uma descrição opcional, além de possuir um estado de ativação, que indica se está ativa ou inativa. O agregado garante a integridade dos dados por meio de regras de negócio, como a obrigatoriedade do nome, que deve conter no mínimo três caracteres, e a validação do estado ativo. A descrição, por sua vez, é um campo flexível, podendo ser nula ou em branco.<br>
-                   Tabela 03 - Descrição de domínio do agregado de categoria:
+O agregado Categoria conforme observado na Tablela 03, representa a entidade central do domínio do catálogo de vídeos, responsável por agrupar e organizar conteúdos audiovisuais de acordo com critérios temáticos ou estratégicos, como “Filmes”, “Séries”, “Lançamentos” ou “Infantil”. Seu principal objetivo é estruturar o catálogo de forma lógica, permitindo melhor indexação, filtragem e recomendação de vídeos dentro do sistema. Cada categoria é definida por um nome e uma descrição opcional, além de possuir um estado de ativação, que indica se está ativa ou inativa. O agregado garante a integridade dos dados por meio de regras de negócio, como a obrigatoriedade do nome, que deve conter no mínimo três caracteres, e a validação do estado ativo. A descrição, por sua vez, é um campo flexível, podendo ser nula ou em branco.
+                   <br>Tabela 03 - Descrição de domínio do agregado de categoria:
 
-<img width="414" height="262" alt="image" src="https://github.com/user-attachments/assets/aa0978b5-232a-4ee1-be7b-2a1ee0ea15df" />
+<img width="414" height="262" alt="image" src="https://github.com/user-attachments/assets/aa0978b5-232a-4ee1-be7b-2a1ee0ea15df" /><br>
 
                                        
-                                          Fonte: Elaborado pelo autor (2025)
+     Fonte: Elaborado pelo autor (2025)
  
 
 Além disso, o agregado mantém informações de auditoria, incluindo as datas de criação, atualização e exclusão, que permitem rastrear o ciclo de vida da entidade. No contexto do domínio, o agregado Categoria estabelece uma relação conceitual com os agregados Gênero e Vídeo, podendo ser referenciada por ambos para classificação e associação de conteúdo. Ainda assim, preserva sua autonomia e independência transacional, conforme os princípios de isolamento entre agregados propostos por Evans (2004) em Domain-Driven Design.
