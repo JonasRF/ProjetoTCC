@@ -120,14 +120,8 @@ Tabela 01 – Requisitos Funcionais (RFs)
 
 <img width="739" height="755" alt="image" src="https://github.com/user-attachments/assets/d6e0d1c7-310e-432e-a289-de1c1dd2e949" />
 
-                                            
-Já os Requisitos Não Funcionais conforme exposto na Tabela 02 especificam propriedades e restrições de qualidade que determinam como o sistema deve operar, sem descrever diretamente suas funcionalidades. No caso do microsserviço de administração do Codeflix, esses requisitos envolvem desempenho, disponibilidade, escalabilidade, tolerância a falhas, segurança, interoperabilidade e monitoramento contínuo. Em arquiteturas distribuídas, tais atributos são indispensáveis, pois garantem que cada microsserviço seja autônomo, resiliente e capaz de se comunicar de forma eficiente e assíncrona com os demais componentes do ecossistema. Como destacam Bass, Clements e Kazman (2021), requisitos de qualidade influenciam diretamente as decisões arquiteturais e são determinantes para assegurar a sustentabilidade e a confiabilidade de sistemas complexos.
-
-                                                             															  
-<img width="731" height="691" alt="image" src="https://github.com/user-attachments/assets/d352498e-1b17-42cf-b4d6-02f8440fbd5d" />
-
-
-Modelagem
+                                        
+##Modelagem
 
 
 Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.
