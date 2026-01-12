@@ -60,6 +60,7 @@ Rel_R(app, db, "Interage com db via", "SQL") Rel_L(app, bucket, "Faz upload de v
 
 ## Arquitetura do sistema
 
+<center> 
 A arquitetura do Codeflix é caracterizada pela divisão de funcionalidades em componentes autônomos, 
 organizados em microsserviços que se comunicam por meio de APIs REST e serviços de mensageria. Esse 
 modelo arquitetural permite que cada serviço seja especializado em um domínio específico, possibilitando 
@@ -70,6 +71,7 @@ principais vantagens da abordagem em microsserviços, uma vez que reduz o acopla
 evolução independente do sistema. Dessa forma, o Codeflix incorpora tais princípios, combinando comunicação síncrona 
 via APIs e integração assíncrona por eventos, o que está em consonância com o modelo de event-driven architecture 
 defendido por Richardson (2018).
+<center/> 
 <br>
 <br>
 ## Componentes
