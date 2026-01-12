@@ -152,60 +152,30 @@ Tabela 04 - Descrição de domínio do agregado de gênero:
 
 <br><img width="417" height="192" alt="image" src="https://github.com/user-attachments/assets/ab8cfa7a-784a-4a46-87bb-071ff99ab5e3" /><br>
 
-
                 Fonte: Elaborado pelo autor (2025)
  
-                   Figura 2.3 – Diagrama da tabela associativa entre os agregados de categoria e gênero
+Figura 2.3 – Diagrama da tabela associativa entre os agregados de categoria e gênero
 
 
 <br><img width="619" height="155" alt="image" src="https://github.com/user-attachments/assets/f408e9ff-59a9-4489-ae58-d389562d9eac" /><br>
-
 
                                Fonte: Elaborado pelo autor (2025)
 
 O agregado Cast Member representado na Tabela 05, representa as pessoas que participam da produção dos vídeos do catálogo, podendo assumir papéis distintos, como ator ou diretor. Cada membro possui um nome e um tipo, definidos no momento do cadastro. O agregado é responsável por garantir a consistência e validade dessas informações, assegurando que o nome não seja nulo ou vazio, contenha entre 3 e 255 caracteres e que o tipo pertença a um conjunto pré-definido de valores válidos. Além disso, o agregado mantém informações de auditoria, como data de criação, atualização e exclusão, permitindo rastrear alterações ao longo do tempo. Esse agregado se relaciona indiretamente com o agregado Vídeo, sendo referenciado por meio de identificadores.
 
-               Tabela 05 - Descrição de domínio do agregado de Cast Member:
+Tabela 05 - Descrição de domínio do agregado de Cast Member:
 
-Membro do elenco
-Nome	Nome do membro do elenco
-Tipo	Tipo do membro
-Criado	Data da criação
-Atualizado	Data da última atualização
-Deletado	Data da exclusão
-Regras de negócio
-Nome não dever ser nulo ou em branco
-Nome deve conter no mínimo 3 e no máximo 255
-caracteres
+<br><img width="446" height="239" alt="image" src="https://github.com/user-attachments/assets/df4cb72a-dbb6-4050-8a3b-3b72af09f26b" /><br>
+
  
                                                    Fonte: Elaborado pelo autor (2025)
  
 O agregado Vídeo constitui o núcleo central do domínio do catálogo de vídeos, representando o conteúdo audiovisual disponibilizado na plataforma conforme representado na Tabela 06. Seu propósito é gerenciar todas as informações essenciais sobre um vídeo, abrangendo dados descritivos, classificações, mídias associadas e vínculos com outras entidades do domínio. Cada vídeo possui um título, uma descrição, o ano de lançamento e a duração, que caracterizam o conteúdo e facilitam sua identificação dentro do catálogo. O título é obrigatório e limitado a 255 caracteres, enquanto a descrição não pode ser vazia. O ano de lançamento e a classificação indicativa (rating) são informações mandatórias, garantindo a conformidade com políticas de exibição e recomendações etárias.
-                                    Tabela 06 - Descrição de domínio do agregado de Vídeo:
 
-Vídeo
-Título	Título do vídeo
-Descrição	Descrição do vídeo
-Ano de
-lançamento	Ano de lançamento do vídeo
-Duração	Tempo de duração do vídeo
-Publicado	Data de publicação
-Auditoria	Data de criação e atualização
-Rating	Classificação do vídeo
-Thumb	Imagem
-Meia thumb	Imagem
-Banner	Imagem
-Trailer	mídia
-Mídia	url original, url encodada, controle de status
-Relacionamento com Categorias(várias)
-Relacionamento com Gêneros (várias)
-Relacionamento com Membros do elenco (várias)
-Regras de negócio
-Título não dever ser nulo ou em branco
-Título deve conter no máximo 255 caracteres
-Descrição não pode ser vazia
-Ano de lançamento é obrigatório
-Rating é obrigatório
+<br>Tabela 06 - Descrição de domínio do agregado de Vídeo:<br>
+
+<img width="461" height="575" alt="image" src="https://github.com/user-attachments/assets/1dc67801-b678-4109-98e3-527ba6ab38b7" />
+
                                                   
                                                      Fonte: Elaborado pelo autor (2025)
  
