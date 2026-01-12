@@ -181,11 +181,10 @@ O agregado Vídeo constitui o núcleo central do domínio do catálogo de vídeo
  
 O agregado também mantém metadados de mídia, como imagens de thumb, meia thumb e banner, além de elementos audiovisuais como trailer e arquivo principal de vídeo. Esses arquivos são armazenados por meio de URLs originais e codificadas, com controle de status de processamento, assegurando o acompanhamento do ciclo de vida da mídia digital. Além disso, o agregado Vídeo registra informações de auditoria, incluindo as datas de criação, atualização e publicação, permitindo rastreabilidade e controle de versões. No que se refere às relações entre agregados, o Vídeo estabelece associações com Categoria, Gênero e Membro do Elenco, representando as classificações temáticas e autorais do conteúdo. Cada vídeo pode estar vinculado a múltiplas categorias, gêneros e membros do elenco, reforçando a modelagem orientada a composição e o princípio de agregados independentes do Domain- Driven Design (EVANS, 2004).
 
-7.9  Diagrama
+## Diagrama
 
 O diagrama Figura 2.4, apresenta a arquitetura modular do microsserviço de admin do catálogo de vídeos do projeto CodeFlix, fundamentada em princípios de Design Orientado a Domínio (DDD). A arquitetura é centrada nas agregações, que representam as entidades de negócio essenciais do domínio: Category, Genre, Cast Member e Video. A camada de aplicação, implementada com Spring Boot e exposta via REST API, serve como a interface do sistema, recebendo as requisições externas. Essa camada delega a execução da lógica de negócio para a camada de Use Cases (Casos de Uso), que encapsula as operações específicas sobre as gregações, como Create, List, Delete, Get e Update. O design separa claramente as responsabilidades, isolando a lógica de negócio dos detalhes de infraestrutura e da interface de comunicação. Além disso, a arquitetura incorpora serviços externos essenciais: RabbitMQ é utilizado para mensageria assíncrona, viabilizando a comunicação desacoplada entre os componentes, enquanto Google Cloud Storage é empregado para o armazenamento de arquivos multimídia, como vídeos.
  
-
 
 Em suma, a estrutura proposta resulta em um sistema escalável e de fácil manutenção, onde a lógica de negócio reside nos Casos de Uso e opera sobre os agregados do domínio, enquanto a comunicação externa e a infraestrutura são tratadas por tecnologias e serviços modernos e robustos.
 
