@@ -4,12 +4,12 @@ DESENVOLVIMENTO DA APLICAÇÃO
 
 ### Introdução
 
-** O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
+O diagrama da Figura 2.0 descreve a arquitetura do projeto Codeflix, uma plataforma de streaming de vídeo 
 desenvolvida sob o paradigma de microsserviços. A estrutura do sistema, conforme ilustrada pelo diagrama C4, 
 foi concebida para operar como uma entidade coesa e escalável, embora seja composta por múltiplos 
 serviços independentes e especializados. Para apresentar um modelo de desenvolvimento eficiente em microsserviços 
 será desenvolvido o backend do admin do catálogo de vídeos pois esse microsserviço tem toda estrutura necessária 
-para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.**
+para se ter um serviço escalável, resiliente, tolerante a falhas e seguro.
 <br/>
 <br/>
 
@@ -136,20 +136,11 @@ Esses padrões e camadas trabalham juntos conforme a Figura 2.2, criam um sistem
 
 Descrição do domínio
 
-O agregado Categoria conforme observado na Tablela 03, representa a entidade central do domínio do catálogo de vídeos, responsável por agrupar e organizar conteúdos audiovisuais de acordo com critérios temáticos ou estratégicos, como “Filmes”, “Séries”, “Lançamentos” ou “Infantil”. Seu principal objetivo é estruturar o catálogo de forma lógica, permitindo melhor indexação, filtragem e recomendação de vídeos dentro do sistema. Cada categoria é definida por um nome e uma descrição opcional, além de possuir um estado de ativação, que indica se está ativa ou inativa. O agregado garante a integridade dos dados por meio de regras de negócio, como a obrigatoriedade do nome, que deve conter no mínimo três caracteres, e a validação do estado ativo. A descrição, por sua vez, é um campo flexível, podendo ser nula ou em branco.
+O agregado Categoria conforme observado na Tablela 03, representa a entidade central do domínio do catálogo de vídeos, responsável por agrupar e organizar conteúdos audiovisuais de acordo com critérios temáticos ou estratégicos, como “Filmes”, “Séries”, “Lançamentos” ou “Infantil”. Seu principal objetivo é estruturar o catálogo de forma lógica, permitindo melhor indexação, filtragem e recomendação de vídeos dentro do sistema. Cada categoria é definida por um nome e uma descrição opcional, além de possuir um estado de ativação, que indica se está ativa ou inativa. O agregado garante a integridade dos dados por meio de regras de negócio, como a obrigatoriedade do nome, que deve conter no mínimo três caracteres, e a validação do estado ativo. A descrição, por sua vez, é um campo flexível, podendo ser nula ou em branco.<br>
                    Tabela 03 - Descrição de domínio do agregado de categoria:
 
-Categoria
-Nome	Nome da categoria
-Descrição	Texto descritivo da categoria
-Ativo	Indica se a categoria está ativa ou inativa
-Criado	Data da criação
-Atualizado	Data da última atualização
-Deletado	Data da exclusão
-Regras de negócio
-Nome não dever ser nulo ou em branco
-Nome deve conter no mínimo 3 caracteres
-Descrição pode ser nula ou em branco
+<img width="414" height="262" alt="image" src="https://github.com/user-attachments/assets/aa0978b5-232a-4ee1-be7b-2a1ee0ea15df" />
+
                                        
                                           Fonte: Elaborado pelo autor (2025)
  
