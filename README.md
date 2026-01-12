@@ -121,10 +121,9 @@ Tabela 01 – Requisitos Funcionais (RFs)
 <img width="739" height="755" alt="image" src="https://github.com/user-attachments/assets/d6e0d1c7-310e-432e-a289-de1c1dd2e949" />
 
                                         
-##Modelagem
-
-
-Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.
+## Modelagem
+<center>
+Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitecture, não serão utilizados os tactical partterns: Domain Services e Factories conforme foi destacado de verde na Figura 2.1 Tatical Patterns. Será aplicado os componentes conforme é demostrado na Figura 2.2 que é a seção que descreve a estrutura de camadas da Clean Architecture, um padrão que visa isolar as regras de negócio de frameworks e detalhes de implementação. A ideia é que as dependências fluam para dentro, ou seja, as camadas mais externas dependem das mais internas, mas nunca o contrário.</center>
 
                                               
 <img width="753" height="578" alt="image" src="https://github.com/user-attachments/assets/841dd242-f905-4afd-8237-360de163b10e" /><br>
