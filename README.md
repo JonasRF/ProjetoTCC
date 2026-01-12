@@ -154,7 +154,7 @@ Tabela 04 - Descrição de domínio do agregado de gênero:
 
                 Fonte: Elaborado pelo autor (2025)
  
-Figura 2.3 – Diagrama da tabela associativa entre os agregados de categoria e gênero
+  Diagrama da tabela associativa entre os agregados de categoria e gênero
 
 
 <br><img width="619" height="155" alt="image" src="https://github.com/user-attachments/assets/f408e9ff-59a9-4489-ae58-d389562d9eac" /><br>
@@ -194,12 +194,15 @@ Figura 2.4 – Diagrama do serviço de admin do catálogo de vídeos
 
           Fonte: Elaborado pelo autor (2025)
  
-8 APRESENTAÇÃO DA APLICAÇÃO<br>
-		8.1	Pirâmide de testes
+## APRESENTAÇÃO DA APLICAÇÃO<br>
+### Pirâmide de testes
 
 A Figura 2.5 apresenta a pirâmide dos níveis de testes, proposta por Cohn (2010), que organiza a proporção e a importância relativa dos diferentes tipos de testes em um projeto de software. Essa abordagem foi aplicada no desenvolvimento do microsserviço de administração do catálogo de vídeos do projeto Codeflix, permitindo estruturar a estratégia de verificação e validação do código. No nível mais baixo da pirâmide estão os testes unitários, que verificam de forma isolada o funcionamento de pequenas partes do código, como métodos ou funções. Por não dependerem de frameworks externos ou integrações, esses testes são extremamente rápidos e representam a maior parte dos testes implementados na aplicação. O nível intermediário é composto pelos testes de integração, que validam a comunicação e o funcionamento conjunto entre diferentes unidades do sistema.
 
-                                                Figura 2.5 – A pirâmide dos níveis de testes
+Figura 2.5 – A pirâmide dos níveis de testes<br>
+
+<img width="463" height="369" alt="image" src="https://github.com/user-attachments/assets/9b8ad2f0-f0b8-4d40-822a-7de29e6a0269" /><br>
+
 
                                                 Fonte: Imagem adaptada de COHN, 2010
 
