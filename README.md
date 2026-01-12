@@ -129,7 +129,7 @@ Uma vez que nesse projeto será aplicado o design arquitetural do clean arquitec
                                                    
 A Figura 2.2 ilustra o diagrama da arquitetura da aplicação, que combina os princípios de Domain-Driven Design (DDD) com os componentes da Clean Architecture. O diagrama mostra a base do DDD com o uso de Value Objects (como Identifier, Name, Money) e Aggregates (como Category, Genre, Cast Member, Video), que encapsulam a lógica de negócio principal. Esses Aggregates são então mapeados para os Componentes da Clean Architecture, que incluem as Entidades do DDD, os Use Cases (responsáveis pela lógica da aplicação), os Gateways (que fazem a interface com a infraestrutura/persistência) e os Presenters (que preparam os dados para a interface). O diagrama estabelece a clareza e separação de responsabilidades entre as diferentes camadas.<br>
                                         
-<img width="796" height="460" alt="image" src="https://github.com/user-attachments/assets/b3c0377f-6674-40ac-9574-81aa901b146b" />
+<img width="796" height="460" alt="image" src="https://github.com/user-attachments/assets/b3c0377f-6674-40ac-9574-81aa901b146b" /><br>
                                 
 Esses padrões e camadas trabalham juntos conforme a Figura 2.2, criam um sistema com um design robusto, que é fácil de manter, testar e evoluir. A combinação de DDD e Clean Architecture é muito comum, pois o DDD ajuda a modelar o domínio de forma clara, enquanto a Clean Architecture organiza o código para que o domínio seja o centro da aplicação, protegido de detalhes técnicos.
 
@@ -174,7 +174,7 @@ O agregado Vídeo constitui o núcleo central do domínio do catálogo de vídeo
 
 <br>Tabela 06 - Descrição de domínio do agregado de Vídeo:<br>
 
-<img width="461" height="575" alt="image" src="https://github.com/user-attachments/assets/1dc67801-b678-4109-98e3-527ba6ab38b7" />
+<img width="461" height="575" alt="image" src="https://github.com/user-attachments/assets/1dc67801-b678-4109-98e3-527ba6ab38b7" /><br>
 
                                                   
                                                      Fonte: Elaborado pelo autor (2025)
@@ -189,13 +189,14 @@ O diagrama Figura 2.4, apresenta a arquitetura modular do microsserviço de admi
 
 Em suma, a estrutura proposta resulta em um sistema escalável e de fácil manutenção, onde a lógica de negócio reside nos Casos de Uso e opera sobre os agregados do domínio, enquanto a comunicação externa e a infraestrutura são tratadas por tecnologias e serviços modernos e robustos.
 
-                                        Figura 2.4 – Diagrama do serviço de admin do catálogo de vídeos
+Figura 2.4 – Diagrama do serviço de admin do catálogo de vídeos
 
+<br><img width="790" height="696" alt="image" src="https://github.com/user-attachments/assets/1452818e-f109-438c-a538-35a16cd484d7" /><br>
 
-Fonte: Elaborado pelo autor (2025)
+          Fonte: Elaborado pelo autor (2025)
  
-8	APRESENTAÇÃO DA APLICAÇÃO
-8.1	Pirâmide de testes
+8 APRESENTAÇÃO DA APLICAÇÃO<br>
+		8.1	Pirâmide de testes
 
 A Figura 2.5 apresenta a pirâmide dos níveis de testes, proposta por Cohn (2010), que organiza a proporção e a importância relativa dos diferentes tipos de testes em um projeto de software. Essa abordagem foi aplicada no desenvolvimento do microsserviço de administração do catálogo de vídeos do projeto Codeflix, permitindo estruturar a estratégia de verificação e validação do código. No nível mais baixo da pirâmide estão os testes unitários, que verificam de forma isolada o funcionamento de pequenas partes do código, como métodos ou funções. Por não dependerem de frameworks externos ou integrações, esses testes são extremamente rápidos e representam a maior parte dos testes implementados na aplicação. O nível intermediário é composto pelos testes de integração, que validam a comunicação e o funcionamento conjunto entre diferentes unidades do sistema.
 
