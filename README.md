@@ -142,7 +142,7 @@ O agregado Categoria conforme observado na Tablela 03, representa a entidade cen
 <img width="414" height="262" alt="image" src="https://github.com/user-attachments/assets/aa0978b5-232a-4ee1-be7b-2a1ee0ea15df" /><br>
 
                                        
-     Fonte: Elaborado pelo autor (2025)
+                Fonte: Elaborado pelo autor (2025)
  
 
 Além disso, o agregado mantém informações de auditoria, incluindo as datas de criação, atualização e exclusão, que permitem rastrear o ciclo de vida da entidade. No contexto do domínio, o agregado Categoria estabelece uma relação conceitual com os agregados Gênero e Vídeo, podendo ser referenciada por ambos para classificação e associação de conteúdo. Ainda assim, preserva sua autonomia e independência transacional, conforme os princípios de isolamento entre agregados propostos por Evans (2004) em Domain-Driven Design.
@@ -150,27 +150,16 @@ Além disso, o agregado mantém informações de auditoria, incluindo as datas d
 O agregado Gênero representa uma categoria temática que agrupa vídeos de acordo com características comuns de conteúdo, como Ação, Drama, Comédia ou Documentário conforme demonstrado na Tabela 04. Seu principal objetivo é organizar e classificar os vídeos no catálogo, permitindo uma melhor experiência de navegação e busca por parte dos usuários. Cada gênero possui um nome e um estado de ativação, que indica se ele está ativo ou inativo no sistema. O agregado é responsável por garantir a integridade das informações, assegurando que o nome não seja nulo ou vazio, e que os registros mantenham consistência quanto ao seu ciclo de vida, controlado por atributos de auditoria; como datas de criação, atualização e exclusão lógica. Os agregados de categoria e gênero possuem um relacionamento muitos para muitos conforme e demonstrado na imagem acima. Uma vez que esse tipo de relacionamento tem a necessidade de ter uma tabela associativa conforme Figura onde são configuradas as chaves compostas, que são as chaves primarias de categoria e gênero.
 Tabela 04 - Descrição de domínio do agregado de gênero:
 
-Gênero
-Nome	Nome do gênero
-Ativo	Indica se o gênero está ativo ou inativo
-Criado	Data da criação
-Atualizado	Data da última atualização
-Deletado	Data da exclusão
-Regras de negócio
-Nome não dever ser nulo ou em branco
+<br><img width="417" height="192" alt="image" src="https://github.com/user-attachments/assets/ab8cfa7a-784a-4a46-87bb-071ff99ab5e3" /><br>
 
-Fonte: Elaborado pelo autor (2025)
+
+                Fonte: Elaborado pelo autor (2025)
  
                    Figura 2.3 – Diagrama da tabela associativa entre os agregados de categoria e gênero
 
 
+<br><img width="619" height="155" alt="image" src="https://github.com/user-attachments/assets/f408e9ff-59a9-4489-ae58-d389562d9eac" /><br>
 
-Categoria
-N to N	
-
-Gênero
-
-		
 
                                Fonte: Elaborado pelo autor (2025)
 
