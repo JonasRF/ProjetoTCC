@@ -2,10 +2,12 @@ package org.jonasribeiro.admin.catalogo.infraestructure.services.local;
 
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
 import org.jonasribeiro.admin.catalogo.infraestructure.services.StorageService;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Service
 public class InMemoryStorageService  implements StorageService {
 
     private final Map<String, Resource> storage;

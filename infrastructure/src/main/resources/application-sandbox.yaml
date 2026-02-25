@@ -1,10 +1,10 @@
 amqp:
   admin:
     auto-create: ${AMQP_ADMIN_AUTO_CREATE:true}
-  host: ${AMQP_RABBIT_HOST}
-  port: ${AMQP_RABBIT_PORT}
-  username: ${AMQP_RABBIT_USERNAME}
-  password: ${AMQP_RABBIT_PASSWORD}
+  host: ${AMQP_RABBIT_HOST:localhost}
+  port: ${AMQP_RABBIT_PORT:5672}
+  username: ${AMQP_RABBIT_USERNAME:adm_videos}
+  password: ${AMQP_RABBIT_PASSWORD:123456}
 
 keycloak:
   realm: ${KEYCLOAK_REALM:codeflix}

@@ -3,6 +3,7 @@ package org.jonasribeiro.admin.catalogo.infraestructure.video;
 import org.jonasribeiro.admin.catalogo.domain.resource.VideoResource;
 import org.jonasribeiro.admin.catalogo.domain.video.*;
 import org.jonasribeiro.admin.catalogo.infraestructure.configuration.properties.storage.StorageProperties;
+
 import org.jonasribeiro.admin.catalogo.infraestructure.services.StorageService;
 import org.springframework.stereotype.Component;
 

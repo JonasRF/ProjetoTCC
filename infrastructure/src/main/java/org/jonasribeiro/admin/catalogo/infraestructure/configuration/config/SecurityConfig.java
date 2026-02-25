@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@Profile("!development")
 public class SecurityConfig {
 
         private static final String ROLE_ADMIN = "CATALOGO_ADMIN";
@@ -42,6 +43,21 @@ public class SecurityConfig {
                     // permite preflight OPTIONS usando AntPathRequestMatcher
                     authorize.requestMatchers(new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/**", "OPTIONS"))
                             .permitAll();
+
+                    // permitir endpoints do Swagger/OpenAPI (tanto com /api prefix quanto sem)
+                    authorize
+                            .antMatchers(
+                                    "/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/v3/api-docs/**",
+                                    "/v3/api-docs/swagger-config",
+                                    "/swagger-resources/**",
+                                    "/webjars/**",
+                                    "/api/swagger-ui/**",
+                                    "/api/v3/api-docs/**",
+                                    "/api/v3/api-docs/swagger-config",
+                                    "/api/swagger-ui.html"
+                            ).permitAll();
 
                     authorize
                             .antMatchers("/cast_members*").hasAnyRole(ROLE_ADMIN, ROLE_CAST_MEMBERS)
@@ -140,5 +156,3 @@ public class SecurityConfig {
             }
     }
 }
-
-
