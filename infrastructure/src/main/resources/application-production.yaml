@@ -5,14 +5,14 @@ amqp:
   password: ${AMQP_RABBIT_PASSWORD}
 
 keycloak:
-  realm: ${KEYCLOAK_REALM:codeflix}
-  host: ${KEYCLOAK_HOST:http://localhost:8443}
+  realm: ${KEYCLOAK_REALM}
+  host: ${KEYCLOAK_HOST}
 
 mysql:
-  username: ${DATABASE_MYSQL_USERNAME:root}
-  password: ${DATABASE_MYSQL_PASSWORD:123456}
+  username: ${DATABASE_MYSQL_USERNAME}
+  password: ${DATABASE_MYSQL_PASSWORD}
   schema: adm_videos
-  url: ${DATABASE_MYSQL_URL:localhost:3306}
+  url: ${DATABASE_MYSQL_URL}
 
 spring:
   jpa:

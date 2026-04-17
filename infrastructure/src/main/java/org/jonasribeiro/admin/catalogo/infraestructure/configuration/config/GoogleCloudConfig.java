@@ -20,7 +20,7 @@ import java.util.Base64;
 import java.util.Objects;
 
 @Configuration
-@Profile({"!development & !test-integration & !test-e2e"})
+@Profile({"development", "production", "sandbox"})
 public class GoogleCloudConfig {
 
     @Bean
@@ -50,6 +50,7 @@ public class GoogleCloudConfig {
     @Bean
     public Storage storage(
             final Credentials credentials,
+            final GoogleCloudProperties cloudConfig,
             final GoogleStorageProperties storageProperties
     ) {
         final var transportOptions = HttpTransportOptions.newBuilder()
@@ -66,6 +67,7 @@ public class GoogleCloudConfig {
 
         return StorageOptions.newBuilder()
                 .setCredentials(credentials)
+                .setProjectId(cloudConfig.getProjectId())
                 .setTransportOptions(transportOptions)
                 .setRetrySettings(retrySettings)
                 .build()

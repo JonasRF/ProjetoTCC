@@ -5,8 +5,6 @@ import org.jonasribeiro.admin.catalogo.infraestructure.configuration.properties.
 import org.jonasribeiro.admin.catalogo.infraestructure.configuration.properties.storage.StorageProperties;
 import org.jonasribeiro.admin.catalogo.infraestructure.services.StorageService;
 import org.jonasribeiro.admin.catalogo.infraestructure.services.impl.GCStorageService;
-import org.jonasribeiro.admin.catalogo.infraestructure.services.local.InMemoryStorageService;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,13 +20,7 @@ public class StorageConfig {
     }
 
     @Bean
-    @Profile({"development", "test-integration", "test-e2e"})
-    public StorageService gcStorageService(){
-            return new InMemoryStorageService();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
+    @Profile({"development", "production", "sandbox"})
     public StorageService gcStorageService(
             final Storage storage,
             final GoogleStorageProperties props

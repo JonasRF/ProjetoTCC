@@ -5,12 +5,14 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import org.jonasribeiro.admin.catalogo.domain.video.Resource;
 import org.jonasribeiro.admin.catalogo.infraestructure.services.StorageService;
+import org.springframework.context.annotation.Primary;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
+@Primary
 public class GCStorageService implements StorageService {
 
     private final String bucketName;
